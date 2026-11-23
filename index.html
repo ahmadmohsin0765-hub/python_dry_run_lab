@@ -1255,18 +1255,23 @@
     <div id="viewExplain" class="tab-view full-tab-container">
       <div class="tab-card">
         <div class="tab-card-header">
-          <div class="tab-card-title">
+          <div class="tab-card-title" style="display:flex; align-items:center; gap:8px; flex-wrap:wrap;">
             <span>💬 AI Python Tutor (Powered by Groq)</span>
-            <span class="badge badge-coral">Llama-3.3-70b</span>
             <select id="aiModelSelect"
               style="padding:2px 8px; font-size:12px; border-radius:4px; border:1px solid var(--border-color); background:var(--bg-secondary); color:var(--text-primary); cursor:pointer;">
               <option value="llama-3.1-8b-instant" selected>Llama 3.1 8B (Fast & Universal)</option>
               <option value="llama-3.3-70b-versatile">Llama 3.3 70B (Versatile)</option>
               <option value="llama3-70b-8192">Llama 3 70B</option>
               <option value="llama3-8b-8192">Llama 3 8B</option>
+              <option value="deepseek-r1-distill-llama-70b">DeepSeek R1 Distill 70B</option>
+              <option value="qwen-2.5-32b">Qwen 2.5 32B</option>
               <option value="gemma2-9b-it">Gemma 2 9B</option>
               <option value="mixtral-8x7b-32768">Mixtral 8x7B</option>
+              <option value="__custom__">Custom Model...</option>
             </select>
+            <input type="text" id="aiCustomModelInput" placeholder="Enter model ID..." style="display:none; padding:2px 8px; font-size:12px; width:150px; border-radius:4px;">
+            <button id="btnFetchModels" class="btn btn-sm" style="font-size:11px; padding:2px 7px;" title="Query all authorized models directly from Groq API">🔄 Detect My Models</button>
+            <span id="aiModelStatusBadge" style="font-size:11px; color:var(--text-muted);"></span>
           </div>
           <div style="display:flex; align-items:center; gap:10px;">
             <select id="aiLevelSelect" style="padding:3px 8px; font-size:12px;">
@@ -2146,6 +2151,9 @@ initPyodide();
             setTimeout(() => codeEditor.refresh(), 50);
           } else {
             viewEl.style.display = 'flex';
+            if (k === 'explain' && (state.groqApiKey || sessionStorage.getItem('GROQ_API_KEY'))) {
+              fetchAvailableGroqModels(true);
+            }
           }
         } else {
           viewEl.classList.remove('active');
@@ -2684,6 +2692,82 @@ initPyodide();
     }
 
     /* 10. AI TUTOR (GROQ INTEGRATION) */
+    async function fetchAvailableGroqModels(silent = false) {
+      const apiKey = state.groqApiKey || sessionStorage.getItem('GROQ_API_KEY');
+      const statusBadge = document.getElementById('aiModelStatusBadge');
+      if (!apiKey) {
+        if (!silent && statusBadge) statusBadge.textContent = 'Key not set';
+        return [];
+      }
+      if (!silent && statusBadge) statusBadge.textContent = 'Detecting models...';
+      try {
+        const res = await fetch('https://api.groq.com/openai/v1/models', {
+          headers: { 'Authorization': `Bearer ${apiKey}` }
+        });
+        if (!res.ok) {
+          const errData = await res.json().catch(() => ({}));
+          const msg = errData.error?.message || res.statusText;
+          if (res.status === 401) {
+            if (statusBadge) statusBadge.textContent = '❌ Invalid key';
+          } else {
+            if (statusBadge) statusBadge.textContent = 'Failed: ' + msg;
+          }
+          return [];
+        }
+        const data = await res.json();
+        if (data && Array.isArray(data.data)) {
+          // Filter out whisper, tts, and guard models
+          const chatModels = data.data
+            .map(m => m.id)
+            .filter(id => id && !id.includes('whisper') && !id.includes('guard'));
+          
+          const select = document.getElementById('aiModelSelect');
+          if (select && chatModels.length > 0) {
+            const currentVal = select.value;
+            select.innerHTML = '';
+            chatModels.forEach(m => {
+              const opt = document.createElement('option');
+              opt.value = m;
+              opt.textContent = m;
+              select.appendChild(opt);
+            });
+            const customOpt = document.createElement('option');
+            customOpt.value = '__custom__';
+            customOpt.textContent = 'Custom Model...';
+            select.appendChild(customOpt);
+
+            if (chatModels.includes(currentVal)) {
+              select.value = currentVal;
+            } else {
+              select.value = chatModels[0];
+            }
+            if (statusBadge) statusBadge.textContent = `✓ ${chatModels.length} models detected`;
+          }
+          return chatModels;
+        }
+      } catch (err) {
+        if (statusBadge) statusBadge.textContent = 'Network error';
+      }
+      return [];
+    }
+
+    const modelSelectEl = document.getElementById('aiModelSelect');
+    const customModelInputEl = document.getElementById('aiCustomModelInput');
+    if (modelSelectEl && customModelInputEl) {
+      modelSelectEl.addEventListener('change', (e) => {
+        if (e.target.value === '__custom__') {
+          customModelInputEl.style.display = 'inline-block';
+          customModelInputEl.focus();
+        } else {
+          customModelInputEl.style.display = 'none';
+        }
+      });
+    }
+    const btnFetchModelsEl = document.getElementById('btnFetchModels');
+    if (btnFetchModelsEl) {
+      btnFetchModelsEl.addEventListener('click', () => fetchAvailableGroqModels(false));
+    }
+
     async function callGroqAI(userPrompt, actionType) {
       const apiKey = state.groqApiKey || sessionStorage.getItem('GROQ_API_KEY');
       if (!apiKey) {
@@ -2718,7 +2802,15 @@ MANDATORY RULES:
       document.getElementById('aiTokenEst').textContent = `Estimated tokens: ~${estTokens}`;
 
       const modelSelect = document.getElementById('aiModelSelect');
-      let chosenModel = modelSelect ? modelSelect.value : 'llama-3.1-8b-instant';
+      const customModelInput = document.getElementById('aiCustomModelInput');
+      let chosenModel = 'llama-3.3-70b-versatile';
+      if (modelSelect) {
+        if (modelSelect.value === '__custom__' && customModelInput && customModelInput.value.trim()) {
+          chosenModel = customModelInput.value.trim();
+        } else if (modelSelect.value && modelSelect.value !== '__custom__') {
+          chosenModel = modelSelect.value;
+        }
+      }
 
       const chatWindow = document.getElementById('aiChatWindow');
       chatWindow.innerHTML = `<em>Thinking and streaming response from Groq (${chosenModel})...</em>`;
@@ -2749,15 +2841,60 @@ MANDATORY RULES:
           const errData = await response.json().catch(() => ({}));
           const errMsg = errData.error?.message || response.statusText;
 
-          // If chosen model is not accessible (e.g. 70B gating), automatically fallback to universal llama-3.1-8b-instant
-          if ((errMsg.toLowerCase().includes('does not exist') || errMsg.toLowerCase().includes('access') || response.status === 404) && chosenModel !== 'llama-3.1-8b-instant') {
-            chatWindow.innerHTML = `<em>Model '${chosenModel}' not accessible. Automatically falling back to universal Llama 3.1 8B...</em>`;
-            if (modelSelect) modelSelect.value = 'llama-3.1-8b-instant';
-            chosenModel = 'llama-3.1-8b-instant';
-            response = await tryFetch(chosenModel);
-            if (!response.ok) {
-              const errData2 = await response.json().catch(() => ({}));
-              throw new Error(errData2.error?.message || response.statusText);
+          // If chosen model is not accessible (permission denied or model not found), query accessible models & try all candidates
+          if (errMsg.toLowerCase().includes('does not exist') || errMsg.toLowerCase().includes('access') || response.status === 404) {
+            chatWindow.innerHTML = `<em>Model '${chosenModel}' not accessible on this key. Auto-detecting your authorized Groq models...</em>`;
+            
+            // 1. Query live list of models enabled for this API key
+            const liveModels = await fetchAvailableGroqModels(true);
+            
+            // 2. Candidate models pool to try
+            const candidatePool = [
+              ...liveModels,
+              'llama-3.3-70b-versatile',
+              'llama-3.1-8b-instant',
+              'llama3-70b-8192',
+              'llama3-8b-8192',
+              'deepseek-r1-distill-llama-70b',
+              'qwen-2.5-32b',
+              'gemma2-9b-it',
+              'mixtral-8x7b-32768'
+            ];
+            
+            // Filter unique models excluding the one that just failed
+            const toTry = [...new Set(candidatePool)].filter(m => m && m !== chosenModel && m !== '__custom__');
+            
+            let succeeded = false;
+            for (const candidate of toTry) {
+              chatWindow.innerHTML = `<em>Trying alternative model authorized on your account: <strong>${candidate}</strong>...</em>`;
+              const altRes = await tryFetch(candidate);
+              if (altRes.ok) {
+                response = altRes;
+                chosenModel = candidate;
+                if (modelSelect) {
+                  if (![...modelSelect.options].some(o => o.value === candidate)) {
+                    const opt = document.createElement('option');
+                    opt.value = candidate;
+                    opt.textContent = candidate;
+                    modelSelect.prepend(opt);
+                  }
+                  modelSelect.value = candidate;
+                }
+                succeeded = true;
+                break;
+              }
+            }
+            
+            if (!succeeded) {
+              throw new Error(
+                `Your Groq API key cannot access any of the standard chat models (including llama-3.1-8b-instant and llama-3.3-70b-versatile).\n\n` +
+                `Why this happens:\n` +
+                `1. In the Groq Console, projects can have "Model Permissions" enabled that restrict which models an API key is allowed to call.\n` +
+                `2. How to fix:\n` +
+                `   - Go to https://console.groq.com/keys\n` +
+                `   - Check your Project Settings -> Model Permissions\n` +
+                `   - Ensure Meta Llama models (or all models) are toggled ON for this project/key, or create a new free API key with Default permissions.`
+              );
             }
           } else {
             throw new Error(errMsg);
@@ -3073,7 +3210,9 @@ ans = factorial_recursive(5)`;
       sessionStorage.setItem('GROQ_API_KEY', key);
       updateGroqStatusUI();
       groqModal.classList.remove('active');
-      if (key) alert('Groq API Key saved for this session!');
+      if (key) {
+        fetchAvailableGroqModels(false);
+      }
     });
 
     document.getElementById('btnClearGroqModal').addEventListener('click', () => {
@@ -3155,6 +3294,9 @@ ans = factorial_recursive(5)`;
     }
 
     codeEditor.setValue(CODE_EXAMPLES.bubble_sort);
+    if (state.groqApiKey) {
+      fetchAvailableGroqModels(true);
+    }
   </script>
 </body>
 
