@@ -3,10 +3,10 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Python Dry-Run Lab — Interactive Step-by-Step Execution Playground</title>
+  <title>Python Dry-Run Lab — Interactive Execution Playground</title>
   <meta name="description" content="Cohere Playground-inspired, live step-by-step Python execution visualizer and dry-run debugger powered by Pyodide WebAssembly.">
 
-  <!-- Google Fonts: Inter & JetBrains Mono -->
+  <!-- Fonts: Inter & JetBrains Mono -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
@@ -220,9 +220,7 @@
     .badge-blue { background: var(--accent-blue-bg); color: var(--accent-blue); }
     .badge-yellow { background: var(--accent-yellow-bg); color: var(--accent-yellow); }
 
-    /* ==========================================================================
-       TOP NAVIGATION BAR (COHERE STYLE)
-       ========================================================================== */
+    /* HEADER */
     header {
       background: var(--bg-header);
       border-bottom: 1px solid var(--border-main);
@@ -268,7 +266,7 @@
     .nav-links {
       display: flex;
       align-items: center;
-      gap: 18px;
+      gap: 16px;
     }
     .nav-link {
       font-size: 11.5px;
@@ -308,9 +306,7 @@
       background: var(--accent-green);
     }
 
-    /* ==========================================================================
-       SUBHEADER PILL TABS (COHERE TOOLBAR STYLE)
-       ========================================================================== */
+    /* SUBHEADER TOOLBAR PILLS */
     .subnav-bar {
       background: var(--bg-header);
       border-bottom: 1px solid var(--border-main);
@@ -354,31 +350,44 @@
       font-weight: 600;
     }
 
-    /* ==========================================================================
-       MAIN PLAYGROUND WORKSPACE: SPLIT FORM & CODE PANE
-       ========================================================================== */
-    .playground-split {
-      display: grid;
-      grid-template-columns: 460px 1fr;
+    /* MAIN WORKSPACE */
+    .main-workspace-container {
       flex: 1;
       height: calc(100vh - 110px);
+      display: flex;
+      flex-direction: column;
       overflow: hidden;
       background: var(--bg-page);
+      position: relative;
+    }
+
+    .tab-view {
+      display: none;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+    }
+    .tab-view.active {
+      display: flex;
+    }
+    #viewTrace.active {
+      display: grid !important;
+      grid-template-columns: 460px 1fr !important;
+      height: 100% !important;
+      overflow: hidden !important;
     }
 
     @media (max-width: 1080px) {
-      .playground-split {
-        grid-template-columns: 1fr;
-        height: auto;
-        overflow: visible;
+      #viewTrace.active {
+        grid-template-columns: 1fr !important;
+        overflow-y: auto !important;
       }
       .panel-left {
-        height: auto !important;
         border-right: none !important;
         border-bottom: 1px solid var(--border-main);
       }
       .panel-right {
-        height: auto !important;
+        height: 500px !important;
       }
     }
 
@@ -389,6 +398,7 @@
       overflow-y: auto;
       display: flex;
       flex-direction: column;
+      height: 100%;
     }
 
     .param-group {
@@ -418,7 +428,6 @@
       font-weight: 400;
     }
 
-    /* "What Just Happened" Banner Card */
     .what-happened-card {
       background: var(--bg-card-elevated);
       border: 1px solid var(--border-main);
@@ -438,7 +447,6 @@
       color: var(--accent-coral);
     }
 
-    /* Variables Table */
     .vars-table {
       width: 100%;
       border-collapse: collapse;
@@ -480,7 +488,6 @@
       margin-left: 4px;
     }
 
-    /* Memory / Objects */
     .obj-box {
       border: 1px solid var(--border-main);
       background: var(--bg-card-elevated);
@@ -509,13 +516,14 @@
       font-weight: 600;
     }
 
-    /* Right Panel: Dark Code & Execution Pane */
+    /* Right Panel: Dark Code & Console */
     .panel-right {
       background: var(--bg-code-pane);
       color: var(--text-light);
       display: flex;
       flex-direction: column;
       overflow: hidden;
+      height: 100%;
     }
 
     .editor-tab-strip {
@@ -577,11 +585,13 @@
       grid-template-rows: 1fr 200px;
       flex: 1;
       overflow: hidden;
+      height: calc(100% - 40px);
     }
 
     .codemirror-wrapper {
       height: 100%;
       position: relative;
+      overflow: hidden;
     }
     .CodeMirror {
       height: 100% !important;
@@ -615,7 +625,6 @@
       border-left: 3px solid #d29922 !important;
     }
 
-    /* Response / Output Split Section */
     .response-pane {
       border-top: 1px solid var(--border-dark);
       background: #121418;
@@ -647,9 +656,113 @@
       flex: 1;
     }
 
-    /* ==========================================================================
-       BOTTOM ACTION BAR (COHERE RUN / RESET STYLE)
-       ========================================================================== */
+    /* FULL TAB VIEWS */
+    .full-tab-container {
+      width: 100%;
+      height: 100%;
+      overflow-y: auto;
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .tab-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-main);
+      border-radius: 8px;
+      padding: 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .tab-card-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid var(--border-subtle);
+      padding-bottom: 10px;
+    }
+    .tab-card-title {
+      font-size: 14px;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .dry-run-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 11.5px;
+      font-family: 'JetBrains Mono', monospace;
+    }
+    .dry-run-table th {
+      position: sticky;
+      top: 0;
+      background: var(--bg-card-elevated);
+      padding: 8px 10px;
+      text-align: left;
+      font-weight: 600;
+      border-bottom: 1px solid var(--border-main);
+      z-index: 10;
+    }
+    .dry-run-table td {
+      padding: 6px 10px;
+      border-bottom: 1px solid var(--border-subtle);
+      white-space: nowrap;
+    }
+    .dry-run-table tr.current-step-row {
+      background: var(--current-line);
+      font-weight: 600;
+    }
+    .dry-run-table tr:hover {
+      background: rgba(255,255,255,0.03);
+    }
+    .cell-changed {
+      background: var(--accent-green-bg);
+      color: var(--accent-green);
+      font-weight: 600;
+    }
+    .cell-hidden-quiz {
+      filter: blur(4px);
+      user-select: none;
+      background: var(--border-subtle);
+      cursor: pointer;
+    }
+
+    .flowchart-wrapper {
+      background: #0f1115;
+      border: 1px solid var(--border-main);
+      border-radius: 8px;
+      padding: 16px;
+      min-height: 250px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: auto;
+    }
+    .flowchart-node-active {
+      stroke: var(--accent-coral) !important;
+      stroke-width: 3px !important;
+      filter: drop-shadow(0 0 6px var(--accent-coral));
+    }
+
+    .ai-chat-box {
+      border: 1px solid var(--border-main);
+      border-radius: 8px;
+      background: var(--bg-card-elevated);
+      padding: 14px;
+      min-height: 200px;
+      max-height: 380px;
+      overflow-y: auto;
+      font-size: 13px;
+      line-height: 1.6;
+    }
+
+    /* BOTTOM ACTION BAR */
     .bottom-bar {
       background: var(--bg-header);
       border-top: 1px solid var(--border-main);
@@ -668,7 +781,7 @@
       align-items: center;
       gap: 10px;
       flex: 1;
-      max-width: 620px;
+      max-width: 640px;
     }
     .step-slider {
       flex: 1;
@@ -704,9 +817,7 @@
       gap: 10px;
     }
 
-    /* ==========================================================================
-       MODAL OVERLAYS (GROQ KEY, COMPARE, DOCS)
-       ========================================================================== */
+    /* MODALS */
     .modal-backdrop {
       display: none;
       position: fixed;
@@ -755,7 +866,6 @@
       background: var(--bg-card-elevated);
     }
 
-    /* Loading Status Overlay */
     .loading-toast {
       position: fixed;
       bottom: 60px;
@@ -792,9 +902,7 @@
 </head>
 <body>
 
-  <!-- ==========================================================================
-       HEADER (COHERE PLAYGROUND BRANDING & NAV)
-       ========================================================================== -->
+  <!-- HEADER -->
   <header>
     <div class="brand-group">
       <a href="#" class="brand-logo" onclick="event.preventDefault()">
@@ -811,9 +919,9 @@
         <span id="groqKeyLabel">🔑 Groq API Key: Not Set</span>
       </div>
 
-      <a href="#" class="nav-link active" onclick="event.preventDefault()">PLAYGROUND</a>
-      <a href="#" class="nav-link" id="navCompareLink" onclick="event.preventDefault()">COMPARE</a>
-      <a href="#" class="nav-link" id="navDocsLink" onclick="event.preventDefault()">DOCS</a>
+      <a href="#" class="nav-link active" id="navPlaygroundLink">PLAYGROUND</a>
+      <a href="#" class="nav-link" id="navCompareLink">COMPARE</a>
+      <a href="#" class="nav-link" id="navDocsLink">DOCS</a>
 
       <button id="btnThemeToggle" class="btn btn-sm" style="padding:4px 8px;" title="Toggle Light/Dark Theme">
         🌙
@@ -821,9 +929,7 @@
     </div>
   </header>
 
-  <!-- ==========================================================================
-       SUBHEADER TOOLBAR PILLS
-       ========================================================================== */ -->
+  <!-- SUBHEADER MODE PILLS BAR -->
   <div class="subnav-bar">
     <div class="mode-pills">
       <button class="mode-pill active" data-view="trace">⚡ Dry-Run Visualizer</button>
@@ -832,6 +938,7 @@
       <button class="mode-pill" data-view="diagram">📊 AST & Flowchart</button>
       <button class="mode-pill" data-view="metrics">🔥 Metrics</button>
       <button class="mode-pill" data-view="compare">⚖️ Compare Mode</button>
+      <button class="mode-pill" data-view="history">📜 Share & History</button>
     </div>
 
     <div style="display:flex; align-items:center; gap:8px;">
@@ -851,149 +958,381 @@
     </div>
   </div>
 
-  <!-- ==========================================================================
-       MAIN PLAYGROUND WORKSPACE
-       ========================================================================== -->
-  <main class="playground-split">
+  <!-- MAIN WORKSPACE CONTAINER -->
+  <main class="main-workspace-container">
 
-    <!-- LEFT PANEL: STATE & PARAMETERS (FORM ROWS) -->
-    <section class="panel-left" id="panelLeft">
-      
-      <!-- 1. What Just Happened Live Event -->
-      <div class="param-group">
-        <div class="what-happened-card" id="whatHappenedCard">
-          <span class="what-happened-label" id="whatHappenedLabel">Execution Status</span>
-          <span id="whatHappenedText" style="font-weight:500;">Click "⚡ RUN" to execute code and step through memory state.</span>
+    <!-- VIEW 1: TRACE VISUALIZER -->
+    <div id="viewTrace" class="tab-view active playground-split">
+      <!-- Left Panel: State & Parameters -->
+      <section class="panel-left">
+        <!-- Event Status -->
+        <div class="param-group">
+          <div class="what-happened-card" id="whatHappenedCard">
+            <span class="what-happened-label" id="whatHappenedLabel">Execution Status</span>
+            <span id="whatHappenedText" style="font-weight:500;">Click "⚡ RUN" to trace execution step-by-step.</span>
+          </div>
         </div>
-      </div>
 
-      <!-- 2. Loop Tracker Row -->
-      <div class="param-group" id="loopTrackerRow" style="display:none;">
-        <div class="param-header">
-          <span class="param-title">loop_state <span class="param-type">iteration</span></span>
-          <span class="badge badge-coral" id="loopTrackerVar">i = 0</span>
+        <!-- Loop State -->
+        <div class="param-group" id="loopTrackerRow" style="display:none;">
+          <div class="param-header">
+            <span class="param-title">loop_state <span class="param-type">iteration</span></span>
+            <span class="badge badge-coral" id="loopTrackerVar">i = 0</span>
+          </div>
+          <div id="loopTrackerText" style="font-size:12px; color:var(--text-muted);">Iteration 1 of loop</div>
         </div>
-        <div id="loopTrackerText" style="font-size:12px; color:var(--text-muted);">Iteration 1 of loop</div>
-      </div>
 
-      <!-- 3. Variables & Scope Table -->
-      <div class="param-group" style="flex:1;">
-        <div class="param-header" style="margin-bottom:6px;">
-          <span class="param-title">variables <span class="param-type">table</span></span>
-          <span style="font-size:10.5px; color:var(--text-muted);">changes flash green</span>
+        <!-- Variables Table -->
+        <div class="param-group" style="flex:1;">
+          <div class="param-header" style="margin-bottom:6px;">
+            <span class="param-title">variables <span class="param-type">table</span></span>
+            <span style="font-size:10.5px; color:var(--text-muted);">changes flash green</span>
+          </div>
+          <div style="overflow-x:auto;">
+            <table class="vars-table" id="varsTable">
+              <thead>
+                <tr>
+                  <th>Name</th>
+                  <th>Scope</th>
+                  <th>Type</th>
+                  <th>Value</th>
+                </tr>
+              </thead>
+              <tbody id="varsTableBody">
+                <tr>
+                  <td colspan="4" style="color:var(--text-muted); text-align:center; padding:16px;">No active variables. Click RUN to trace.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
         </div>
-        <div style="overflow-x:auto;">
-          <table class="vars-table" id="varsTable">
+
+        <!-- Call Stack -->
+        <div class="param-group">
+          <div class="param-header" style="margin-bottom:6px;">
+            <span class="param-title">call_stack <span class="param-type">array</span></span>
+            <span style="font-size:10.5px; color:var(--text-muted);">active frame on top</span>
+          </div>
+          <div id="stackContainer" style="display:flex; flex-direction:column; gap:6px;">
+            <span style="color:var(--text-muted); font-size:11.5px;">No active frames.</span>
+          </div>
+        </div>
+
+        <!-- Heap Memory Objects -->
+        <div class="param-group">
+          <div class="param-header" style="margin-bottom:6px;">
+            <span class="param-title">heap_objects <span class="param-type">memory</span></span>
+            <span style="font-size:10.5px; color:var(--text-muted);">tracks pointers & aliasing</span>
+          </div>
+          <div id="objectsContainer" style="display:flex; flex-direction:column; gap:8px;">
+            <span style="color:var(--text-muted); font-size:11.5px;">No composite objects in heap.</span>
+          </div>
+        </div>
+
+        <!-- Limits Configuration -->
+        <div class="param-group">
+          <div class="param-header">
+            <span class="param-title">max_steps <span class="param-type">int</span></span>
+            <select id="maxStepsSelect" style="padding:2px 8px; font-size:11.5px;">
+              <option value="1000">1,000 steps</option>
+              <option value="5000">5,000 steps</option>
+              <option value="10000" selected>10,000 steps (default)</option>
+              <option value="25000">25,000 steps</option>
+              <option value="50000">50,000 steps</option>
+            </select>
+          </div>
+          <span style="font-size:11px; color:var(--text-muted);">Watchdog timeout: 30s. Accommodates 999+ iterations comfortably.</span>
+        </div>
+
+        <!-- Input Drawer -->
+        <div class="param-group" id="inputDrawer" style="display:none;">
+          <div class="param-header">
+            <span class="param-title">stdin_inputs <span class="param-type">list</span></span>
+            <span style="font-size:10.5px; color:var(--accent-coral);">input() detected</span>
+          </div>
+          <textarea id="prefillInputText" rows="2" placeholder="Pre-fill input values (one per line)"></textarea>
+        </div>
+      </section>
+
+      <!-- Right Code & Output Panel -->
+      <section class="panel-right">
+        <div class="editor-tab-strip">
+          <div class="editor-tabs">
+            <div class="editor-tab active" data-pane="python">PYTHON</div>
+            <div class="editor-tab" data-pane="stdout">STDOUT</div>
+          </div>
+          <div class="pane-header-actions">
+            <span style="font-size:11px; font-family:monospace; color:var(--text-light-muted);" id="lineCountLabel">0 lines</span>
+            <span class="pane-action-link" id="btnCopyCode">Copy 📋</span>
+            <span class="pane-action-link" id="btnFormatCode">Format ⚡</span>
+            <span class="pane-action-link" id="btnClearBreakpoints">Clear BP ✕</span>
+          </div>
+        </div>
+
+        <div class="editor-split-container">
+          <div class="codemirror-wrapper">
+            <textarea id="codeTextarea"></textarea>
+          </div>
+          <div class="response-pane">
+            <div class="response-header">
+              <span id="responseStatusLabel">RESPONSE • 200 (READY)</span>
+              <div style="display:flex; gap:12px;">
+                <span class="pane-action-link" id="btnClearStdout">Clear</span>
+                <span class="pane-action-link" id="btnCopyStdout">Copy</span>
+              </div>
+            </div>
+            <div class="terminal-output" id="stdoutConsole">No output produced yet. Click RUN to execute.</div>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <!-- VIEW 2: DRY-RUN MATRIX & QUIZ -->
+    <div id="viewTable" class="tab-view full-tab-container">
+      <div class="tab-card">
+        <div class="tab-card-header">
+          <div class="tab-card-title">
+            <span>📋 Exam-Style Dry-Run Matrix</span>
+            <span class="badge badge-coral" id="tableStepCountBadge">0 Steps</span>
+          </div>
+          <div style="display:flex; align-items:center; gap:8px;">
+            <select id="tableFilterSelect" style="padding:4px 8px; font-size:12px;">
+              <option value="all">All Execution Steps</option>
+              <option value="changes">Only Variable Changes</option>
+              <option value="loops">Only Loop Iterations</option>
+            </select>
+            <button id="btnQuizMode" class="btn btn-sm">🎯 Test Yourself Mode</button>
+            <button id="btnExportCsv" class="btn btn-sm">Export CSV</button>
+            <button id="btnExportMd" class="btn btn-sm">Export Markdown</button>
+          </div>
+        </div>
+
+        <div id="quizScoreBanner" style="display:none; padding:8px 12px; background:var(--accent-coral-bg); border-radius:6px; font-size:12px; justify-content:space-between; align-items:center;">
+          <span><strong>Quiz Mode Active:</strong> Click blurred cells to predict upcoming variable values!</span>
+          <span id="quizScoreText" class="badge badge-coral">Score: 0 / 0</span>
+        </div>
+
+        <div style="max-height: calc(100vh - 250px); overflow: auto; border: 1px solid var(--border-main); border-radius: 6px;">
+          <table class="dry-run-table" id="dryRunTable">
             <thead>
-              <tr>
-                <th>Name</th>
-                <th>Scope</th>
-                <th>Type</th>
-                <th>Value</th>
+              <tr id="dryRunTableHeaders">
+                <th>Step</th>
+                <th>Line</th>
+                <th>Code</th>
+                <th>Output</th>
               </tr>
             </thead>
-            <tbody id="varsTableBody">
+            <tbody id="dryRunTableBody">
               <tr>
-                <td colspan="4" style="color:var(--text-muted); text-align:center; padding:16px;">No active variables yet. Click Run to trace.</td>
+                <td colspan="4" style="text-align:center; padding:30px; color:var(--text-muted);">
+                  Click "⚡ RUN" in the bottom action bar to record the trace matrix.
+                </td>
               </tr>
             </tbody>
           </table>
         </div>
       </div>
+    </div>
 
-      <!-- 4. Call Stack Frames -->
-      <div class="param-group">
-        <div class="param-header" style="margin-bottom:6px;">
-          <span class="param-title">call_stack <span class="param-type">array</span></span>
-          <span style="font-size:10.5px; color:var(--text-muted);">active frame on top</span>
-        </div>
-        <div id="stackContainer" style="display:flex; flex-direction:column; gap:6px;">
-          <span style="color:var(--text-muted); font-size:11.5px;">No active frames.</span>
-        </div>
-      </div>
-
-      <!-- 5. Heap Memory & Object Aliasing -->
-      <div class="param-group">
-        <div class="param-header" style="margin-bottom:6px;">
-          <span class="param-title">heap_objects <span class="param-type">memory</span></span>
-          <span style="font-size:10.5px; color:var(--text-muted);">tracks pointers & aliasing</span>
-        </div>
-        <div id="objectsContainer" style="display:flex; flex-direction:column; gap:8px;">
-          <span style="color:var(--text-muted); font-size:11.5px;">No composite objects in heap.</span>
-        </div>
-      </div>
-
-      <!-- 6. Execution Limit Configuration -->
-      <div class="param-group">
-        <div class="param-header">
-          <span class="param-title">max_steps <span class="param-type">int</span></span>
-          <select id="maxStepsSelect" style="padding:2px 8px; font-size:11.5px;">
-            <option value="1000">1,000 steps</option>
-            <option value="5000">5,000 steps</option>
-            <option value="10000" selected>10,000 steps (default)</option>
-            <option value="25000">25,000 steps</option>
-            <option value="50000">50,000 steps</option>
-          </select>
-        </div>
-        <span style="font-size:11px; color:var(--text-muted);">Watchdog timeout: 30 seconds. Accommodates 999+ iterations comfortably.</span>
-      </div>
-
-      <!-- 7. input() Simulation Drawer -->
-      <div class="param-group" id="inputDrawer" style="display:none;">
-        <div class="param-header">
-          <span class="param-title">stdin_inputs <span class="param-type">list</span></span>
-          <span style="font-size:10.5px; color:var(--accent-coral);">input() detected</span>
-        </div>
-        <textarea id="prefillInputText" rows="2" placeholder="Pre-fill input values (one per line)"></textarea>
-      </div>
-
-    </section>
-
-    <!-- RIGHT PANEL: DARK CODE & CONSOLE SPLIT -->
-    <section class="panel-right" id="panelRight">
-      
-      <!-- Strip with Tab & Action Links -->
-      <div class="editor-tab-strip">
-        <div class="editor-tabs">
-          <div class="editor-tab active" id="tabPython">PYTHON</div>
-          <div class="editor-tab" id="tabStdout">STDOUT</div>
-          <div class="editor-tab" id="tabMetrics">METRICS</div>
+    <!-- VIEW 3: AI TUTOR (GROQ INTEGRATION) -->
+    <div id="viewExplain" class="tab-view full-tab-container">
+      <div class="tab-card">
+        <div class="tab-card-header">
+          <div class="tab-card-title">
+            <span>💬 AI Python Tutor (Powered by Groq)</span>
+            <span class="badge badge-coral">Llama-3.3-70b</span>
+          </div>
+          <div style="display:flex; align-items:center; gap:10px;">
+            <select id="aiLevelSelect" style="padding:3px 8px; font-size:12px;">
+              <option value="beginner" selected>Level: Beginner</option>
+              <option value="intermediate">Level: Intermediate</option>
+            </select>
+            <label style="display:flex; align-items:center; gap:6px; font-size:12px; cursor:pointer;">
+              <input type="checkbox" id="chkEli12">
+              <span>Explain like I'm 12</span>
+            </label>
+          </div>
         </div>
 
-        <div class="pane-header-actions">
-          <span style="font-size:11px; font-family:monospace; color:var(--text-light-muted);" id="lineCountLabel">0 lines</span>
-          <span class="pane-action-link" id="btnCopyCode">Copy 📋</span>
-          <span class="pane-action-link" id="btnFormatCode">Format ⚡</span>
-          <span class="pane-action-link" id="btnClearBreakpoints">Clear BP ✕</span>
+        <!-- AI Actions Grid -->
+        <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap:8px;">
+          <button id="btnAiExplainCode" class="btn btn-sm">📖 Explain this code</button>
+          <button id="btnAiExplainStep" class="btn btn-sm">🎯 Explain current step</button>
+          <button id="btnAiWhyError" class="btn btn-sm">❓ Why this error?</button>
+          <button id="btnAiFindBug" class="btn btn-sm">🐞 Find bug (hint)</button>
+          <button id="btnAiImprovements" class="btn btn-sm">✨ Suggest improvements</button>
+        </div>
+
+        <div style="display:flex; justify-content:space-between; font-size:11px; color:var(--text-muted);">
+          <span id="aiTokenEst">Estimated tokens: ~0</span>
+          <span id="aiTokenActual"></span>
+        </div>
+
+        <div id="aiChatWindow" class="ai-chat-box">
+          <span style="color:var(--text-muted);">
+            Click any AI action above or type a question below. If you haven't set your Groq API key yet, click the <strong>🔑 Groq API Key</strong> button in the top header.
+          </span>
+        </div>
+
+        <div style="display:flex; gap:8px;">
+          <input type="text" id="aiCustomPrompt" placeholder="Ask a question about this code or current memory state..." style="flex:1;">
+          <button id="btnAiSendChat" class="btn btn-run btn-sm">Ask AI</button>
         </div>
       </div>
+    </div>
 
-      <div class="editor-split-container">
-        <!-- Top Code Area -->
-        <div class="codemirror-wrapper">
-          <textarea id="codeTextarea"></textarea>
+    <!-- VIEW 4: AST & FLOWCHART DIAGRAM -->
+    <div id="viewDiagram" class="tab-view full-tab-container">
+      <div style="display:grid; grid-template-columns: 1fr 340px; gap:16px; height:100%;">
+        <div class="tab-card" style="height:100%;">
+          <div class="tab-card-header">
+            <div class="tab-card-title">
+              <span>📊 Control-Flow Diagram (Inline SVG)</span>
+            </div>
+            <span style="font-size:11px; color:var(--text-muted);">Active execution node illuminates on step</span>
+          </div>
+          <div class="flowchart-wrapper" id="flowchartWrapper" style="flex:1;">
+            <span style="color:var(--text-muted);">Click "⚡ RUN" to generate control flow diagram.</span>
+          </div>
         </div>
 
-        <!-- Bottom Response / Console Area -->
-        <div class="response-pane">
-          <div class="response-header">
-            <span id="responseStatusLabel">RESPONSE • 200 (READY)</span>
-            <div style="display:flex; gap:12px;">
-              <span class="pane-action-link" id="btnClearStdout">Clear</span>
-              <span class="pane-action-link" id="btnCopyStdout">Copy</span>
+        <div style="display:flex; flex-direction:column; gap:16px;">
+          <div class="tab-card">
+            <div class="tab-card-header">
+              <span class="tab-card-title">🧠 Complexity Estimate</span>
+            </div>
+            <div id="complexityBox" style="font-size:12.5px; font-weight:600; color:var(--accent-coral);">
+              O(1) - Constant (Run trace to evaluate)
             </div>
           </div>
-          <div class="terminal-output" id="stdoutConsole">No output produced yet. Click RUN to execute.</div>
+
+          <div class="tab-card">
+            <div class="tab-card-header">
+              <span class="tab-card-title">⚠️ Beginner Warnings</span>
+            </div>
+            <div id="warningsList" style="display:flex; flex-direction:column; gap:6px; font-size:12px;">
+              <span style="color:var(--accent-green);">✅ No syntax or beginner pitfalls detected.</span>
+            </div>
+          </div>
+
+          <div class="tab-card" style="flex:1;">
+            <div class="tab-card-header">
+              <span class="tab-card-title">📑 Program Outline</span>
+            </div>
+            <div id="astOutline" style="font-size:12px; color:var(--text-muted); line-height:1.6;">
+              Run trace to extract functions, classes, and loops.
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- VIEW 5: METRICS & HOTSPOTS -->
+    <div id="viewMetrics" class="tab-view full-tab-container">
+      <div style="display:grid; grid-template-columns: repeat(4, 1fr); gap:12px;">
+        <div class="tab-card">
+          <span style="font-size:11px; color:var(--text-muted);">Total Recorded Steps</span>
+          <strong id="metricTotalSteps" style="font-size:22px; color:var(--accent-coral);">0</strong>
+        </div>
+        <div class="tab-card">
+          <span style="font-size:11px; color:var(--text-muted);">Execution Time</span>
+          <strong id="metricTime" style="font-size:22px; color:var(--accent-green);">0 ms</strong>
+        </div>
+        <div class="tab-card">
+          <span style="font-size:11px; color:var(--text-muted);">Max Call-Stack Depth</span>
+          <strong id="metricMaxDepth" style="font-size:22px; color:var(--accent-blue);">0</strong>
+        </div>
+        <div class="tab-card">
+          <span style="font-size:11px; color:var(--text-muted);">Line Coverage</span>
+          <strong id="metricCoverage" style="font-size:22px; color:var(--accent-yellow);">0%</strong>
         </div>
       </div>
 
-    </section>
+      <div class="tab-card" id="recursionWarningBox" style="display:none; background:var(--accent-yellow-bg); border-color:var(--accent-yellow);">
+        <strong style="color:var(--accent-yellow);">⚠️ Deep Recursion Detected:</strong>
+        <span style="font-size:12px;">Call stack reached depth <span id="recDepthSpan">0</span>. Be mindful of Python recursion limits (1,000).</span>
+      </div>
+
+      <div class="tab-card">
+        <div class="tab-card-header">
+          <span class="tab-card-title">🔥 Hotspots: Line Execution Frequency</span>
+          <span style="font-size:11px; color:var(--text-muted);">Identifies bottleneck lines inside nested loops</span>
+        </div>
+        <div id="hotspotChartContainer" style="padding:10px; min-height:160px;">
+          <span style="color:var(--text-muted); font-size:12px;">Click "⚡ RUN" to view execution frequency chart.</span>
+        </div>
+      </div>
+
+      <div class="tab-card" style="font-size:12.5px; color:var(--text-muted);">
+        💡 <em>"Steps are a rough stand-in for work done. It's how you feel the difference between O(n) and O(n²)."</em>
+      </div>
+    </div>
+
+    <!-- VIEW 6: COMPARE MODE -->
+    <div id="viewCompare" class="tab-view full-tab-container">
+      <div class="tab-card">
+        <div class="tab-card-header">
+          <div class="tab-card-title">
+            <span>⚖️ Algorithmic Compare Mode: Head-to-Head</span>
+            <span class="badge badge-coral">Benchmark</span>
+          </div>
+          <button id="btnRunCompare" class="btn btn-run btn-sm">▶ Benchmark Both</button>
+        </div>
+
+        <div style="display:grid; grid-template-columns: 1fr 1fr; gap:16px; min-height:280px;">
+          <div style="display:flex; flex-direction:column; gap:6px;">
+            <strong style="font-size:12px;">Implementation A (e.g. Iterative Factorial)</strong>
+            <textarea id="compareCodeA" style="flex:1; font-family:'JetBrains Mono',monospace; font-size:12px; padding:10px; resize:none;"></textarea>
+          </div>
+          <div style="display:flex; flex-direction:column; gap:6px;">
+            <strong style="font-size:12px;">Implementation B (e.g. Recursive Factorial)</strong>
+            <textarea id="compareCodeB" style="flex:1; font-family:'JetBrains Mono',monospace; font-size:12px; padding:10px; resize:none;"></textarea>
+          </div>
+        </div>
+
+        <div id="compareResultsCard" style="padding:14px; background:var(--bg-card-elevated); border:1px solid var(--border-main); border-radius:6px; font-size:12.5px;">
+          <span style="color:var(--text-muted);">Click "Benchmark Both" to compare execution steps, time, and stack depth side-by-side.</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- VIEW 7: SHARE & HISTORY -->
+    <div id="viewHistory" class="tab-view full-tab-container">
+      <div class="tab-card">
+        <div class="tab-card-header">
+          <span class="tab-card-title">🔗 Shareable Session Link</span>
+        </div>
+        <div style="display:flex; gap:8px;">
+          <input type="text" id="shareUrlInput" readonly placeholder="Click Copy to create a shareable URL hash" style="flex:1;">
+          <button id="btnGenerateShare" class="btn btn-sm">Copy Link</button>
+        </div>
+        <span style="font-size:11px; color:var(--text-muted);">Encodes the script and inputs into the URL hash. No server storage needed.</span>
+      </div>
+
+      <div class="tab-card">
+        <div class="tab-card-header">
+          <span class="tab-card-title">📦 Trace & Report Export</span>
+        </div>
+        <div style="display:flex; gap:8px;">
+          <button id="btnExportJsonTrace" class="btn btn-sm">Download Trace (JSON)</button>
+          <button id="btnExportSessionMd" class="btn btn-sm">Download Report (Markdown)</button>
+        </div>
+      </div>
+
+      <div class="tab-card">
+        <div class="tab-card-header">
+          <span class="tab-card-title">📜 Session History</span>
+          <button id="btnClearHistory" class="btn btn-sm">Clear History</button>
+        </div>
+        <div id="historyListContainer" style="display:flex; flex-direction:column; gap:6px; max-height:220px; overflow-y:auto;">
+          <span style="color:var(--text-muted); font-size:12px;">No runs recorded yet.</span>
+        </div>
+      </div>
+    </div>
 
   </main>
 
-  <!-- ==========================================================================
-       BOTTOM ACTION BAR (COHERE RUN / RESET STYLE)
-       ========================================================================== -->
+  <!-- BOTTOM ACTION BAR -->
   <footer class="bottom-bar">
     <div class="stepper-cluster">
       <div style="display:flex; gap:4px;">
@@ -1023,9 +1362,7 @@
     </div>
   </footer>
 
-  <!-- ==========================================================================
-       MODAL 1: GROQ API KEY CONFIGURATION (PROMINENT & SECURE)
-       ========================================================================== -->
+  <!-- MODALS -->
   <div id="groqModal" class="modal-backdrop">
     <div class="modal-card">
       <div class="modal-header">
@@ -1036,15 +1373,13 @@
         <p style="margin-bottom:12px; color:var(--text-muted);">
           To enable live AI streaming explanations, "Explain like I'm 12" beginner analogies, and interactive bug hunting, please provide your <strong>Groq API key</strong>.
         </p>
-
         <div style="display:flex; flex-direction:column; gap:6px; margin-bottom:14px;">
           <label style="font-size:12px; font-weight:600;">Groq API Key (gsk_...):</label>
           <input type="password" id="modalGroqInput" placeholder="gsk_xxxxxxxxxxxxxxxxxxxxxx" style="width:100%;">
           <span style="font-size:11px; color:var(--text-muted);">
-            🔒 Stored <strong>only in this browser's sessionStorage</strong>. It is sent nowhere except Groq's official API. The execution engine works 100% locally without any key!
+            🔒 Stored <strong>only in this browser's sessionStorage</strong>. It is sent nowhere except Groq's official API.
           </span>
         </div>
-
         <div style="display:flex; align-items:center; justify-content:space-between;">
           <a href="https://console.groq.com/keys" target="_blank" style="color:var(--accent-coral); font-size:12px; text-decoration:none;">
             Get a free key from console.groq.com ↗
@@ -1059,6 +1394,32 @@
     </div>
   </div>
 
+  <div id="docsModal" class="modal-backdrop">
+    <div class="modal-card">
+      <div class="modal-header">
+        <span>📖 Python Dry-Run Lab — Guide & Shortcuts</span>
+        <button class="btn btn-sm close-modal-btn">✕</button>
+      </div>
+      <div class="modal-body">
+        <h4>🎮 Keyboard Shortcuts</h4>
+        <ul style="margin-left:20px; margin-bottom:14px; font-size:12.5px;">
+          <li><kbd>→</kbd> : Step Forward (Next line)</li>
+          <li><kbd>←</kbd> : Step Backward (Replay previous line)</li>
+          <li><kbd>Space</kbd> : Toggle Auto-Play / Pause</li>
+          <li><kbd>B</kbd> : Toggle Breakpoint on current line</li>
+          <li><kbd>Esc</kbd> : Stop execution</li>
+        </ul>
+        <h4>⚡ 999+ Iteration Support</h4>
+        <p style="margin-bottom:10px;">
+          Execution limit supports up to 50,000 steps with a 30-second watchdog. High-iteration loops like <code>for i in range(1, 1000):</code> run smoothly in Pyodide WebAssembly.
+        </p>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-run btn-sm close-modal-btn">Got it</button>
+      </div>
+    </div>
+  </div>
+
   <!-- Loading Status Toast -->
   <div id="loadingStatusToast" class="loading-toast">
     <div class="spinner"></div>
@@ -1068,13 +1429,9 @@
     </div>
   </div>
 
-  <!-- ==========================================================================
-       VANILLA JS LOGIC WITH 999+ ITERATION FIX
-       ========================================================================== -->
+  <!-- SCRIPT -->
   <script>
-    /* ==========================================================================
-       1. EXAMPLES (INCLUDING 999 BENCHMARK)
-       ========================================================================== */
+    /* 1. CODE EXAMPLES */
     const CODE_EXAMPLES = {
       bubble_sort: `def bubble_sort(arr):
     n = len(arr)
@@ -1157,7 +1514,7 @@ print("Frequencies:", frequency)`,
 acc = BankAccount("Alice", 100)
 acc.deposit(50)
 acc.withdraw(70)
-print(f"Final balance for {acc.owner}: \${acc.balance}")`,
+print(f"Final balance for {acc.owner}: USD " + str(acc.balance))`,
 
       string_reversal: `def reverse_string(text):
     reversed_chars = []
@@ -1179,9 +1536,7 @@ v1 = safe_divide(10, 2)
 v2 = safe_divide(5, 0)`
     };
 
-    /* ==========================================================================
-       2. PYTHON TRACER ENGINE (ROBUST SYS.SETTRACE)
-       ========================================================================== */
+    /* 2. PYTHON TRACER ENGINE */
     const PY_TRACER_SOURCE = `
 import sys
 import io
@@ -1246,20 +1601,83 @@ class Tracer:
 
         loop_lines = set()
         loops = []
+        functions = []
+        classes = []
+        cfg_nodes = []
+        node_id = 1
+
         class Analyzer(ast.NodeVisitor):
+            def __init__(self):
+                self.max_depth = 0
+                self.curr_depth = 0
+
+            def visit_FunctionDef(self, node):
+                functions.append({"name": node.name, "line": node.lineno, "args": [a.arg for a in node.args.args]})
+                self.generic_visit(node)
+
+            def visit_ClassDef(self, node):
+                methods = [n.name for n in node.body if isinstance(n, ast.FunctionDef)]
+                classes.append({"name": node.name, "line": node.lineno, "methods": methods})
+                self.generic_visit(node)
+
             def visit_For(self, node):
                 loop_lines.add(node.lineno)
+                self.curr_depth += 1
+                if self.curr_depth > self.max_depth: self.max_depth = self.curr_depth
                 t = node.target.id if isinstance(node.target, ast.Name) else "item"
                 loops.append({"line": node.lineno, "target": t})
                 self.generic_visit(node)
+                self.curr_depth -= 1
+
             def visit_While(self, node):
                 loop_lines.add(node.lineno)
+                self.curr_depth += 1
+                if self.curr_depth > self.max_depth: self.max_depth = self.curr_depth
                 loops.append({"line": node.lineno, "target": None})
                 self.generic_visit(node)
-        
+                self.curr_depth -= 1
+
         analyzer = Analyzer()
         analyzer.visit(tree)
-        return {"loop_lines": list(loop_lines), "loops": loops}
+
+        for stmt in tree.body:
+            stype = type(stmt).__name__
+            lbl = f"L{stmt.lineno}: {stype}"
+            if isinstance(stmt, ast.Assign):
+                targets = [t.id for t in stmt.targets if isinstance(t, ast.Name)]
+                lbl = f"Assign: {', '.join(targets)}"
+            elif isinstance(stmt, (ast.For, ast.While)):
+                lbl = f"Loop (Line {stmt.lineno})"
+            elif isinstance(stmt, ast.FunctionDef):
+                lbl = f"Def {stmt.name}()"
+            cfg_nodes.append({"id": node_id, "line": stmt.lineno, "type": stype, "label": lbl})
+            node_id += 1
+
+        warnings = []
+        for node in ast.walk(tree):
+            if isinstance(node, ast.FunctionDef):
+                for default in node.args.defaults:
+                    if isinstance(default, (ast.List, ast.Dict, ast.Set)):
+                        warnings.append({"line": node.lineno, "msg": f"Function '{node.name}' has mutable default argument."})
+            if isinstance(node, ast.Compare):
+                for op, comp in zip(node.ops, node.comparators):
+                    if isinstance(op, (ast.Is, ast.IsNot)) and isinstance(comp, (ast.Constant, getattr(ast, 'Num', type(None)), getattr(ast, 'Str', type(None)))):
+                        warnings.append({"line": node.lineno, "msg": f"Used 'is' comparison with literal on line {node.lineno}. Use '=='."})
+
+        complexity = "O(1) - Constant"
+        if analyzer.max_depth == 1: complexity = "O(n) - Linear"
+        elif analyzer.max_depth == 2: complexity = "O(n²) - Quadratic"
+        elif analyzer.max_depth >= 3: complexity = f"O(n^{analyzer.max_depth}) - Polynomial"
+
+        return {
+            "loop_lines": list(loop_lines),
+            "loops": loops,
+            "functions": functions,
+            "classes": classes,
+            "warnings": warnings,
+            "complexity_estimate": complexity,
+            "cfg_nodes": cfg_nodes
+        }
 
     def capture_frame(self, frame, event, arg):
         if frame.f_code.co_filename != self.user_filename:
@@ -1271,7 +1689,6 @@ class Tracer:
 
         lineno = max(1, frame.f_lineno)
 
-        # Call Stack
         stack = []
         curr = frame
         while curr and curr.f_code.co_filename == self.user_filename:
@@ -1281,7 +1698,6 @@ class Tracer:
             stack.append({"func_name": fn_name, "lineno": max(1, curr.f_lineno), "args": frame_args})
             curr = curr.f_back
 
-        # Variables & Objects
         local_vars = {}
         objects_mem = {}
         for k, v in frame.f_locals.items():
@@ -1298,7 +1714,6 @@ class Tracer:
             if isinstance(v, (list, dict, set, tuple)) or hasattr(v, '__dict__'):
                 objects_mem[hex(id(v))] = get_object_info(v)
 
-        # Change detection
         changes = []
         for k, var in local_vars.items():
             if k not in self.prev_locals:
@@ -1306,7 +1721,6 @@ class Tracer:
             elif self.prev_locals[k]["repr"] != var["repr"]:
                 changes.append(f"'{k}' changed to {var['repr']}")
 
-        # Loop state
         loop_info = None
         if lineno in self.loop_lines:
             self.loop_counts[lineno] = self.loop_counts.get(lineno, 0) + 1
@@ -1360,12 +1774,12 @@ class Tracer:
 
     def run(self):
         if "syntax_error" in self.ast_info:
-            return {"success": False, "error_type": "SyntaxError", "syntax_error": self.ast_info["syntax_error"]}
+            return {"success": False, "error_type": "SyntaxError", "syntax_error": self.ast_info["syntax_error"], "ast": self.ast_info}
 
         try:
             compiled = compile(self.code_str, self.user_filename, "exec")
         except SyntaxError as e:
-            return {"success": False, "error_type": "SyntaxError", "syntax_error": {"line": e.lineno, "offset": e.offset, "msg": e.msg}}
+            return {"success": False, "error_type": "SyntaxError", "syntax_error": {"line": e.lineno, "offset": e.offset, "msg": e.msg}, "ast": self.ast_info}
 
         input_queue = list(self.inputs)
         def custom_input(prompt=""):
@@ -1397,13 +1811,12 @@ class Tracer:
             "runtime_error": runtime_error,
             "snapshots": self.snapshots,
             "total_steps": len(self.snapshots),
-            "final_stdout": self.stdout_buf.getvalue()
+            "final_stdout": self.stdout_buf.getvalue(),
+            "ast": self.ast_info
         }
 `;
 
-    /* ==========================================================================
-       3. WEB WORKER WITH CLEAN SYNTAX INITIALIZATION
-       ========================================================================== */
+    /* 3. WEB WORKER SETUP */
     const WORKER_SCRIPT_TEXT = `
 importScripts("https://cdn.jsdelivr.net/pyodide/v0.26.4/full/pyodide.js");
 
@@ -1418,7 +1831,6 @@ async function initPyodide() {
     });
     postMessage({ type: 'STATUS', text: 'Initializing tracer...' });
     
-    // Inject tracer code cleanly
     const tracerCode = ${JSON.stringify(PY_TRACER_SOURCE)};
     await pyodide.runPythonAsync(tracerCode);
     
@@ -1467,9 +1879,7 @@ initPyodide();
       if (pyWorker) pyWorker.terminate();
       pyWorker = new Worker(workerUrl);
       pyWorker.onmessage = handleWorkerMessage;
-      pyWorker.onerror = (err) => {
-        showStatusToast('Worker error: ' + err.message, true);
-      };
+      pyWorker.onerror = (err) => showStatusToast('Worker error: ' + err.message, true);
     }
 
     function handleWorkerMessage(e) {
@@ -1506,9 +1916,7 @@ initPyodide();
 
     createWorker();
 
-    /* ==========================================================================
-       4. STATE & CODEMIRROR SETUP
-       ========================================================================== */
+    /* 4. STATE & CODEMIRROR */
     const state = {
       breakpoints: new Set(),
       executedLines: new Set(),
@@ -1518,6 +1926,11 @@ initPyodide();
       isPlaying: false,
       playInterval: null,
       playSpeedMs: 300,
+      astData: null,
+      currentFilter: 'all',
+      quizMode: false,
+      quizScores: { correct: 0, total: 0 },
+      history: [],
       groqApiKey: sessionStorage.getItem('GROQ_API_KEY') || ''
     };
 
@@ -1533,9 +1946,7 @@ initPyodide();
       gutters: ['CodeMirror-linenumbers', 'breakpoint-gutter']
     });
 
-    codeEditor.on('gutterClick', (cm, line, gutter) => {
-      toggleBreakpoint(line + 1);
-    });
+    codeEditor.on('gutterClick', (cm, line) => toggleBreakpoint(line + 1));
 
     function toggleBreakpoint(lineNo) {
       const idx = lineNo - 1;
@@ -1566,9 +1977,81 @@ initPyodide();
       document.getElementById('inputDrawer').style.display = hasInput ? 'flex' : 'none';
     }
 
-    /* ==========================================================================
-       5. TRACE EXECUTION LOGIC (WITH 999 ITERATION HEADROOM & 30S WATCHDOG)
-       ========================================================================== */
+    /* 5. TAB SWITCHING (ALL TABS WORK!) */
+    const modePills = document.querySelectorAll('.mode-pill');
+    const tabViews = {
+      trace: document.getElementById('viewTrace'),
+      table: document.getElementById('viewTable'),
+      explain: document.getElementById('viewExplain'),
+      diagram: document.getElementById('viewDiagram'),
+      metrics: document.getElementById('viewMetrics'),
+      compare: document.getElementById('viewCompare'),
+      history: document.getElementById('viewHistory')
+    };
+
+    function switchTab(viewKey) {
+      modePills.forEach(p => {
+        if (p.getAttribute('data-view') === viewKey) p.classList.add('active');
+        else p.classList.remove('active');
+      });
+
+      Object.entries(tabViews).forEach(([k, viewEl]) => {
+        if (!viewEl) return;
+        if (k === viewKey) {
+          viewEl.classList.add('active');
+          if (k === 'trace') {
+            viewEl.style.display = 'grid';
+            setTimeout(() => codeEditor.refresh(), 50);
+          } else {
+            viewEl.style.display = 'flex';
+          }
+        } else {
+          viewEl.classList.remove('active');
+          viewEl.style.display = 'none';
+        }
+      });
+    }
+
+    modePills.forEach(pill => {
+      pill.addEventListener('click', () => {
+        const viewKey = pill.getAttribute('data-view');
+        switchTab(viewKey);
+      });
+    });
+
+    document.getElementById('navPlaygroundLink').addEventListener('click', (e) => {
+      e.preventDefault();
+      switchTab('trace');
+    });
+
+    document.getElementById('navCompareLink').addEventListener('click', (e) => {
+      e.preventDefault();
+      switchTab('compare');
+    });
+
+    document.getElementById('navDocsLink').addEventListener('click', (e) => {
+      e.preventDefault();
+      document.getElementById('docsModal').classList.add('active');
+    });
+
+    document.querySelectorAll('.editor-tab').forEach(tab => {
+      tab.addEventListener('click', () => {
+        document.querySelectorAll('.editor-tab').forEach(t => t.classList.remove('active'));
+        tab.classList.add('active');
+        const pane = tab.getAttribute('data-pane');
+        const splitContainer = document.querySelector('.editor-split-container');
+        if (pane === 'python') {
+          splitContainer.style.gridTemplateRows = '1fr 200px';
+          document.querySelector('.codemirror-wrapper').style.display = 'block';
+          codeEditor.refresh();
+        } else if (pane === 'stdout') {
+          splitContainer.style.gridTemplateRows = '0px 1fr';
+          document.querySelector('.codemirror-wrapper').style.display = 'none';
+        }
+      });
+    });
+
+    /* 6. TRACE EXECUTION (999+ ITERATION HEADROOM & 30S WATCHDOG) */
     function runTrace() {
       const code = codeEditor.getValue().trim();
       if (!code) {
@@ -1588,7 +2071,6 @@ initPyodide();
       const inputs = prefillRaw ? prefillRaw.split('\n').map(s => s.trim()).filter(s => s.length > 0) : [];
       const maxSteps = parseInt(document.getElementById('maxStepsSelect').value, 10) || 10000;
 
-      // 30-second watchdog timer (handles 999 to 10,000+ iterations with real trace snapshots)
       clearTimeout(workerTimeoutTimer);
       workerTimeoutTimer = setTimeout(() => {
         pyWorker.terminate();
@@ -1596,7 +2078,7 @@ initPyodide();
         setRunningState(false);
         showRuntimeError({
           type: 'TimeoutError',
-          msg: 'Execution exceeded 30 seconds limit. If your code runs 1,000+ iterations, you can adjust step limits or check loop bounds.',
+          msg: 'Execution exceeded 30 seconds limit. If running large loops (1,000+ iterations), you can adjust step limits.',
           line: 1
         });
       }, 30000);
@@ -1631,16 +2113,14 @@ initPyodide();
 
     function handleTraceResult(result) {
       if (!result.success) {
-        if (result.syntax_error) {
-          showSyntaxError(result.syntax_error);
-        } else if (result.runtime_error) {
-          showRuntimeError(result.runtime_error);
-        }
+        if (result.syntax_error) showSyntaxError(result.syntax_error);
+        else if (result.runtime_error) showRuntimeError(result.runtime_error);
         return;
       }
 
       state.snapshots = result.snapshots || [];
       state.totalSteps = state.snapshots.length;
+      state.astData = result.ast;
       state.currentStep = 0;
       state.executedLines.clear();
 
@@ -1650,13 +2130,14 @@ initPyodide();
       scrubber.value = 1;
 
       document.getElementById('responseStatusLabel').textContent = `RESPONSE • 200 (${state.totalSteps} STEPS RECORDED)`;
+      document.getElementById('tableStepCountBadge').textContent = `${state.totalSteps} Steps`;
 
-      if (state.totalSteps > 0) {
-        goToStep(1);
-      } else {
-        document.getElementById('stepCounterBadge').textContent = 'Step 0 of 0';
-        document.getElementById('whatHappenedText').textContent = 'Code executed with 0 steps.';
-      }
+      renderDryRunTable();
+      renderAstAnalysis();
+      renderMetrics(result);
+      saveRunToHistory(result);
+
+      if (state.totalSteps > 0) goToStep(1);
     }
 
     function showSyntaxError(err) {
@@ -1685,9 +2166,7 @@ initPyodide();
       }
     }
 
-    /* ==========================================================================
-       6. STEP RENDERING & TIME TRAVEL
-       ========================================================================== */
+    /* 7. STEP RENDERING */
     function goToStep(stepNum) {
       if (state.totalSteps === 0) return;
       stepNum = Math.max(1, Math.min(stepNum, state.totalSteps));
@@ -1707,11 +2186,9 @@ initPyodide();
       state.executedLines.add(snap.line);
       updateGutterMarkers();
 
-      // What Just Happened
       document.getElementById('whatHappenedLabel').textContent = `Line ${snap.line} — ${snap.event.toUpperCase()}`;
       document.getElementById('whatHappenedText').textContent = snap.explanation;
 
-      // Loop Tracker
       const loopRow = document.getElementById('loopTrackerRow');
       if (snap.loop_info) {
         loopRow.style.display = 'flex';
@@ -1721,17 +2198,13 @@ initPyodide();
         loopRow.style.display = 'none';
       }
 
-      // Render Variables
       renderVariables(snap);
-
-      // Render Call Stack
       renderCallStack(snap);
-
-      // Render Objects Memory
       renderObjectsMemory(snap);
-
-      // Console Output
       document.getElementById('stdoutConsole').textContent = snap.stdout || '(no output yet)';
+
+      highlightTableRow(stepNum);
+      highlightFlowchartNode(snap.line);
     }
 
     function updateGutterMarkers() {
@@ -1851,9 +2324,510 @@ initPyodide();
       }).join('');
     }
 
-    /* ==========================================================================
-       7. STEP NAVIGATION & PLAYBACK CONTROLS
-       ========================================================================== */
+    /* 8. DRY RUN MATRIX & QUIZ */
+    function renderDryRunTable() {
+      const tableHead = document.getElementById('dryRunTableHeaders');
+      const tableBody = document.getElementById('dryRunTableBody');
+      if (state.totalSteps === 0) return;
+
+      const varNamesSet = new Set();
+      state.snapshots.forEach(s => {
+        Object.keys(s.locals || {}).forEach(k => varNamesSet.add(k));
+        Object.keys(s.globals || {}).forEach(k => varNamesSet.add(k));
+      });
+      const varNames = Array.from(varNamesSet);
+
+      tableHead.innerHTML = `
+        <th>Step</th>
+        <th>Line</th>
+        <th>Code</th>
+        ${varNames.map(v => `<th>${escapeHtml(v)}</th>`).join('')}
+        <th>Output</th>
+      `;
+
+      const codeLines = codeEditor.getValue().split('\n');
+
+      tableBody.innerHTML = state.snapshots.map((snap, sIdx) => {
+        const stepNum = sIdx + 1;
+        const lineText = codeLines[snap.line - 1] || '';
+        const prev = sIdx > 0 ? state.snapshots[sIdx - 1] : null;
+
+        if (state.currentFilter === 'changes' && snap.changes.length === 0) return '';
+        if (state.currentFilter === 'loops' && !snap.loop_info) return '';
+
+        const varCells = varNames.map(v => {
+          const valObj = (snap.locals && snap.locals[v]) || (snap.globals && snap.globals[v]);
+          const valRepr = valObj ? valObj.repr : '-';
+          let changed = false;
+          if (prev && valObj) {
+            const prevVal = (prev.locals && prev.locals[v]) || (prev.globals && prev.globals[v]);
+            if (prevVal && prevVal.repr !== valRepr) changed = true;
+          }
+
+          if (state.quizMode && sIdx >= state.currentStep) {
+            return `<td class="cell-hidden-quiz" data-step="${stepNum}" data-var="${v}" data-val="${escapeHtml(valRepr)}" onclick="revealQuizCell(this)">???</td>`;
+          }
+          return `<td class="${changed ? 'cell-changed' : ''}">${escapeHtml(valRepr)}</td>`;
+        }).join('');
+
+        return `
+          <tr id="dryRow-${stepNum}" onclick="goToStep(${stepNum})" style="cursor:pointer;">
+            <td>${stepNum}</td>
+            <td><span class="badge badge-coral">L${snap.line}</span></td>
+            <td style="color:var(--text-muted); max-width:200px; overflow:hidden; text-overflow:ellipsis;">${escapeHtml(lineText.trim())}</td>
+            ${varCells}
+            <td>${escapeHtml(snap.stdout ? snap.stdout.slice(-30).replace(/\n/g, ' ↵ ') : '')}</td>
+          </tr>
+        `;
+      }).join('');
+    }
+
+    function highlightTableRow(stepNum) {
+      document.querySelectorAll('.dry-run-table tr').forEach(r => r.classList.remove('current-step-row'));
+      const row = document.getElementById(`dryRow-${stepNum}`);
+      if (row) {
+        row.classList.add('current-step-row');
+        row.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+      }
+    }
+
+    document.getElementById('tableFilterSelect').addEventListener('change', (e) => {
+      state.currentFilter = e.target.value;
+      renderDryRunTable();
+    });
+
+    document.getElementById('btnQuizMode').addEventListener('click', () => {
+      state.quizMode = !state.quizMode;
+      const banner = document.getElementById('quizScoreBanner');
+      const btn = document.getElementById('btnQuizMode');
+      if (state.quizMode) {
+        btn.classList.add('btn-run');
+        banner.style.display = 'flex';
+        state.quizScores = { correct: 0, total: 0 };
+        updateQuizScore();
+      } else {
+        btn.classList.remove('btn-run');
+        banner.style.display = 'none';
+      }
+      renderDryRunTable();
+    });
+
+    function revealQuizCell(cell) {
+      if (!cell.classList.contains('cell-hidden-quiz')) return;
+      const actualVal = cell.getAttribute('data-val');
+      const guess = prompt(`Predict value for ${cell.getAttribute('data-var')} at Step ${cell.getAttribute('data-step')}:`);
+      state.quizScores.total++;
+      if (guess && guess.trim() === actualVal.trim()) {
+        state.quizScores.correct++;
+        alert('🎉 Correct prediction!');
+      } else if (guess !== null) {
+        alert(`Actual value was: ${actualVal}`);
+      }
+      cell.classList.remove('cell-hidden-quiz');
+      cell.textContent = actualVal;
+      updateQuizScore();
+    }
+
+    function updateQuizScore() {
+      document.getElementById('quizScoreText').textContent = `Score: ${state.quizScores.correct} / ${state.quizScores.total}`;
+    }
+
+    document.getElementById('btnExportCsv').addEventListener('click', () => {
+      if (state.totalSteps === 0) return;
+      let csv = 'Step,Line,Event,Explanation\n';
+      state.snapshots.forEach(s => {
+        csv += `${s.step},${s.line},"${s.event}","${s.explanation.replace(/"/g, '""')}"\n`;
+      });
+      const blob = new Blob([csv], { type: 'text/csv' });
+      const a = document.createElement('a');
+      a.href = URL.createObjectURL(blob);
+      a.download = 'python_trace.csv';
+      a.click();
+    });
+
+    document.getElementById('btnExportMd').addEventListener('click', () => {
+      if (state.totalSteps === 0) return;
+      let md = '| Step | Line | Explanation | Stdout |\n|---|---|---|---|\n';
+      state.snapshots.forEach(s => {
+        md += `| ${s.step} | L${s.line} | ${s.explanation} | ${(s.stdout || '').replace(/\n/g, ' ')} |\n`;
+      });
+      navigator.clipboard.writeText(md).then(() => alert('Markdown trace copied!'));
+    });
+
+    /* 9. AST & SVG FLOWCHART */
+    function renderAstAnalysis() {
+      const ast = state.astData;
+      if (!ast) return;
+
+      document.getElementById('complexityBox').textContent = ast.complexity_estimate || 'O(1) - Constant';
+
+      const warningsDiv = document.getElementById('warningsList');
+      if (ast.warnings && ast.warnings.length > 0) {
+        warningsDiv.innerHTML = ast.warnings.map(w => `
+          <div style="padding:6px 10px; background:var(--accent-red-bg); border-left:3px solid var(--accent-red); border-radius:4px;">
+            <strong>L${w.line}:</strong> ${escapeHtml(w.msg)}
+          </div>
+        `).join('');
+      } else {
+        warningsDiv.innerHTML = '<span style="color:var(--accent-green);">✅ No anti-patterns detected!</span>';
+      }
+
+      const outline = document.getElementById('astOutline');
+      const fnList = (ast.functions || []).map(f => `def ${f.name}(${f.args.join(', ')}) (L${f.line})`);
+      const clsList = (ast.classes || []).map(c => `class ${c.name} (L${c.line})`);
+      outline.innerHTML = `
+        <div><strong>Functions:</strong> ${fnList.length ? fnList.join(', ') : 'None'}</div>
+        <div><strong>Classes:</strong> ${clsList.length ? clsList.join(', ') : 'None'}</div>
+        <div><strong>Loops:</strong> ${ast.loops ? ast.loops.length : 0} loop(s) detected</div>
+      `;
+
+      renderSvgFlowchart(ast.cfg_nodes || []);
+    }
+
+    function renderSvgFlowchart(nodes) {
+      const wrapper = document.getElementById('flowchartWrapper');
+      if (!nodes || nodes.length === 0) {
+        wrapper.innerHTML = '<span style="color:var(--text-muted);">No executable blocks found.</span>';
+        return;
+      }
+
+      const nodeWidth = 140;
+      const nodeHeight = 36;
+      const gapY = 24;
+      const startX = 20;
+      const startY = 20;
+      const totalHeight = startY + nodes.length * (nodeHeight + gapY) + 20;
+
+      let svg = `<svg width="180" height="${totalHeight}" xmlns="http://www.w3.org/2000/svg" style="font-family:sans-serif; font-size:11px;">`;
+      nodes.forEach((n, idx) => {
+        const y = startY + idx * (nodeHeight + gapY);
+        const isDecision = n.type === 'For' || n.type === 'While' || n.type === 'If';
+        const color = isDecision ? '#e06c53' : '#58a6ff';
+
+        svg += `
+          <g id="flowNode-${n.line}" style="cursor:pointer;" onclick="focusLine(${n.line})">
+            <rect x="${startX}" y="${y}" width="${nodeWidth}" height="${nodeHeight}" rx="6" 
+                  fill="#181b22" stroke="${color}" stroke-width="1.5" />
+            <text x="${startX + nodeWidth / 2}" y="${y + 22}" fill="#f0f3f6" text-anchor="middle" font-weight="500">
+              ${escapeHtml(n.label.slice(0, 18))}
+            </text>
+          </g>
+        `;
+        if (idx < nodes.length - 1) {
+          const arrowStartY = y + nodeHeight;
+          const arrowEndY = arrowStartY + gapY;
+          const arrowX = startX + nodeWidth / 2;
+          svg += `
+            <line x1="${arrowX}" y1="${arrowStartY}" x2="${arrowX}" y2="${arrowEndY}" stroke="#30363d" stroke-width="2" />
+            <polygon points="${arrowX - 4},${arrowEndY - 4} ${arrowX + 4},${arrowEndY - 4} ${arrowX},${arrowEndY}" fill="#30363d" />
+          `;
+        }
+      });
+      svg += '</svg>';
+      wrapper.innerHTML = svg;
+    }
+
+    function highlightFlowchartNode(lineNo) {
+      document.querySelectorAll('#flowchartWrapper g rect').forEach(r => r.classList.remove('flowchart-node-active'));
+      const g = document.getElementById(`flowNode-${lineNo}`);
+      if (g) {
+        const rect = g.querySelector('rect');
+        if (rect) rect.classList.add('flowchart-node-active');
+      }
+    }
+
+    function focusLine(lineNo) {
+      codeEditor.setCursor(lineNo - 1, 0);
+      codeEditor.focus();
+    }
+
+    /* 10. AI TUTOR (GROQ INTEGRATION) */
+    async function callGroqAI(userPrompt, actionType) {
+      const apiKey = state.groqApiKey || sessionStorage.getItem('GROQ_API_KEY');
+      if (!apiKey) {
+        document.getElementById('groqModal').classList.add('active');
+        return;
+      }
+
+      const code = codeEditor.getValue();
+      const currentSnap = state.snapshots[state.currentStep - 1] || {};
+      const eli12 = document.getElementById('chkEli12').checked;
+      const level = document.getElementById('aiLevelSelect').value;
+
+      const traceSummary = {
+        total_steps: state.totalSteps,
+        current_step: state.currentStep,
+        current_line: currentSnap.line,
+        explanation: currentSnap.explanation,
+        active_locals: currentSnap.locals,
+        active_globals: currentSnap.globals,
+        stdout: currentSnap.stdout
+      };
+
+      const systemPrompt = `You are an AI Python Tutor inside Python Dry-Run Lab.
+Target Audience: ${eli12 ? "A 12-year-old learning Python for the first time. Use fun, clear analogies." : (level === 'beginner' ? "A beginner programmer." : "An intermediate student.")}
+MANDATORY RULES:
+1. Ground answers strictly in the trace context. Never invent unverified output.
+2. Teach conceptually, step-by-step. Keep answers crisp and helpful.`;
+
+      const promptPayload = "CODE:\n```python\n" + code + "\n```\n\nTRACE CONTEXT:\n" + JSON.stringify(traceSummary, null, 2) + "\n\nUSER REQUEST:\n" + userPrompt;
+
+      const estTokens = Math.round((systemPrompt.length + promptPayload.length) / 4);
+      document.getElementById('aiTokenEst').textContent = `Estimated tokens: ~${estTokens}`;
+
+      const chatWindow = document.getElementById('aiChatWindow');
+      chatWindow.innerHTML = '<em>Thinking and streaming response from Groq (Llama-3.3-70b)...</em>';
+
+      try {
+        const response = await fetch('https://api.groq.com/openai/v1/chat/completions', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${apiKey}`
+          },
+          body: JSON.stringify({
+            model: 'llama-3.3-70b-versatile',
+            messages: [
+              { role: 'system', content: systemPrompt },
+              { role: 'user', content: promptPayload }
+            ],
+            stream: true,
+            temperature: 0.3
+          })
+        });
+
+        if (!response.ok) {
+          const errData = await response.json();
+          throw new Error(errData.error?.message || response.statusText);
+        }
+
+        chatWindow.innerHTML = '';
+        const reader = response.body.getReader();
+        const decoder = new TextDecoder();
+        let fullText = '';
+
+        while (true) {
+          const { done, value } = await reader.read();
+          if (done) break;
+          const chunk = decoder.decode(value);
+          const lines = chunk.split('\n').filter(l => l.trim().startsWith('data:'));
+          for (const line of lines) {
+            const raw = line.replace('data: ', '').trim();
+            if (raw === '[DONE]') break;
+            try {
+              const parsed = JSON.parse(raw);
+              const delta = parsed.choices[0]?.delta?.content || '';
+              fullText += delta;
+              chatWindow.innerHTML = escapeHtml(fullText).replace(/\n/g, '<br>');
+              chatWindow.scrollTop = chatWindow.scrollHeight;
+            } catch (err) {}
+          }
+        }
+        document.getElementById('aiTokenActual').textContent = 'Stream completed successfully.';
+      } catch (err) {
+        chatWindow.innerHTML = `<span style="color:var(--accent-red);">Error: ${escapeHtml(err.message)}</span>`;
+      }
+    }
+
+    document.getElementById('btnAiExplainCode').addEventListener('click', () => callGroqAI('Explain what this Python program is doing line by line.', 'code'));
+    document.getElementById('btnAiExplainStep').addEventListener('click', () => callGroqAI('Explain what just happened at this current step and how memory changed.', 'step'));
+    document.getElementById('btnAiWhyError').addEventListener('click', () => callGroqAI('Why did an error occur here, or what might go wrong?', 'error'));
+    document.getElementById('btnAiFindBug').addEventListener('click', () => callGroqAI('Are there any logical bugs? Give me a hint first before showing the fix.', 'bug'));
+    document.getElementById('btnAiImprovements').addEventListener('click', () => callGroqAI('Suggest 2-3 Pythonic improvements or clean code best practices.', 'improve'));
+    document.getElementById('btnAiSendChat').addEventListener('click', () => {
+      const q = document.getElementById('aiCustomPrompt').value.trim();
+      if (q) {
+        callGroqAI(q, 'chat');
+        document.getElementById('aiCustomPrompt').value = '';
+      }
+    });
+
+    /* 11. METRICS & HOTSPOTS */
+    function renderMetrics(result) {
+      document.getElementById('metricTotalSteps').textContent = result.total_steps || state.totalSteps;
+      const lastSnap = state.snapshots[state.snapshots.length - 1];
+      document.getElementById('metricTime').textContent = (lastSnap ? lastSnap.time_ms : 0) + ' ms';
+
+      let maxDepth = 0;
+      const lineCounts = {};
+      state.snapshots.forEach(s => {
+        const d = (s.stack || []).length;
+        if (d > maxDepth) maxDepth = d;
+        lineCounts[s.line] = (lineCounts[s.line] || 0) + 1;
+      });
+
+      document.getElementById('metricMaxDepth').textContent = maxDepth;
+      const totalCodeLines = codeEditor.lineCount();
+      const coveredLines = Object.keys(lineCounts).length;
+      document.getElementById('metricCoverage').textContent = Math.round((coveredLines / totalCodeLines) * 100) + '%';
+
+      const recBox = document.getElementById('recursionWarningBox');
+      if (maxDepth >= 25) {
+        recBox.style.display = 'block';
+        document.getElementById('recDepthSpan').textContent = maxDepth;
+      } else {
+        recBox.style.display = 'none';
+      }
+
+      renderHotspotChart(lineCounts);
+    }
+
+    function renderHotspotChart(lineCounts) {
+      const container = document.getElementById('hotspotChartContainer');
+      const lines = Object.keys(lineCounts).map(Number).sort((a, b) => a - b);
+      if (lines.length === 0) {
+        container.innerHTML = '<span style="color:var(--text-muted); font-size:12px;">No lines executed.</span>';
+        return;
+      }
+
+      const maxCount = Math.max(...Object.values(lineCounts));
+      const barHeight = 18;
+      const gap = 6;
+      const svgHeight = lines.length * (barHeight + gap) + 10;
+
+      let svg = `<svg width="100%" height="${svgHeight}" xmlns="http://www.w3.org/2000/svg" style="font-family:sans-serif; font-size:11px;">`;
+      lines.forEach((lineNo, idx) => {
+        const count = lineCounts[lineNo];
+        const widthPct = Math.max(5, (count / maxCount) * 75);
+        const y = idx * (barHeight + gap) + 5;
+        svg += `
+          <g>
+            <text x="5" y="${y + 13}" fill="var(--text-muted)">L${lineNo}</text>
+            <rect x="35" y="${y}" width="${widthPct}%" height="${barHeight}" rx="3" fill="var(--accent-coral)" />
+            <text x="calc(35% + ${widthPct}% + 6px)" y="${y + 13}" fill="var(--text-main)" font-size="10px">${count}x</text>
+          </g>
+        `;
+      });
+      svg += '</svg>';
+      container.innerHTML = svg;
+    }
+
+    /* 12. COMPARE MODE */
+    document.getElementById('compareCodeA').value = `def factorial_iterative(n):
+    res = 1
+    for i in range(1, n + 1):
+        res *= i
+    return res
+
+ans = factorial_iterative(5)`;
+
+    document.getElementById('compareCodeB').value = `def factorial_recursive(n):
+    if n <= 1:
+        return 1
+    return n * factorial_recursive(n - 1)
+
+ans = factorial_recursive(5)`;
+
+    document.getElementById('btnRunCompare').addEventListener('click', async () => {
+      const codeA = document.getElementById('compareCodeA').value;
+      const codeB = document.getElementById('compareCodeB').value;
+      const resultsDiv = document.getElementById('compareResultsCard');
+      resultsDiv.innerHTML = '<em>Benchmarking both implementations in Pyodide WebAssembly...</em>';
+
+      async function runSnippet(c) {
+        return new Promise((resolve) => {
+          const tempWorker = new Worker(workerUrl);
+          tempWorker.onmessage = (e) => {
+            if (e.data.type === 'READY') {
+              tempWorker.postMessage({ type: 'RUN', payload: { code: c, inputs: [], maxSteps: 10000 }, id: 1 });
+            } else if (e.data.type === 'RUN_COMPLETE') {
+              tempWorker.terminate();
+              resolve(e.data.result);
+            }
+          };
+        });
+      }
+
+      const resA = await runSnippet(codeA);
+      const resB = await runSnippet(codeB);
+
+      const stepsA = resA.total_steps || 0;
+      const stepsB = resB.total_steps || 0;
+      const winner = stepsA < stepsB ? 'A' : (stepsB < stepsA ? 'B' : 'Tie');
+
+      resultsDiv.innerHTML = `
+        <div style="display:grid; grid-template-columns: 1fr 1fr; gap:16px;">
+          <div style="padding:10px; background:var(--bg-card); border:1px solid var(--border-main); border-radius:6px;">
+            <h4>Implementation A</h4>
+            <div>Steps: <strong>${stepsA}</strong> ${winner === 'A' ? '<span class="badge badge-coral">Winner (Fewer steps)</span>' : ''}</div>
+            <div>Status: ${resA.success ? 'Success' : 'Error'}</div>
+          </div>
+          <div style="padding:10px; background:var(--bg-card); border:1px solid var(--border-main); border-radius:6px;">
+            <h4>Implementation B</h4>
+            <div>Steps: <strong>${stepsB}</strong> ${winner === 'B' ? '<span class="badge badge-coral">Winner (Fewer steps)</span>' : ''}</div>
+            <div>Status: ${resB.success ? 'Success' : 'Error'}</div>
+          </div>
+        </div>
+      `;
+    });
+
+    /* 13. SHARE & HISTORY */
+    function saveRunToHistory(result) {
+      const firstLine = codeEditor.getValue().trim().split('\n')[0] || 'Python Script';
+      const historyItem = {
+        id: Date.now(),
+        time: new Date().toLocaleTimeString(),
+        title: firstLine.slice(0, 32),
+        steps: result.total_steps || 0,
+        success: result.success
+      };
+      state.history.unshift(historyItem);
+      if (state.history.length > 10) state.history.pop();
+      renderHistoryList();
+    }
+
+    function renderHistoryList() {
+      const container = document.getElementById('historyListContainer');
+      if (state.history.length === 0) {
+        container.innerHTML = '<span style="color:var(--text-muted); font-size:12px;">No runs recorded yet.</span>';
+        return;
+      }
+      container.innerHTML = state.history.map(item => `
+        <div style="padding:6px 10px; background:var(--bg-card-elevated); border:1px solid var(--border-main); border-radius:6px; display:flex; justify-content:space-between; align-items:center; font-size:11.5px;">
+          <div>
+            <strong>${escapeHtml(item.title)}</strong>
+            <div style="color:var(--text-muted); font-size:10.5px;">${item.time} • ${item.steps} steps</div>
+          </div>
+          <span class="badge ${item.success ? 'badge-live' : 'badge-coral'}">${item.success ? 'Success' : 'Error'}</span>
+        </div>
+      `).join('');
+    }
+
+    document.getElementById('btnClearHistory').addEventListener('click', () => {
+      state.history = [];
+      renderHistoryList();
+    });
+
+    document.getElementById('btnGenerateShare').addEventListener('click', () => {
+      const payload = { c: codeEditor.getValue(), i: document.getElementById('prefillInputText').value };
+      const b64 = btoa(encodeURIComponent(JSON.stringify(payload)));
+      const url = `${window.location.origin}${window.location.pathname}#code=${b64}`;
+      document.getElementById('shareUrlInput').value = url;
+      navigator.clipboard.writeText(url).then(() => alert('Shareable link copied to clipboard!'));
+    });
+
+    document.getElementById('btnExportJsonTrace').addEventListener('click', () => {
+      if (state.totalSteps === 0) return;
+      const json = JSON.stringify(state.snapshots, null, 2);
+      const blob = new Blob([json], { type: 'application/json' });
+      const a = document.createElement('a');
+      a.href = URL.createObjectURL(blob);
+      a.download = 'trace.json';
+      a.click();
+    });
+
+    document.getElementById('btnExportSessionMd').addEventListener('click', () => {
+      const code = codeEditor.getValue();
+      const lastSnap = state.snapshots[state.snapshots.length - 1];
+      const md = "# Python Dry-Run Lab Session Report\nGenerated: " + new Date().toLocaleString() + "\n\n## Python Source Code\n```python\n" + code + "\n```\n\n## Execution Summary\n- Total Steps: " + state.totalSteps + "\n- Execution Time: " + (lastSnap ? lastSnap.time_ms : 0) + " ms\n- Final Stdout:\n```\n" + (lastSnap ? lastSnap.stdout : "(no output)") + "\n```\n";
+      const blob = new Blob([md], { type: 'text/markdown' });
+      const a = document.createElement('a');
+      a.href = URL.createObjectURL(blob);
+      a.download = 'report.md';
+      a.click();
+    });
+
+    /* 14. STEP CONTROLS & SHORTCUTS */
     function stepNext() {
       if (state.currentStep < state.totalSteps) goToStep(state.currentStep + 1);
       else pauseAutoPlay();
@@ -1893,7 +2867,6 @@ initPyodide();
       if (state.isPlaying) startAutoPlay();
     });
 
-    // Keyboard Shortcuts
     window.addEventListener('keydown', (e) => {
       if (['INPUT', 'TEXTAREA'].includes(e.target.tagName)) return;
       if (e.key === 'ArrowRight') { e.preventDefault(); stepNext(); }
@@ -1908,9 +2881,7 @@ initPyodide();
       }
     });
 
-    /* ==========================================================================
-       8. GROQ API KEY MODAL & CONFIGURATION
-       ========================================================================== */
+    /* 15. GROQ KEY & THEME */
     const groqModal = document.getElementById('groqModal');
     const modalGroqInput = document.getElementById('modalGroqInput');
     const groqStatusDot = document.getElementById('groqStatusDot');
@@ -1957,9 +2928,6 @@ initPyodide();
 
     updateGroqStatusUI();
 
-    /* ==========================================================================
-       9. UI ACTIONS & EXAMPLE SWITCHER
-       ========================================================================== */
     document.getElementById('btnRunTrace').addEventListener('click', runTrace);
 
     const exampleSelect = document.getElementById('exampleSelect');
@@ -1978,7 +2946,7 @@ initPyodide();
     });
 
     document.getElementById('btnCopyCode').addEventListener('click', () => {
-      navigator.clipboard.writeText(codeEditor.getValue()).then(() => alert('Code copied to clipboard!'));
+      navigator.clipboard.writeText(codeEditor.getValue()).then(() => alert('Code copied!'));
     });
 
     document.getElementById('btnFormatCode').addEventListener('click', () => {
@@ -2005,7 +2973,6 @@ initPyodide();
       navigator.clipboard.writeText(document.getElementById('stdoutConsole').textContent).then(() => alert('Stdout copied!'));
     });
 
-    // Theme Toggle
     const themeBtn = document.getElementById('btnThemeToggle');
     const savedTheme = localStorage.getItem('COHERE_THEME') || 'dark';
     document.documentElement.setAttribute('data-theme', savedTheme);
@@ -2024,7 +2991,6 @@ initPyodide();
       return String(str).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#39;');
     }
 
-    // Default Load
     codeEditor.setValue(CODE_EXAMPLES.bubble_sort);
   </script>
 </body>
