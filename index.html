@@ -1271,6 +1271,7 @@
             </select>
             <input type="text" id="aiCustomModelInput" placeholder="Enter model ID..." style="display:none; padding:2px 8px; font-size:12px; width:150px; border-radius:4px;">
             <button id="btnFetchModels" class="btn btn-sm" style="font-size:11px; padding:2px 7px;" title="Query all authorized models directly from Groq API">🔄 Detect My Models</button>
+            <button id="btnTestModels" class="btn btn-sm" style="font-size:11px; padding:2px 7px; color:var(--accent-coral);" title="Run a live test on models and remove any that error">🧪 Test & Filter Models</button>
             <span id="aiModelStatusBadge" style="font-size:11px; color:var(--text-muted);"></span>
           </div>
           <div style="display:flex; align-items:center; gap:10px;">
@@ -2151,8 +2152,8 @@ initPyodide();
             setTimeout(() => codeEditor.refresh(), 50);
           } else {
             viewEl.style.display = 'flex';
-            if (k === 'explain' && (state.groqApiKey || sessionStorage.getItem('GROQ_API_KEY'))) {
-              fetchAvailableGroqModels(true);
+            if (k === 'explain' && getCleanApiKey()) {
+              testAndFilterWorkingModels(true);
             }
           }
         } else {
@@ -2692,8 +2693,17 @@ initPyodide();
     }
 
     /* 10. AI TUTOR (GROQ INTEGRATION) */
+    function getCleanApiKey() {
+      let k = (state.groqApiKey || sessionStorage.getItem('GROQ_API_KEY') || '').trim();
+      if (k.startsWith('Bearer ')) k = k.slice(7).trim();
+      if ((k.startsWith('"') && k.endsWith('"')) || (k.startsWith("'") && k.endsWith("'"))) {
+        k = k.slice(1, -1).trim();
+      }
+      return k;
+    }
+
     async function fetchAvailableGroqModels(silent = false) {
-      const apiKey = state.groqApiKey || sessionStorage.getItem('GROQ_API_KEY');
+      const apiKey = getCleanApiKey();
       const statusBadge = document.getElementById('aiModelStatusBadge');
       if (!apiKey) {
         if (!silent && statusBadge) statusBadge.textContent = 'Key not set';
@@ -2751,6 +2761,137 @@ initPyodide();
       return [];
     }
 
+    let isTestingModels = false;
+    async function testAndFilterWorkingModels(silent = true) {
+      if (isTestingModels) return [];
+      const apiKey = getCleanApiKey();
+      const statusBadge = document.getElementById('aiModelStatusBadge');
+      const chatWindow = document.getElementById('aiChatWindow');
+      if (!apiKey) {
+        if (!silent) document.getElementById('groqModal').classList.add('active');
+        return [];
+      }
+
+      isTestingModels = true;
+      if (statusBadge) statusBadge.textContent = '⏳ Testing models...';
+      if (!silent && chatWindow) {
+        chatWindow.innerHTML = '<em>🧪 Testing available Groq models with quick test pings...</em>';
+      }
+
+      let candidatePool = [
+        'llama-3.3-70b-versatile',
+        'llama-3.1-8b-instant',
+        'llama3-70b-8192',
+        'llama3-8b-8192',
+        'deepseek-r1-distill-llama-70b',
+        'qwen-2.5-32b',
+        'gemma2-9b-it',
+        'mixtral-8x7b-32768'
+      ];
+
+      try {
+        const res = await fetch('https://api.groq.com/openai/v1/models', {
+          headers: { 'Authorization': `Bearer ${apiKey}` }
+        });
+        if (res.ok) {
+          const data = await res.json();
+          if (data && Array.isArray(data.data)) {
+            const remoteChatModels = data.data
+              .map(m => m.id)
+              .filter(id => id && !id.includes('whisper') && !id.includes('guard'));
+            if (remoteChatModels.length > 0) {
+              candidatePool = [...new Set([...remoteChatModels, ...candidatePool])];
+            }
+          }
+        }
+      } catch (e) {}
+
+      // Test all candidates in parallel for lightning-fast completion (~300ms)
+      const testPromises = candidatePool.map(async (mId) => {
+        try {
+          const testRes = await fetch('https://api.groq.com/openai/v1/chat/completions', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+              'Authorization': `Bearer ${apiKey}`
+            },
+            body: JSON.stringify({
+              model: mId,
+              messages: [{ role: 'user', content: 'test' }],
+              max_tokens: 1
+            })
+          });
+          if (testRes.ok) {
+            return { id: mId, ok: true };
+          } else {
+            const errJson = await testRes.json().catch(() => ({}));
+            return { id: mId, ok: false, error: errJson.error?.message || testRes.statusText };
+          }
+        } catch (netErr) {
+          return { id: mId, ok: false, error: netErr.message };
+        }
+      });
+
+      const results = await Promise.all(testPromises);
+      const workingModels = results.filter(r => r.ok).map(r => r.id);
+      const failedModels = results.filter(r => !r.ok);
+
+      const select = document.getElementById('aiModelSelect');
+      if (select) {
+        if (workingModels.length > 0) {
+          const prevVal = select.value;
+          select.innerHTML = '';
+          workingModels.forEach(m => {
+            const opt = document.createElement('option');
+            opt.value = m;
+            opt.textContent = `✓ ${m}`;
+            select.appendChild(opt);
+          });
+          const customOpt = document.createElement('option');
+          customOpt.value = '__custom__';
+          customOpt.textContent = 'Custom Model...';
+          select.appendChild(customOpt);
+
+          if (workingModels.includes(prevVal)) {
+            select.value = prevVal;
+          } else {
+            select.value = workingModels[0];
+          }
+
+          if (statusBadge) statusBadge.textContent = `🟢 ${workingModels.length} models verified`;
+
+          if (!silent && chatWindow) {
+            let summaryHtml = `<strong>🎉 Model Test Complete!</strong><br><br>`;
+            summaryHtml += `<strong>✅ Working models (${workingModels.length}):</strong><br>`;
+            summaryHtml += `<ul style="margin:6px 0 12px 20px; color:var(--accent-green);">` +
+              workingModels.map(m => `<li><strong>${escapeHtml(m)}</strong> — Active & verified!</li>`).join('') +
+              `</ul>`;
+            if (failedModels.length > 0) {
+              summaryHtml += `<details style="color:var(--text-muted); font-size:11.5px; margin-top:8px;"><summary style="cursor:pointer;">Removed ${failedModels.length} non-working models (click to view details)</summary><ul style="margin:6px 0 0 20px;">` +
+                failedModels.map(f => `<li><code>${escapeHtml(f.id)}</code>: ${escapeHtml(f.error)}</li>`).join('') +
+                `</ul></details>`;
+            }
+            chatWindow.innerHTML = summaryHtml;
+          }
+        } else {
+          if (statusBadge) statusBadge.textContent = '❌ 0 models working';
+          if (!silent && chatWindow) {
+            let errHtml = `<span style="color:var(--accent-red); font-weight:600;">❌ None of the tested models worked with this Groq API key.</span><br><br>`;
+            errHtml += `<strong>Errors encountered:</strong><ul style="margin:6px 0 12px 20px; font-size:12px;">` +
+              failedModels.slice(0, 4).map(f => `<li><code>${escapeHtml(f.id)}</code>: ${escapeHtml(f.error)}</li>`).join('') +
+              `</ul>`;
+            errHtml += `<strong>How to fix:</strong><br>`;
+            errHtml += `1. Check your API key at <a href="https://console.groq.com/keys" target="_blank" style="color:var(--accent-coral);">console.groq.com/keys</a>.<br>`;
+            errHtml += `2. If your key is inside an organization or project, check <strong>Project Settings &gt; Model Permissions</strong>.<br>`;
+            errHtml += `3. Or create a brand new free API key with standard permissions.`;
+            chatWindow.innerHTML = errHtml;
+          }
+        }
+      }
+      isTestingModels = false;
+      return workingModels;
+    }
+
     const modelSelectEl = document.getElementById('aiModelSelect');
     const customModelInputEl = document.getElementById('aiCustomModelInput');
     if (modelSelectEl && customModelInputEl) {
@@ -2767,9 +2908,13 @@ initPyodide();
     if (btnFetchModelsEl) {
       btnFetchModelsEl.addEventListener('click', () => fetchAvailableGroqModels(false));
     }
+    const btnTestModelsEl = document.getElementById('btnTestModels');
+    if (btnTestModelsEl) {
+      btnTestModelsEl.addEventListener('click', () => testAndFilterWorkingModels(false));
+    }
 
     async function callGroqAI(userPrompt, actionType) {
-      const apiKey = state.groqApiKey || sessionStorage.getItem('GROQ_API_KEY');
+      const apiKey = getCleanApiKey();
       if (!apiKey) {
         document.getElementById('groqModal').classList.add('active');
         return;
@@ -3211,7 +3356,7 @@ ans = factorial_recursive(5)`;
       updateGroqStatusUI();
       groqModal.classList.remove('active');
       if (key) {
-        fetchAvailableGroqModels(false);
+        testAndFilterWorkingModels(true);
       }
     });
 
@@ -3294,8 +3439,8 @@ ans = factorial_recursive(5)`;
     }
 
     codeEditor.setValue(CODE_EXAMPLES.bubble_sort);
-    if (state.groqApiKey) {
-      fetchAvailableGroqModels(true);
+    if (getCleanApiKey()) {
+      testAndFilterWorkingModels(true);
     }
   </script>
 </body>
