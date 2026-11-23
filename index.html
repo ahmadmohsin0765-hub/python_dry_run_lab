@@ -1,15 +1,19 @@
 <!DOCTYPE html>
 <html lang="en" data-theme="dark">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Python Dry-Run Lab — Interactive Execution Playground</title>
-  <meta name="description" content="Cohere Playground-inspired, live step-by-step Python execution visualizer and dry-run debugger powered by Pyodide WebAssembly.">
+  <meta name="description"
+    content="Cohere Playground-inspired, live step-by-step Python execution visualizer and dry-run debugger powered by Pyodide WebAssembly.">
 
   <!-- Fonts: Inter & JetBrains Mono -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap"
+    rel="stylesheet">
 
   <!-- CodeMirror 5 CDN -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/codemirror.min.css">
@@ -53,7 +57,7 @@
       --current-line: rgba(254, 240, 138, 0.45);
       --btn-primary-bg: #111317;
       --btn-primary-text: #ffffff;
-      --shadow-sm: 0 1px 3px rgba(0,0,0,0.04);
+      --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.04);
       --cm-theme: "dracula";
     }
 
@@ -85,7 +89,7 @@
       --current-line: rgba(210, 153, 34, 0.28);
       --btn-primary-bg: #f0f3f6;
       --btn-primary-text: #0d0f12;
-      --shadow-sm: 0 2px 6px rgba(0,0,0,0.3);
+      --shadow-sm: 0 2px 6px rgba(0, 0, 0, 0.3);
       --cm-theme: "dracula";
     }
 
@@ -107,7 +111,9 @@
       line-height: 1.5;
     }
 
-    code, pre, .mono {
+    code,
+    pre,
+    .mono {
       font-family: 'JetBrains Mono', monospace;
     }
 
@@ -129,17 +135,21 @@
       white-space: nowrap;
       user-select: none;
     }
+
     .btn:hover:not(:disabled) {
       background: var(--bg-card-elevated);
       border-color: var(--text-muted);
     }
+
     .btn:active:not(:disabled) {
       transform: translateY(1px);
     }
+
     .btn:disabled {
       opacity: 0.45;
       cursor: not-allowed;
     }
+
     .btn-run {
       background: var(--btn-primary-bg) !important;
       color: var(--btn-primary-text) !important;
@@ -148,11 +158,13 @@
       padding: 7px 18px;
       border-radius: 6px;
       font-size: 13px;
-      box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
     }
+
     .btn-run:hover:not(:disabled) {
       opacity: 0.92;
     }
+
     .btn-reset {
       background: transparent;
       border: 1px solid var(--border-main);
@@ -160,11 +172,13 @@
       padding: 7px 14px;
       border-radius: 6px;
     }
+
     .btn-danger {
       background: var(--accent-red);
       color: #ffffff;
       border-color: var(--accent-red);
     }
+
     .btn-sm {
       padding: 4px 9px;
       font-size: 11.5px;
@@ -172,7 +186,10 @@
     }
 
     /* Inputs & Selects */
-    select, input[type="text"], input[type="password"], textarea {
+    select,
+    input[type="text"],
+    input[type="password"],
+    textarea {
       background: var(--bg-card);
       border: 1px solid var(--border-main);
       color: var(--text-main);
@@ -183,7 +200,10 @@
       outline: none;
       transition: border-color 0.15s, box-shadow 0.15s;
     }
-    select:focus, input:focus, textarea:focus {
+
+    select:focus,
+    input:focus,
+    textarea:focus {
       border-color: var(--accent-coral);
       box-shadow: 0 0 0 2px var(--accent-coral-bg);
     }
@@ -198,11 +218,13 @@
       border-radius: 12px;
       font-weight: 600;
     }
+
     .badge-live {
       background: var(--accent-green-bg);
       color: var(--accent-green);
       border: 1px solid rgba(63, 185, 80, 0.3);
     }
+
     .badge-live::before {
       content: "";
       width: 6px;
@@ -212,13 +234,35 @@
       display: inline-block;
       animation: pulse 1.8s infinite;
     }
+
     @keyframes pulse {
-      0%, 100% { opacity: 1; transform: scale(1); }
-      50% { opacity: 0.4; transform: scale(0.85); }
+
+      0%,
+      100% {
+        opacity: 1;
+        transform: scale(1);
+      }
+
+      50% {
+        opacity: 0.4;
+        transform: scale(0.85);
+      }
     }
-    .badge-coral { background: var(--accent-coral-bg); color: var(--accent-coral); }
-    .badge-blue { background: var(--accent-blue-bg); color: var(--accent-blue); }
-    .badge-yellow { background: var(--accent-yellow-bg); color: var(--accent-yellow); }
+
+    .badge-coral {
+      background: var(--accent-coral-bg);
+      color: var(--accent-coral);
+    }
+
+    .badge-blue {
+      background: var(--accent-blue-bg);
+      color: var(--accent-blue);
+    }
+
+    .badge-yellow {
+      background: var(--accent-yellow-bg);
+      color: var(--accent-yellow);
+    }
 
     /* HEADER */
     header {
@@ -250,6 +294,7 @@
       color: var(--text-main);
       text-decoration: none;
     }
+
     .brand-logo .dot {
       width: 14px;
       height: 14px;
@@ -257,6 +302,7 @@
       background: linear-gradient(135deg, #e06c53, #111317);
       display: inline-block;
     }
+
     .brand-logo span.tagline {
       font-weight: 400;
       color: var(--text-muted);
@@ -268,6 +314,7 @@
       align-items: center;
       gap: 16px;
     }
+
     .nav-link {
       font-size: 11.5px;
       font-weight: 600;
@@ -278,9 +325,12 @@
       text-decoration: none;
       transition: color 0.15s;
     }
-    .nav-link:hover, .nav-link.active {
+
+    .nav-link:hover,
+    .nav-link.active {
       color: var(--text-main);
     }
+
     .groq-key-pill {
       display: flex;
       align-items: center;
@@ -293,15 +343,18 @@
       cursor: pointer;
       transition: all 0.15s;
     }
+
     .groq-key-pill:hover {
       border-color: var(--accent-coral);
     }
+
     .groq-status-dot {
       width: 7px;
       height: 7px;
       border-radius: 50%;
       background: var(--accent-yellow);
     }
+
     .groq-status-dot.connected {
       background: var(--accent-green);
     }
@@ -323,6 +376,7 @@
       align-items: center;
       gap: 8px;
     }
+
     .mode-pill {
       display: inline-flex;
       align-items: center;
@@ -339,10 +393,12 @@
       transition: all 0.15s;
       white-space: nowrap;
     }
+
     .mode-pill:hover {
       color: var(--text-main);
       background: var(--bg-card-elevated);
     }
+
     .mode-pill.active {
       background: var(--pill-active-bg);
       border-color: var(--pill-active-border);
@@ -362,14 +418,16 @@
     }
 
     .tab-view {
-      display: none;
+      display: none !important;
       width: 100%;
       height: 100%;
       overflow: hidden;
     }
+
     .tab-view.active {
-      display: flex;
+      display: flex !important;
     }
+
     #viewTrace.active {
       display: grid !important;
       grid-template-columns: 460px 1fr !important;
@@ -382,10 +440,12 @@
         grid-template-columns: 1fr !important;
         overflow-y: auto !important;
       }
+
       .panel-left {
         border-right: none !important;
         border-bottom: 1px solid var(--border-main);
       }
+
       .panel-right {
         height: 500px !important;
       }
@@ -414,12 +474,14 @@
       align-items: center;
       justify-content: space-between;
     }
+
     .param-title {
       font-family: 'JetBrains Mono', monospace;
       font-size: 12px;
       font-weight: 600;
       color: var(--text-main);
     }
+
     .param-type {
       font-family: 'JetBrains Mono', monospace;
       font-size: 11px;
@@ -439,6 +501,7 @@
       flex-direction: column;
       gap: 4px;
     }
+
     .what-happened-label {
       font-size: 10px;
       font-weight: 700;
@@ -453,6 +516,7 @@
       font-size: 11.5px;
       font-family: 'JetBrains Mono', monospace;
     }
+
     .vars-table th {
       text-align: left;
       padding: 5px 8px;
@@ -460,24 +524,34 @@
       border-bottom: 1px solid var(--border-main);
       font-weight: 600;
     }
+
     .vars-table td {
       padding: 5px 8px;
       border-bottom: 1px solid var(--border-subtle);
     }
+
     .vars-table tr.changed-flash {
       background: var(--accent-green-bg);
       animation: flashRow 0.9s ease-out;
     }
+
     @keyframes flashRow {
-      0% { background: rgba(63, 185, 80, 0.4); }
-      100% { background: var(--accent-green-bg); }
+      0% {
+        background: rgba(63, 185, 80, 0.4);
+      }
+
+      100% {
+        background: var(--accent-green-bg);
+      }
     }
+
     .val-diff {
       color: var(--text-muted);
       text-decoration: line-through;
       margin-right: 6px;
       font-size: 10.5px;
     }
+
     .tag-new {
       background: var(--accent-yellow-bg);
       color: var(--accent-yellow);
@@ -495,12 +569,14 @@
       padding: 7px 10px;
       font-size: 11.5px;
     }
+
     .obj-header {
       display: flex;
       justify-content: space-between;
       margin-bottom: 4px;
       font-size: 11px;
     }
+
     .obj-ptrs {
       display: flex;
       gap: 4px;
@@ -508,6 +584,7 @@
       margin-top: 4px;
       font-size: 10.5px;
     }
+
     .ptr-badge {
       background: var(--accent-coral-bg);
       color: var(--accent-coral);
@@ -535,10 +612,12 @@
       justify-content: space-between;
       min-height: 40px;
     }
+
     .editor-tabs {
       display: flex;
       height: 40px;
     }
+
     .editor-tab {
       display: flex;
       align-items: center;
@@ -552,9 +631,11 @@
       border-bottom: 2px solid transparent;
       transition: all 0.15s;
     }
+
     .editor-tab:hover {
       color: var(--text-light);
     }
+
     .editor-tab.active {
       color: var(--text-light);
       border-bottom-color: var(--accent-coral);
@@ -567,6 +648,7 @@
       font-size: 11.5px;
       color: var(--text-light-muted);
     }
+
     .pane-action-link {
       color: var(--text-light-muted);
       text-decoration: none;
@@ -576,6 +658,7 @@
       gap: 4px;
       transition: color 0.15s;
     }
+
     .pane-action-link:hover {
       color: var(--text-light);
     }
@@ -593,6 +676,7 @@
       position: relative;
       overflow: hidden;
     }
+
     .CodeMirror {
       height: 100% !important;
       font-family: 'JetBrains Mono', monospace !important;
@@ -601,25 +685,30 @@
       background: #0f1115 !important;
       color: #f0f3f6 !important;
     }
+
     .CodeMirror-gutters {
       background: #121418 !important;
       border-right: 1px solid #20242c !important;
     }
+
     .breakpoint-gutter {
       width: 16px;
     }
+
     .breakpoint-marker {
       color: #ef4444;
       cursor: pointer;
       text-align: center;
       font-size: 14px;
     }
+
     .executed-gutter-marker {
       width: 4px;
       height: 100%;
       background: #238636;
       border-radius: 2px;
     }
+
     .cm-current-line {
       background: rgba(210, 153, 34, 0.25) !important;
       border-left: 3px solid #d29922 !important;
@@ -632,6 +721,7 @@
       flex-direction: column;
       overflow: hidden;
     }
+
     .response-header {
       padding: 6px 16px;
       background: #15181e;
@@ -645,6 +735,7 @@
       text-transform: uppercase;
       color: var(--text-light-muted);
     }
+
     .terminal-output {
       padding: 10px 14px;
       font-family: 'JetBrains Mono', monospace;
@@ -662,7 +753,6 @@
       height: 100%;
       overflow-y: auto;
       padding: 20px;
-      display: flex;
       flex-direction: column;
       gap: 16px;
     }
@@ -685,6 +775,7 @@
       border-bottom: 1px solid var(--border-subtle);
       padding-bottom: 10px;
     }
+
     .tab-card-title {
       font-size: 14px;
       font-weight: 700;
@@ -699,6 +790,7 @@
       font-size: 11.5px;
       font-family: 'JetBrains Mono', monospace;
     }
+
     .dry-run-table th {
       position: sticky;
       top: 0;
@@ -709,23 +801,28 @@
       border-bottom: 1px solid var(--border-main);
       z-index: 10;
     }
+
     .dry-run-table td {
       padding: 6px 10px;
       border-bottom: 1px solid var(--border-subtle);
       white-space: nowrap;
     }
+
     .dry-run-table tr.current-step-row {
       background: var(--current-line);
       font-weight: 600;
     }
+
     .dry-run-table tr:hover {
-      background: rgba(255,255,255,0.03);
+      background: rgba(255, 255, 255, 0.03);
     }
+
     .cell-changed {
       background: var(--accent-green-bg);
       color: var(--accent-green);
       font-weight: 600;
     }
+
     .cell-hidden-quiz {
       filter: blur(4px);
       user-select: none;
@@ -744,6 +841,7 @@
       justify-content: center;
       overflow: auto;
     }
+
     .flowchart-node-active {
       stroke: var(--accent-coral) !important;
       stroke-width: 3px !important;
@@ -783,6 +881,7 @@
       flex: 1;
       max-width: 640px;
     }
+
     .step-slider {
       flex: 1;
       height: 6px;
@@ -792,6 +891,7 @@
       background: var(--border-main);
       cursor: pointer;
     }
+
     .step-slider::-webkit-slider-thumb {
       -webkit-appearance: none;
       width: 15px;
@@ -800,6 +900,7 @@
       background: var(--accent-coral);
       cursor: pointer;
     }
+
     .step-counter-badge {
       font-family: 'JetBrains Mono', monospace;
       font-size: 12px;
@@ -822,27 +923,30 @@
       display: none;
       position: fixed;
       inset: 0;
-      background: rgba(0,0,0,0.6);
+      background: rgba(0, 0, 0, 0.6);
       backdrop-filter: blur(2px);
       z-index: 200;
       align-items: center;
       justify-content: center;
       padding: 16px;
     }
+
     .modal-backdrop.active {
       display: flex;
     }
+
     .modal-card {
       background: var(--bg-card);
       border: 1px solid var(--border-main);
       border-radius: 8px;
       width: 100%;
       max-width: 520px;
-      box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
       display: flex;
       flex-direction: column;
       overflow: hidden;
     }
+
     .modal-header {
       padding: 14px 18px;
       border-bottom: 1px solid var(--border-main);
@@ -852,11 +956,13 @@
       font-weight: 700;
       font-size: 14px;
     }
+
     .modal-body {
       padding: 18px;
       font-size: 13px;
       line-height: 1.6;
     }
+
     .modal-footer {
       padding: 12px 18px;
       border-top: 1px solid var(--border-main);
@@ -877,16 +983,18 @@
       display: flex;
       align-items: center;
       gap: 10px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
       z-index: 90;
       font-size: 12px;
       transition: all 0.3s;
     }
+
     .loading-toast.hidden {
       opacity: 0;
       pointer-events: none;
       transform: translateY(10px);
     }
+
     .spinner {
       width: 16px;
       height: 16px;
@@ -895,11 +1003,15 @@
       border-radius: 50%;
       animation: spin 0.8s linear infinite;
     }
+
     @keyframes spin {
-      to { transform: rotate(360deg); }
+      to {
+        transform: rotate(360deg);
+      }
     }
   </style>
 </head>
+
 <body>
 
   <!-- HEADER -->
@@ -1000,7 +1112,8 @@
               </thead>
               <tbody id="varsTableBody">
                 <tr>
-                  <td colspan="4" style="color:var(--text-muted); text-align:center; padding:16px;">No active variables. Click RUN to trace.</td>
+                  <td colspan="4" style="color:var(--text-muted); text-align:center; padding:16px;">No active variables.
+                    Click RUN to trace.</td>
                 </tr>
               </tbody>
             </table>
@@ -1041,7 +1154,8 @@
               <option value="50000">50,000 steps</option>
             </select>
           </div>
-          <span style="font-size:11px; color:var(--text-muted);">Watchdog timeout: 30s. Accommodates 999+ iterations comfortably.</span>
+          <span style="font-size:11px; color:var(--text-muted);">Watchdog timeout: 30s. Accommodates 999+ iterations
+            comfortably.</span>
         </div>
 
         <!-- Input Drawer -->
@@ -1062,7 +1176,8 @@
             <div class="editor-tab" data-pane="stdout">STDOUT</div>
           </div>
           <div class="pane-header-actions">
-            <span style="font-size:11px; font-family:monospace; color:var(--text-light-muted);" id="lineCountLabel">0 lines</span>
+            <span style="font-size:11px; font-family:monospace; color:var(--text-light-muted);" id="lineCountLabel">0
+              lines</span>
             <span class="pane-action-link" id="btnCopyCode">Copy 📋</span>
             <span class="pane-action-link" id="btnFormatCode">Format ⚡</span>
             <span class="pane-action-link" id="btnClearBreakpoints">Clear BP ✕</span>
@@ -1107,12 +1222,14 @@
           </div>
         </div>
 
-        <div id="quizScoreBanner" style="display:none; padding:8px 12px; background:var(--accent-coral-bg); border-radius:6px; font-size:12px; justify-content:space-between; align-items:center;">
+        <div id="quizScoreBanner"
+          style="display:none; padding:8px 12px; background:var(--accent-coral-bg); border-radius:6px; font-size:12px; justify-content:space-between; align-items:center;">
           <span><strong>Quiz Mode Active:</strong> Click blurred cells to predict upcoming variable values!</span>
           <span id="quizScoreText" class="badge badge-coral">Score: 0 / 0</span>
         </div>
 
-        <div style="max-height: calc(100vh - 250px); overflow: auto; border: 1px solid var(--border-main); border-radius: 6px;">
+        <div
+          style="max-height: calc(100vh - 250px); overflow: auto; border: 1px solid var(--border-main); border-radius: 6px;">
           <table class="dry-run-table" id="dryRunTable">
             <thead>
               <tr id="dryRunTableHeaders">
@@ -1140,7 +1257,9 @@
         <div class="tab-card-header">
           <div class="tab-card-title">
             <span>💬 AI Python Tutor (Powered by Groq)</span>
-            <select id="aiModelSelect" style="padding:2px 8px; font-size:12px; border-radius:4px; border:1px solid var(--border-color); background:var(--bg-secondary); color:var(--text-primary); cursor:pointer;">
+            <span class="badge badge-coral">Llama-3.3-70b</span>
+            <select id="aiModelSelect"
+              style="padding:2px 8px; font-size:12px; border-radius:4px; border:1px solid var(--border-color); background:var(--bg-secondary); color:var(--text-primary); cursor:pointer;">
               <option value="llama-3.1-8b-instant" selected>Llama 3.1 8B (Fast & Universal)</option>
               <option value="llama-3.3-70b-versatile">Llama 3.3 70B (Versatile)</option>
               <option value="llama3-70b-8192">Llama 3 70B</option>
@@ -1177,12 +1296,14 @@
 
         <div id="aiChatWindow" class="ai-chat-box">
           <span style="color:var(--text-muted);">
-            Click any AI action above or type a question below. If you haven't set your Groq API key yet, click the <strong>🔑 Groq API Key</strong> button in the top header.
+            Click any AI action above or type a question below. If you haven't set your Groq API key yet, click the
+            <strong>🔑 Groq API Key</strong> button in the top header.
           </span>
         </div>
 
         <div style="display:flex; gap:8px;">
-          <input type="text" id="aiCustomPrompt" placeholder="Ask a question about this code or current memory state..." style="flex:1;">
+          <input type="text" id="aiCustomPrompt" placeholder="Ask a question about this code or current memory state..."
+            style="flex:1;">
           <button id="btnAiSendChat" class="btn btn-run btn-sm">Ask AI</button>
         </div>
       </div>
@@ -1255,9 +1376,11 @@
         </div>
       </div>
 
-      <div class="tab-card" id="recursionWarningBox" style="display:none; background:var(--accent-yellow-bg); border-color:var(--accent-yellow);">
+      <div class="tab-card" id="recursionWarningBox"
+        style="display:none; background:var(--accent-yellow-bg); border-color:var(--accent-yellow);">
         <strong style="color:var(--accent-yellow);">⚠️ Deep Recursion Detected:</strong>
-        <span style="font-size:12px;">Call stack reached depth <span id="recDepthSpan">0</span>. Be mindful of Python recursion limits (1,000).</span>
+        <span style="font-size:12px;">Call stack reached depth <span id="recDepthSpan">0</span>. Be mindful of Python
+          recursion limits (1,000).</span>
       </div>
 
       <div class="tab-card">
@@ -1289,16 +1412,20 @@
         <div style="display:grid; grid-template-columns: 1fr 1fr; gap:16px; min-height:280px;">
           <div style="display:flex; flex-direction:column; gap:6px;">
             <strong style="font-size:12px;">Implementation A (e.g. Iterative Factorial)</strong>
-            <textarea id="compareCodeA" style="flex:1; font-family:'JetBrains Mono',monospace; font-size:12px; padding:10px; resize:none;"></textarea>
+            <textarea id="compareCodeA"
+              style="flex:1; font-family:'JetBrains Mono',monospace; font-size:12px; padding:10px; resize:none;"></textarea>
           </div>
           <div style="display:flex; flex-direction:column; gap:6px;">
             <strong style="font-size:12px;">Implementation B (e.g. Recursive Factorial)</strong>
-            <textarea id="compareCodeB" style="flex:1; font-family:'JetBrains Mono',monospace; font-size:12px; padding:10px; resize:none;"></textarea>
+            <textarea id="compareCodeB"
+              style="flex:1; font-family:'JetBrains Mono',monospace; font-size:12px; padding:10px; resize:none;"></textarea>
           </div>
         </div>
 
-        <div id="compareResultsCard" style="padding:14px; background:var(--bg-card-elevated); border:1px solid var(--border-main); border-radius:6px; font-size:12.5px;">
-          <span style="color:var(--text-muted);">Click "Benchmark Both" to compare execution steps, time, and stack depth side-by-side.</span>
+        <div id="compareResultsCard"
+          style="padding:14px; background:var(--bg-card-elevated); border:1px solid var(--border-main); border-radius:6px; font-size:12.5px;">
+          <span style="color:var(--text-muted);">Click "Benchmark Both" to compare execution steps, time, and stack
+            depth side-by-side.</span>
         </div>
       </div>
     </div>
@@ -1310,10 +1437,12 @@
           <span class="tab-card-title">🔗 Shareable Session Link</span>
         </div>
         <div style="display:flex; gap:8px;">
-          <input type="text" id="shareUrlInput" readonly placeholder="Click Copy to create a shareable URL hash" style="flex:1;">
+          <input type="text" id="shareUrlInput" readonly placeholder="Click Copy to create a shareable URL hash"
+            style="flex:1;">
           <button id="btnGenerateShare" class="btn btn-sm">Copy Link</button>
         </div>
-        <span style="font-size:11px; color:var(--text-muted);">Encodes the script and inputs into the URL hash. No server storage needed.</span>
+        <span style="font-size:11px; color:var(--text-muted);">Encodes the script and inputs into the URL hash. No
+          server storage needed.</span>
       </div>
 
       <div class="tab-card">
@@ -1331,7 +1460,8 @@
           <span class="tab-card-title">📜 Session History</span>
           <button id="btnClearHistory" class="btn btn-sm">Clear History</button>
         </div>
-        <div id="historyListContainer" style="display:flex; flex-direction:column; gap:6px; max-height:220px; overflow-y:auto;">
+        <div id="historyListContainer"
+          style="display:flex; flex-direction:column; gap:6px; max-height:220px; overflow-y:auto;">
           <span style="color:var(--text-muted); font-size:12px;">No runs recorded yet.</span>
         </div>
       </div>
@@ -1378,17 +1508,20 @@
       </div>
       <div class="modal-body">
         <p style="margin-bottom:12px; color:var(--text-muted);">
-          To enable live AI streaming explanations, "Explain like I'm 12" beginner analogies, and interactive bug hunting, please provide your <strong>Groq API key</strong>.
+          To enable live AI streaming explanations, "Explain like I'm 12" beginner analogies, and interactive bug
+          hunting, please provide your <strong>Groq API key</strong>.
         </p>
         <div style="display:flex; flex-direction:column; gap:6px; margin-bottom:14px;">
           <label style="font-size:12px; font-weight:600;">Groq API Key (gsk_...):</label>
           <input type="password" id="modalGroqInput" placeholder="gsk_xxxxxxxxxxxxxxxxxxxxxx" style="width:100%;">
           <span style="font-size:11px; color:var(--text-muted);">
-            🔒 Stored <strong>only in this browser's sessionStorage</strong>. It is sent nowhere except Groq's official API.
+            🔒 Stored <strong>only in this browser's sessionStorage</strong>. It is sent nowhere except Groq's official
+            API.
           </span>
         </div>
         <div style="display:flex; align-items:center; justify-content:space-between;">
-          <a href="https://console.groq.com/keys" target="_blank" style="color:var(--accent-coral); font-size:12px; text-decoration:none;">
+          <a href="https://console.groq.com/keys" target="_blank"
+            style="color:var(--accent-coral); font-size:12px; text-decoration:none;">
             Get a free key from console.groq.com ↗
           </a>
           <button id="btnClearGroqModal" class="btn btn-sm">Clear Key</button>
@@ -1418,7 +1551,8 @@
         </ul>
         <h4>⚡ 999+ Iteration Support</h4>
         <p style="margin-bottom:10px;">
-          Execution limit supports up to 50,000 steps with a 30-second watchdog. High-iteration loops like <code>for i in range(1, 1000):</code> run smoothly in Pyodide WebAssembly.
+          Execution limit supports up to 50,000 steps with a 30-second watchdog. High-iteration loops like
+          <code>for i in range(1, 1000):</code> run smoothly in Pyodide WebAssembly.
         </p>
       </div>
       <div class="modal-footer">
@@ -1432,7 +1566,8 @@
     <div class="spinner"></div>
     <div>
       <strong id="toastTitle">Initializing Pyodide</strong>
-      <div id="toastDesc" style="color:var(--text-muted); font-size:11px;">Downloading WebAssembly runtime (~10MB CDN)...</div>
+      <div id="toastDesc" style="color:var(--text-muted); font-size:11px;">Downloading WebAssembly runtime (~10MB
+        CDN)...</div>
     </div>
   </div>
 
@@ -2648,7 +2783,7 @@ MANDATORY RULES:
               fullText += delta;
               chatWindow.innerHTML = escapeHtml(fullText).replace(/\n/g, '<br>');
               chatWindow.scrollTop = chatWindow.scrollHeight;
-            } catch (err) {}
+            } catch (err) { }
           }
         }
         document.getElementById('aiTokenActual').textContent = `Stream completed (${chosenModel}).`;
@@ -3022,4 +3157,5 @@ ans = factorial_recursive(5)`;
     codeEditor.setValue(CODE_EXAMPLES.bubble_sort);
   </script>
 </body>
+
 </html>
