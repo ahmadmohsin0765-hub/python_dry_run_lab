@@ -702,13 +702,30 @@
       font-family: 'JetBrains Mono', monospace !important;
       font-size: 13px !important;
       line-height: 1.55 !important;
+    }
+
+    [data-theme="dark"] .CodeMirror {
       background: #0f1115 !important;
       color: #f0f3f6 !important;
     }
 
-    .CodeMirror-gutters {
+    [data-theme="dark"] .CodeMirror-gutters {
       background: #121418 !important;
       border-right: 1px solid #20242c !important;
+    }
+
+    [data-theme="light"] .CodeMirror {
+      background: #ffffff !important;
+      color: #0f172a !important;
+    }
+
+    [data-theme="light"] .CodeMirror-gutters {
+      background: #f8fafc !important;
+      border-right: 1px solid #e2e8f0 !important;
+    }
+
+    [data-theme="light"] .CodeMirror-linenumber {
+      color: #94a3b8 !important;
     }
 
     .breakpoint-gutter {
@@ -732,6 +749,11 @@
     .cm-current-line {
       background: rgba(210, 153, 34, 0.25) !important;
       border-left: 3px solid #d29922 !important;
+    }
+
+    [data-theme="light"] .cm-current-line {
+      background: rgba(254, 240, 138, 0.5) !important;
+      border-left: 3px solid #eab308 !important;
     }
 
     /* =========================================================
@@ -1319,28 +1341,153 @@
       }
     }
 
-    /* Light theme overrides for code pane elements */
+    /* =========================================================
+       LIGHT THEME OVERRIDES FOR CODE PANE & CONSOLE
+       ========================================================= */
     [data-theme="light"] .panel-right {
-      background: #1a1d24;
+      background: #ffffff;
+      color: var(--text-main);
+      border-left: 1px solid var(--border-main);
     }
 
     [data-theme="light"] .editor-tab-strip {
-      background: #14161a;
+      background: #f8fafc;
+      border-bottom: 1px solid var(--border-main);
     }
 
+    [data-theme="light"] .editor-tab {
+      color: var(--text-muted);
+    }
+
+    [data-theme="light"] .editor-tab:hover {
+      color: var(--text-main);
+    }
+
+    [data-theme="light"] .editor-tab.active {
+      color: var(--text-main);
+      border-bottom-color: var(--accent-coral);
+    }
+
+    [data-theme="light"] .pane-header-actions,
+    [data-theme="light"] .pane-action-link,
+    [data-theme="light"] #lineCountLabel {
+      color: var(--text-muted);
+    }
+
+    [data-theme="light"] .pane-action-link:hover {
+      color: var(--text-main);
+    }
+
+    [data-theme="light"] .CodeMirror-cursor {
+      border-left: 1px solid #0f172a !important;
+    }
+
+    [data-theme="light"] .CodeMirror-selected,
+    [data-theme="light"] .CodeMirror-focused .CodeMirror-selected {
+      background: #e2e8f0 !important;
+    }
+
+    /* Console Panel Light Theme */
     [data-theme="light"] .console-panel {
-      background: #121418;
+      background: #f8fafc;
+      border-top: 1px solid var(--border-main);
     }
 
     [data-theme="light"] .console-tab-strip {
-      background: #15181e;
+      background: #f1f5f9;
+      border-bottom: 1px solid var(--border-main);
+    }
+
+    [data-theme="light"] .console-tab {
+      color: #64748b;
+    }
+
+    [data-theme="light"] .console-tab:hover {
+      color: #0f172a;
+    }
+
+    [data-theme="light"] .console-tab.active {
+      color: #0969da;
+      border-bottom-color: #0969da;
+    }
+
+    [data-theme="light"] .console-tab.tab-has-error {
+      color: #cf222e;
+    }
+
+    [data-theme="light"] .console-tab.tab-has-error.active {
+      color: #cf222e;
+      border-bottom-color: #cf222e;
+    }
+
+    [data-theme="light"] .console-tab-divider {
+      color: #cbd5e1;
+    }
+
+    [data-theme="light"] .console-header-actions,
+    [data-theme="light"] .console-status-label,
+    [data-theme="light"] .console-header-actions .pane-action-link {
+      color: #64748b;
+    }
+
+    [data-theme="light"] .console-header-actions .pane-action-link:hover {
+      color: #0f172a;
     }
 
     [data-theme="light"] .terminal-output {
-      background: #0f1115;
-      color: #c9d1d9;
+      background: #ffffff;
+      color: #1e293b;
     }
-  </style>
+
+    [data-theme="light"] .terminal-output.error-console {
+      color: #cf222e;
+      background: #fff5f5;
+    }
+
+    [data-theme="light"] .terminal-output.error-console.no-error {
+      color: #94a3b8;
+      background: #ffffff;
+    }
+
+    [data-theme="light"] .input-pane-hint {
+      background: rgba(9, 105, 218, 0.08);
+      border-bottom: 1px solid rgba(9, 105, 218, 0.18);
+      color: #0969da;
+    }
+
+    [data-theme="light"] .input-editor-wrapper .CodeMirror {
+      background: #ffffff !important;
+      color: #0f172a !important;
+    }
+
+    [data-theme="light"] .input-editor-wrapper .CodeMirror-gutters {
+      background: #f8fafc !important;
+      border-right: 1px solid rgba(9, 105, 218, 0.2) !important;
+    }
+
+    [data-theme="light"] .input-editor-wrapper .CodeMirror-linenumber {
+      color: #0969da !important;
+    }
+
+    [data-theme="light"] .input-editor-wrapper .CodeMirror-cursor {
+      border-left-color: #0969da !important;
+    }
+
+    [data-theme="light"] .input-editor-wrapper .CodeMirror-placeholder {
+      color: #94a3b8 !important;
+    }
+
+    /* Light Theme Syntax Tokens */
+    [data-theme="light"] .cm-s-eclipse .cm-keyword { color: #7c3aed !important; font-weight: 600; }
+    [data-theme="light"] .cm-s-eclipse .cm-def { color: #0284c7 !important; font-weight: 600; }
+    [data-theme="light"] .cm-s-eclipse .cm-variable { color: #0f172a !important; }
+    [data-theme="light"] .cm-s-eclipse .cm-variable-2 { color: #0f172a !important; }
+    [data-theme="light"] .cm-s-eclipse .cm-string { color: #16a34a !important; }
+    [data-theme="light"] .cm-s-eclipse .cm-number { color: #d97706 !important; }
+    [data-theme="light"] .cm-s-eclipse .cm-operator { color: #475569 !important; }
+    [data-theme="light"] .cm-s-eclipse .cm-comment { color: #94a3b8 !important; font-style: italic; }
+    [data-theme="light"] .cm-s-eclipse .cm-builtin { color: #0284c7 !important; }
+    </style>
 </head>
 
 <body>
@@ -2368,7 +2515,15 @@ class Tracer:
             sys.settrace(self.trace_dispatch)
             exec(compiled, safe_globals)
         except Exception as e:
-            runtime_error = {"type": type(e).__name__, "msg": str(e), "line": getattr(e, "lineno", self.prev_line or 1)}
+            err_line = self.prev_line or 1
+            tb = e.__traceback__
+            if tb:
+                import traceback
+                for f in reversed(traceback.extract_tb(tb)):
+                    if f.filename == self.user_filename:
+                        err_line = f.lineno
+                        break
+            runtime_error = {"type": type(e).__name__, "msg": str(e), "line": err_line}
         finally:
             sys.settrace(None)
             sys.stdout = old_stdout
@@ -2736,8 +2891,13 @@ initPyodide();
 
     function handleTraceResult(result) {
       if (!result.success) {
-        if (result.syntax_error) showSyntaxError(result.syntax_error);
-        else if (result.runtime_error) showRuntimeError(result.runtime_error);
+        if (result.syntax_error) {
+          showSyntaxError(result.syntax_error);
+        } else if (result.runtime_error) {
+          showRuntimeError(result.runtime_error, result.final_stdout);
+        } else {
+          showRuntimeError({ type: 'ExecutionError', msg: result.error || 'Execution failed', line: 1 }, result.final_stdout);
+        }
         return;
       }
 
@@ -2784,7 +2944,7 @@ initPyodide();
       switchConsoleTab('error');
     }
 
-    function showRuntimeError(err) {
+    function showRuntimeError(err, stdout = '') {
       const line = Math.max(1, err.line || 1);
       highlightErrorLine(line);
       document.getElementById('whatHappenedLabel').textContent = err.type || 'Runtime Error';
@@ -2796,6 +2956,9 @@ initPyodide();
       errConsole.classList.remove('no-error');
       document.getElementById('tabBtnError').classList.add('tab-has-error');
       document.getElementById('responseStatusLabel').textContent = `ERROR • ${(err.type || 'RuntimeError').toUpperCase()}`;
+      if (stdout) {
+        document.getElementById('stdoutConsole').textContent = stdout;
+      }
       switchConsoleTab('error');
     }
 
@@ -3959,19 +4122,26 @@ MANDATORY RULES:
       }
 
       const themeBtn = document.getElementById('btnThemeToggle');
-      const savedTheme = localStorage.getItem('COHERE_THEME') || 'dark';
-      document.documentElement.setAttribute('data-theme', savedTheme);
-      themeBtn.textContent = savedTheme === 'dark' ? '🌙' : '☀️';
 
-      themeBtn.addEventListener('click', () => {
-        const curr = document.documentElement.getAttribute('data-theme');
-        const next = curr === 'dark' ? 'light' : 'dark';
-        document.documentElement.setAttribute('data-theme', next);
-        localStorage.setItem('COHERE_THEME', next);
-        themeBtn.textContent = next === 'dark' ? '🌙' : '☀️';
-        const cmTheme = next === 'dark' ? 'dracula' : 'eclipse';
+      function applyTheme(theme) {
+        document.documentElement.setAttribute('data-theme', theme);
+        localStorage.setItem('COHERE_THEME', theme);
+        themeBtn.textContent = theme === 'dark' ? '🌙' : '☀️';
+        const cmTheme = theme === 'dark' ? 'dracula' : 'eclipse';
         codeEditor.setOption('theme', cmTheme);
         if (inputEditor) inputEditor.setOption('theme', cmTheme);
+        setTimeout(() => {
+          codeEditor.refresh();
+          if (inputEditor) inputEditor.refresh();
+        }, 30);
+      }
+
+      const savedTheme = localStorage.getItem('COHERE_THEME') || 'dark';
+      applyTheme(savedTheme);
+
+      themeBtn.addEventListener('click', () => {
+        const curr = document.documentElement.getAttribute('data-theme') || 'dark';
+        applyTheme(curr === 'dark' ? 'light' : 'dark');
       });
 
       function escapeHtml(str) {
