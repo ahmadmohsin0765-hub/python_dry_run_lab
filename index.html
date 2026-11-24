@@ -6,7 +6,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Python Dry-Run Lab — Interactive Execution Playground</title>
   <link rel="icon" type="image/svg+xml" href="favicon.svg">
-  <link rel="alternate icon" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2064%2064%22%20width%3D%2264%22%20height%3D%2264%22%3E%0A%20%20%3Cdefs%3E%0A%20%20%20%20%3ClinearGradient%20id%3D%22bg%22%20x1%3D%220%25%22%20y1%3D%220%25%22%20x2%3D%22100%25%22%20y2%3D%22100%25%22%3E%0A%20%20%20%20%20%20%3Cstop%20offset%3D%220%25%22%20stop-color%3D%22%23181b22%22%2F%3E%0A%20%20%20%20%20%20%3Cstop%20offset%3D%22100%25%22%20stop-color%3D%22%230f1115%22%2F%3E%0A%20%20%20%20%3C%2FlinearGradient%3E%0A%20%20%20%20%3ClinearGradient%20id%3D%22pyBlue%22%20x1%3D%220%25%22%20y1%3D%220%25%22%20x2%3D%22100%25%22%20y2%3D%22100%25%22%3E%0A%20%20%20%20%20%20%3Cstop%20offset%3D%220%25%22%20stop-color%3D%22%2338bdf8%22%2F%3E%0A%20%20%20%20%20%20%3Cstop%20offset%3D%22100%25%22%20stop-color%3D%22%230284c7%22%2F%3E%0A%20%20%20%20%3C%2FlinearGradient%3E%0A%20%20%20%20%3ClinearGradient%20id%3D%22pyYellow%22%20x1%3D%220%25%22%20y1%3D%220%25%22%20x2%3D%22100%25%22%20y2%3D%22100%25%22%3E%0A%20%20%20%20%20%20%3Cstop%20offset%3D%220%25%22%20stop-color%3D%22%23fbbf24%22%2F%3E%0A%20%20%20%20%20%20%3Cstop%20offset%3D%22100%25%22%20stop-color%3D%22%23f97316%22%2F%3E%0A%20%20%20%20%3C%2FlinearGradient%3E%0A%20%20%20%20%3Cfilter%20id%3D%22glow%22%20x%3D%22-20%25%22%20y%3D%22-20%25%22%20width%3D%22140%25%22%20height%3D%22140%25%22%3E%0A%20%20%20%20%20%20%3CfeDropShadow%20dx%3D%220%22%20dy%3D%221%22%20stdDeviation%3D%221.5%22%20flood-color%3D%22%23000%22%20flood-opacity%3D%220.6%22%2F%3E%0A%20%20%20%20%3C%2Ffilter%3E%0A%20%20%3C%2Fdefs%3E%0A%0A%20%20%3C!--%20Background%20squircle%20--%3E%0A%20%20%3Crect%20x%3D%222%22%20y%3D%222%22%20width%3D%2260%22%20height%3D%2260%22%20rx%3D%2214%22%20fill%3D%22url(%23bg)%22%20stroke%3D%22%23272b33%22%20stroke-width%3D%222%22%2F%3E%0A%0A%20%20%3C!--%20Python%20Dual%20Snake%20Silhouette%20--%3E%0A%20%20%3C!--%20Top%20Blue%20Segment%20--%3E%0A%20%20%3Cpath%20d%3D%22M31.8%2011.5c-7.2%200-6.8%203.1-6.8%203.1l.01%203.2h6.9v1h-9.7c-3.1%200-5.7%201.9-5.7%205.6%200%203.7%202.4%205.5%205.5%205.5h1.9v-2.8c0-3.1%202.7-5.8%205.8-5.8h9.6c2.6%200%204.6-2.1%204.6-4.7v-4.4c0-2.6-2.2-4.7-4.8-4.7h-7.3zm-2.4%202.5a1.2%201.2%200%201%201%200%202.4%201.2%201.2%200%200%201%200-2.4z%22%20fill%3D%22url(%23pyBlue)%22%20filter%3D%22url(%23glow)%22%2F%3E%0A%0A%20%20%3C!--%20Bottom%20Amber%20Segment%20--%3E%0A%20%20%3Cpath%20d%3D%22M32.2%2052.5c7.2%200%206.8-3.1%206.8-3.1l-.01-3.2h-6.9v-1h9.7c3.1%200%205.7-1.9%205.7-5.6%200-3.7-2.4-5.5-5.5-5.5h-1.9v2.8c0%203.1-2.7%205.8-5.8%205.8h-9.6c-2.6%200-4.6%202.1-4.6%204.7v4.4c0%202.6%202.2%204.7%204.8%204.7h7.3zm2.4-2.5a1.2%201.2%200%201%201%200-2.4%201.2%201.2%200%200%201%200%202.4z%22%20fill%3D%22url(%23pyYellow)%22%20filter%3D%22url(%23glow)%22%2F%3E%0A%0A%20%20%3C!--%20Live%20Step%20Execution%20Indicator%20Dot%20--%3E%0A%20%20%3Ccircle%20cx%3D%2249%22%20cy%3D%2215%22%20r%3D%223.5%22%20fill%3D%22%2322c55e%22%20stroke%3D%22%230f1115%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E">
+  <link rel="alternate icon"
+    href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2064%2064%22%20width%3D%2264%22%20height%3D%2264%22%3E%0A%20%20%3Cdefs%3E%0A%20%20%20%20%3ClinearGradient%20id%3D%22bg%22%20x1%3D%220%25%22%20y1%3D%220%25%22%20x2%3D%22100%25%22%20y2%3D%22100%25%22%3E%0A%20%20%20%20%20%20%3Cstop%20offset%3D%220%25%22%20stop-color%3D%22%23181b22%22%2F%3E%0A%20%20%20%20%20%20%3Cstop%20offset%3D%22100%25%22%20stop-color%3D%22%230f1115%22%2F%3E%0A%20%20%20%20%3C%2FlinearGradient%3E%0A%20%20%20%20%3ClinearGradient%20id%3D%22pyBlue%22%20x1%3D%220%25%22%20y1%3D%220%25%22%20x2%3D%22100%25%22%20y2%3D%22100%25%22%3E%0A%20%20%20%20%20%20%3Cstop%20offset%3D%220%25%22%20stop-color%3D%22%2338bdf8%22%2F%3E%0A%20%20%20%20%20%20%3Cstop%20offset%3D%22100%25%22%20stop-color%3D%22%230284c7%22%2F%3E%0A%20%20%20%20%3C%2FlinearGradient%3E%0A%20%20%20%20%3ClinearGradient%20id%3D%22pyYellow%22%20x1%3D%220%25%22%20y1%3D%220%25%22%20x2%3D%22100%25%22%20y2%3D%22100%25%22%3E%0A%20%20%20%20%20%20%3Cstop%20offset%3D%220%25%22%20stop-color%3D%22%23fbbf24%22%2F%3E%0A%20%20%20%20%20%20%3Cstop%20offset%3D%22100%25%22%20stop-color%3D%22%23f97316%22%2F%3E%0A%20%20%20%20%3C%2FlinearGradient%3E%0A%20%20%20%20%3Cfilter%20id%3D%22glow%22%20x%3D%22-20%25%22%20y%3D%22-20%25%22%20width%3D%22140%25%22%20height%3D%22140%25%22%3E%0A%20%20%20%20%20%20%3CfeDropShadow%20dx%3D%220%22%20dy%3D%221%22%20stdDeviation%3D%221.5%22%20flood-color%3D%22%23000%22%20flood-opacity%3D%220.6%22%2F%3E%0A%20%20%20%20%3C%2Ffilter%3E%0A%20%20%3C%2Fdefs%3E%0A%0A%20%20%3C!--%20Background%20squircle%20--%3E%0A%20%20%3Crect%20x%3D%222%22%20y%3D%222%22%20width%3D%2260%22%20height%3D%2260%22%20rx%3D%2214%22%20fill%3D%22url(%23bg)%22%20stroke%3D%22%23272b33%22%20stroke-width%3D%222%22%2F%3E%0A%0A%20%20%3C!--%20Python%20Dual%20Snake%20Silhouette%20--%3E%0A%20%20%3C!--%20Top%20Blue%20Segment%20--%3E%0A%20%20%3Cpath%20d%3D%22M31.8%2011.5c-7.2%200-6.8%203.1-6.8%203.1l.01%203.2h6.9v1h-9.7c-3.1%200-5.7%201.9-5.7%205.6%200%203.7%202.4%205.5%205.5%205.5h1.9v-2.8c0-3.1%202.7-5.8%205.8-5.8h9.6c2.6%200%204.6-2.1%204.6-4.7v-4.4c0-2.6-2.2-4.7-4.8-4.7h-7.3zm-2.4%202.5a1.2%201.2%200%201%201%200%202.4%201.2%201.2%200%200%201%200-2.4z%22%20fill%3D%22url(%23pyBlue)%22%20filter%3D%22url(%23glow)%22%2F%3E%0A%0A%20%20%3C!--%20Bottom%20Amber%20Segment%20--%3E%0A%20%20%3Cpath%20d%3D%22M32.2%2052.5c7.2%200%206.8-3.1%206.8-3.1l-.01-3.2h-6.9v-1h9.7c3.1%200%205.7-1.9%205.7-5.6%200-3.7-2.4-5.5-5.5-5.5h-1.9v2.8c0%203.1-2.7%205.8-5.8%205.8h-9.6c-2.6%200-4.6%202.1-4.6%204.7v4.4c0%202.6%202.2%204.7%204.8%204.7h7.3zm2.4-2.5a1.2%201.2%200%201%201%200-2.4%201.2%201.2%200%200%201%200%202.4z%22%20fill%3D%22url(%23pyYellow)%22%20filter%3D%22url(%23glow)%22%2F%3E%0A%0A%20%20%3C!--%20Live%20Step%20Execution%20Indicator%20Dot%20--%3E%0A%20%20%3Ccircle%20cx%3D%2249%22%20cy%3D%2215%22%20r%3D%223.5%22%20fill%3D%22%2322c55e%22%20stroke%3D%22%230f1115%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E">
   <meta name="description"
     content="Cohere Playground-inspired, live step-by-step Python execution visualizer and dry-run debugger powered by Pyodide WebAssembly.">
 
@@ -29,7 +30,7 @@
 
   <style>
     /* ==========================================================================
-       COHERE PLAYGROUND INSPRIRED DESIGN SYSTEM
+       COHERE PLAYGROUND INSPIRED DESIGN SYSTEM
        ========================================================================== */
     :root[data-theme="light"] {
       --bg-page: #f9f9fa;
@@ -99,6 +100,13 @@
       box-sizing: border-box;
       margin: 0;
       padding: 0;
+    }
+
+    html,
+    body {
+      height: 100vh;
+      max-height: 100vh;
+      overflow: hidden;
     }
 
     body {
@@ -297,12 +305,12 @@
       text-decoration: none;
     }
 
-    .brand-logo .dot {
-      width: 14px;
-      height: 14px;
-      border-radius: 4px;
-      background: linear-gradient(135deg, #e06c53, #111317);
-      display: inline-block;
+    .brand-logo svg {
+      width: 22px;
+      height: 22px;
+      border-radius: 6px;
+      flex-shrink: 0;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
     }
 
     .brand-logo span.tagline {
@@ -411,7 +419,8 @@
     /* MAIN WORKSPACE */
     .main-workspace-container {
       flex: 1;
-      height: calc(100vh - 110px);
+      height: calc(100vh - 105px);
+      min-height: 0;
       display: flex;
       flex-direction: column;
       overflow: hidden;
@@ -434,10 +443,11 @@
       display: grid !important;
       grid-template-columns: 460px 1fr !important;
       height: 100% !important;
+      min-height: 0 !important;
       overflow: hidden !important;
     }
 
-    @media (max-width: 1080px) {
+    @media (max-width: 900px) {
       #viewTrace.active {
         grid-template-columns: 1fr !important;
         overflow-y: auto !important;
@@ -446,10 +456,12 @@
       .panel-left {
         border-right: none !important;
         border-bottom: 1px solid var(--border-main);
+        height: auto !important;
+        max-height: 400px;
       }
 
       .panel-right {
-        height: 500px !important;
+        height: 600px !important;
       }
     }
 
@@ -458,9 +470,11 @@
       background: var(--bg-card);
       border-right: 1px solid var(--border-main);
       overflow-y: auto;
+      overflow-x: hidden;
       display: flex;
       flex-direction: column;
       height: 100%;
+      min-height: 0;
     }
 
     .param-group {
@@ -603,8 +617,10 @@
       flex-direction: column;
       overflow: hidden;
       height: 100%;
+      min-height: 0;
     }
 
+    /* Editor Tab Strip */
     .editor-tab-strip {
       background: #14161a;
       border-bottom: 1px solid var(--border-dark);
@@ -612,7 +628,9 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
+      height: 40px;
       min-height: 40px;
+      flex-shrink: 0;
     }
 
     .editor-tabs {
@@ -665,21 +683,21 @@
       color: var(--text-light);
     }
 
-    .editor-split-container {
-      display: grid;
-      grid-template-rows: 1fr 200px;
-      flex: 1;
-      overflow: hidden;
-      height: calc(100% - 40px);
-    }
-
+    /* CodeMirror wrapper — takes remaining space above console */
     .codemirror-wrapper {
-      height: 100%;
+      flex: 1 1 0%;
+      min-height: 0;
       position: relative;
       overflow: hidden;
+      height: 100%;
     }
 
     .CodeMirror {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
       height: 100% !important;
       font-family: 'JetBrains Mono', monospace !important;
       font-size: 13px !important;
@@ -716,150 +734,437 @@
       border-left: 3px solid #d29922 !important;
     }
 
-    .response-pane {
-      border-top: 1px solid var(--border-dark);
-      background: #121418;
+    /* =========================================================
+       CONSOLE PANEL — Fixed-height bottom area: INPUT | OUTPUT | ERROR
+       ========================================================= */
+    .console-panel {
+      height: 220px;
+      min-height: 220px;
+      max-height: 220px;
+      flex-shrink: 0;
       display: flex;
       flex-direction: column;
+      border-top: 1px solid var(--border-dark);
+      background: #121418;
       overflow: hidden;
+      position: relative;
     }
 
-    .response-header {
-      padding: 6px 16px;
+    .console-tab-strip {
+      height: 38px;
+      min-height: 38px;
       background: #15181e;
       border-bottom: 1px solid var(--border-dark);
+      padding: 0 16px;
       display: flex;
       align-items: center;
       justify-content: space-between;
+      flex-shrink: 0;
+    }
+
+    .console-tabs {
+      display: flex;
+      align-items: center;
+      height: 100%;
+      gap: 0;
+    }
+
+    .console-tab {
+      display: flex;
+      align-items: center;
+      padding: 0 14px;
+      height: 100%;
       font-size: 11px;
       font-weight: 600;
-      letter-spacing: 0.5px;
+      letter-spacing: 0.6px;
       text-transform: uppercase;
+      color: var(--text-light-muted);
+      cursor: pointer;
+      background: none;
+      border: none;
+      border-bottom: 2px solid transparent;
+      transition: all 0.15s;
+    }
+
+    .console-tab:hover {
+      color: var(--text-light);
+    }
+
+    .console-tab.active {
+      color: var(--text-light);
+      border-bottom-color: var(--accent-blue);
+    }
+
+    [data-theme="light"] .console-tab.active {
+      color: var(--text-main);
+      border-bottom-color: var(--accent-blue);
+    }
+
+    .console-tab.tab-has-error {
+      color: var(--accent-red);
+    }
+
+    .console-tab.tab-has-error.active {
+      border-bottom-color: var(--accent-red);
+      color: var(--accent-red);
+    }
+
+    .console-tab-divider {
+      color: var(--border-dark);
+      padding: 0 2px;
+      user-select: none;
+      font-size: 12px;
+    }
+
+    .console-header-actions {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 11px;
       color: var(--text-light-muted);
     }
 
-    .terminal-output {
-      padding: 10px 14px;
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 12px;
-      color: #e6edf3;
-      white-space: pre-wrap;
-      word-break: break-all;
-      overflow-y: auto;
-      flex: 1;
+    .console-status-label {
+      font-size: 11px;
+      color: var(--text-light-muted);
     }
 
-    /* FULL TAB VIEWS */
-    .full-tab-container {
-      width: 100%;
+    .console-body {
+      flex: 1;
+      min-height: 0;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .console-pane {
+      display: none;
+      position: absolute;
+      inset: 0;
+      overflow: hidden;
+    }
+
+    .console-pane.active {
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* INPUT tab — CodeMirror editor with blue line numbers */
+    /* INPUT tab — polished stdin editor */
+    .input-pane-inner {
+      display: flex;
+      flex-direction: column;
+      position: absolute;
+      inset: 0;
       height: 100%;
+      overflow: hidden;
+    }
+
+    .input-pane-hint {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      padding: 6px 14px;
+      background: rgba(56, 189, 248, 0.07);
+      border-bottom: 1px solid rgba(56, 189, 248, 0.15);
+      font-size: 11px;
+      color: #38bdf8;
+      flex-shrink: 0;
+    }
+
+    .input-pane-hint svg {
+      flex-shrink: 0;
+      opacity: 0.85;
+    }
+
+    .input-editor-wrapper {
+      flex: 1 1 0%;
+      min-height: 0;
+      position: relative;
+      overflow: hidden;
+      height: 100%;
+    }
+
+    .input-editor-wrapper .CodeMirror {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      height: 100% !important;
+      font-size: 13px !important;
+      background: #0a0d12 !important;
+      color: #e2e8f0 !important;
+    }
+
+    .input-editor-wrapper .CodeMirror-linenumber {
+      color: #38bdf8 !important;
+      font-size: 11px !important;
+    }
+
+    [data-theme="light"] .input-editor-wrapper .CodeMirror-linenumber {
+      color: #0066cc !important;
+    }
+
+    .input-editor-wrapper .CodeMirror-gutters {
+      background: #0a0d12 !important;
+      border-right: 1px solid rgba(56, 189, 248, 0.2) !important;
+    }
+
+    .input-editor-wrapper .CodeMirror-cursor {
+      border-left-color: #38bdf8 !important;
+    }
+
+    .input-editor-wrapper .CodeMirror-placeholder {
+      color: #3d5a72 !important;
+      font-style: italic;
+    }
+
+    /* OUTPUT / ERROR — terminal-style pre */
+    .terminal-output {
+      flex: 1;
+      min-height: 0;
+      padding: 12px 16px;
+      overflow-y: auto;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 12.5px;
+      line-height: 1.6;
+      color: var(--text-light);
+      white-space: pre-wrap;
+      word-break: break-all;
+      background: #0f1115;
+    }
+
+    .terminal-output.error-console {
+      color: var(--accent-red);
+    }
+
+    .terminal-output.error-console.no-error {
+      color: var(--text-light-muted);
+    }
+
+    /* =========================================================
+       FULL TAB VIEWS (Dry-Run Matrix, AI Tutor, etc.)
+       ========================================================= */
+    .full-tab-container {
+      flex: 1;
+      min-height: 0;
       overflow-y: auto;
       padding: 20px;
-      flex-direction: column;
-      gap: 16px;
     }
 
     .tab-card {
       background: var(--bg-card);
       border: 1px solid var(--border-main);
       border-radius: 8px;
-      padding: 16px;
-      display: flex;
-      flex-direction: column;
-      gap: 12px;
-      box-shadow: var(--shadow-sm);
+      overflow: hidden;
+      margin-bottom: 16px;
     }
 
     .tab-card-header {
+      padding: 12px 18px;
+      border-bottom: 1px solid var(--border-main);
       display: flex;
       align-items: center;
       justify-content: space-between;
-      border-bottom: 1px solid var(--border-subtle);
-      padding-bottom: 10px;
+      background: var(--bg-card-elevated);
     }
 
     .tab-card-title {
-      font-size: 14px;
       font-weight: 700;
-      display: flex;
-      align-items: center;
-      gap: 8px;
+      font-size: 13px;
     }
 
     .dry-run-table {
       width: 100%;
       border-collapse: collapse;
-      font-size: 11.5px;
+      font-size: 12px;
       font-family: 'JetBrains Mono', monospace;
     }
 
     .dry-run-table th {
-      position: sticky;
-      top: 0;
-      background: var(--bg-card-elevated);
-      padding: 8px 10px;
       text-align: left;
-      font-weight: 600;
-      border-bottom: 1px solid var(--border-main);
-      z-index: 10;
+      padding: 8px 12px;
+      background: var(--bg-card-elevated);
+      border-bottom: 2px solid var(--border-main);
+      font-weight: 700;
+      color: var(--text-muted);
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.4px;
     }
 
     .dry-run-table td {
-      padding: 6px 10px;
+      padding: 7px 12px;
       border-bottom: 1px solid var(--border-subtle);
-      white-space: nowrap;
+      vertical-align: top;
     }
 
-    .dry-run-table tr.current-step-row {
-      background: var(--current-line);
-      font-weight: 600;
-    }
-
-    .dry-run-table tr:hover {
-      background: rgba(255, 255, 255, 0.03);
+    .dry-run-table tr:hover td {
+      background: var(--bg-card-elevated);
     }
 
     .cell-changed {
-      background: var(--accent-green-bg);
-      color: var(--accent-green);
+      background: var(--accent-yellow-bg);
+      color: var(--accent-yellow);
       font-weight: 600;
     }
 
     .cell-hidden-quiz {
-      filter: blur(4px);
-      user-select: none;
-      background: var(--border-subtle);
+      background: var(--bg-card-elevated);
+      color: transparent;
+      border-radius: 3px;
       cursor: pointer;
+      user-select: none;
     }
 
     .flowchart-wrapper {
-      background: #0f1115;
-      border: 1px solid var(--border-main);
-      border-radius: 8px;
       padding: 16px;
-      min-height: 250px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      overflow: auto;
+      overflow-x: auto;
+      min-height: 200px;
     }
 
     .flowchart-node-active {
+      fill: var(--accent-coral-bg) !important;
       stroke: var(--accent-coral) !important;
-      stroke-width: 3px !important;
-      filter: drop-shadow(0 0 6px var(--accent-coral));
     }
 
     .ai-chat-box {
-      border: 1px solid var(--border-main);
-      border-radius: 8px;
-      background: var(--bg-card-elevated);
-      padding: 14px;
-      min-height: 200px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      padding: 16px;
       max-height: 380px;
       overflow-y: auto;
       font-size: 13px;
       line-height: 1.6;
+    }
+
+    /* =========================================================
+       METRICS TAB
+       ========================================================= */
+    .metrics-stat-row {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 12px;
+      margin-bottom: 12px;
+    }
+
+    .metrics-stat-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-main);
+      border-radius: 10px;
+      padding: 14px 16px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      transition: border-color 0.15s, box-shadow 0.15s;
+    }
+
+    .metrics-stat-card:hover {
+      border-color: var(--border-dark);
+      box-shadow: var(--shadow-sm);
+    }
+
+    .metrics-stat-icon {
+      width: 36px;
+      height: 36px;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .metrics-stat-body {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+      min-width: 0;
+    }
+
+    .metrics-stat-label {
+      font-size: 11px;
+      color: var(--text-muted);
+      font-weight: 500;
+      white-space: nowrap;
+    }
+
+    .metrics-stat-value {
+      font-size: 24px;
+      font-family: 'JetBrains Mono', monospace;
+      font-weight: 700;
+      line-height: 1.1;
+      letter-spacing: -0.5px;
+    }
+
+    .metrics-warn-card {
+      display: flex !important;
+      align-items: flex-start;
+      gap: 10px;
+      padding: 12px 16px;
+      background: var(--accent-yellow-bg) !important;
+      border-color: rgba(210, 153, 34, 0.4) !important;
+      border-radius: 8px;
+      margin-bottom: 12px;
+    }
+
+    .metrics-insight-card {
+      display: flex;
+      align-items: flex-start;
+      gap: 8px;
+      padding: 12px 16px;
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: 8px;
+      margin-top: 4px;
+    }
+
+    @media (max-width: 900px) {
+      .metrics-stat-row {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    /* =========================================================
+       HOTSPOT CHART
+       ========================================================= */
+    .hotspot-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 8px;
+    }
+
+    .hotspot-line-label {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      color: var(--text-muted);
+      width: 36px;
+      text-align: right;
+      flex-shrink: 0;
+    }
+
+    .hotspot-bar-track {
+      flex: 1;
+      height: 14px;
+      background: var(--bg-card-elevated);
+      border-radius: 3px;
+      overflow: hidden;
+    }
+
+    .hotspot-bar-fill {
+      height: 100%;
+      border-radius: 3px;
+      background: linear-gradient(90deg, var(--accent-coral), #f97559cc);
+      transition: width 0.3s ease;
+    }
+
+    .hotspot-count-label {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      color: var(--text-muted);
+      width: 36px;
+      flex-shrink: 0;
     }
 
     /* BOTTOM ACTION BAR */
@@ -874,6 +1179,7 @@
       position: sticky;
       bottom: 0;
       z-index: 40;
+      flex-shrink: 0;
     }
 
     .stepper-cluster {
@@ -974,6 +1280,7 @@
       background: var(--bg-card-elevated);
     }
 
+    /* TOAST */
     .loading-toast {
       position: fixed;
       bottom: 60px;
@@ -1011,6 +1318,28 @@
         transform: rotate(360deg);
       }
     }
+
+    /* Light theme overrides for code pane elements */
+    [data-theme="light"] .panel-right {
+      background: #1a1d24;
+    }
+
+    [data-theme="light"] .editor-tab-strip {
+      background: #14161a;
+    }
+
+    [data-theme="light"] .console-panel {
+      background: #121418;
+    }
+
+    [data-theme="light"] .console-tab-strip {
+      background: #15181e;
+    }
+
+    [data-theme="light"] .terminal-output {
+      background: #0f1115;
+      color: #c9d1d9;
+    }
   </style>
 </head>
 
@@ -1021,6 +1350,33 @@
     <div class="brand-group">
       <a href="#" class="brand-logo" onclick="event.preventDefault()">
         <span class="dot"></span>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="22" height="22">
+          <defs>
+            <linearGradient id="hdrBg" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stop-color="#181b22" />
+              <stop offset="100%" stop-color="#0f1115" />
+            </linearGradient>
+            <linearGradient id="hdrPyBlue" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stop-color="#38bdf8" />
+              <stop offset="100%" stop-color="#0284c7" />
+            </linearGradient>
+            <linearGradient id="hdrPyYellow" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stop-color="#fbbf24" />
+              <stop offset="100%" stop-color="#f97316" />
+            </linearGradient>
+            <filter id="hdrGlow" x="-20%" y="-20%" width="140%" height="140%">
+              <feDropShadow dx="0" dy="1" stdDeviation="1.5" flood-color="#000" flood-opacity="0.6" />
+            </filter>
+          </defs>
+          <rect x="2" y="2" width="60" height="60" rx="14" fill="url(#hdrBg)" stroke="#272b33" stroke-width="2" />
+          <path
+            d="M31.8 11.5c-7.2 0-6.8 3.1-6.8 3.1l.01 3.2h6.9v1h-9.7c-3.1 0-5.7 1.9-5.7 5.6 0 3.7 2.4 5.5 5.5 5.5h1.9v-2.8c0-3.1 2.7-5.8 5.8-5.8h9.6c2.6 0 4.6-2.1 4.6-4.7v-4.4c0-2.6-2.2-4.7-4.8-4.7h-7.3zm-2.4 2.5a1.2 1.2 0 1 1 0 2.4 1.2 1.2 0 0 1 0-2.4z"
+            fill="url(#hdrPyBlue)" filter="url(#hdrGlow)" />
+          <path
+            d="M32.2 52.5c7.2 0 6.8-3.1 6.8-3.1l-.01-3.2h-6.9v-1h9.7c3.1 0 5.7-1.9 5.7-5.6 0-3.7-2.4-5.5-5.5-5.5h-1.9v2.8c0 3.1-2.7 5.8-5.8 5.8h-9.6c-2.6 0-4.6 2.1-4.6 4.7v4.4c0 2.6 2.2 4.7 4.8-4.7h7.3zm2.4-2.5a1.2 1.2 0 1 1 0-2.4 1.2 1.2 0 0 1 0 2.4z"
+            fill="url(#hdrPyYellow)" filter="url(#hdrGlow)" />
+          <circle cx="49" cy="15" r="3.5" fill="#22c55e" stroke="#0f1115" stroke-width="1.5" />
+        </svg>
         <span>python dry-run lab</span>
         <span class="tagline">playground</span>
       </a>
@@ -1160,22 +1516,15 @@
             comfortably.</span>
         </div>
 
-        <!-- Input Drawer -->
-        <div class="param-group" id="inputDrawer" style="display:none;">
-          <div class="param-header">
-            <span class="param-title">stdin_inputs <span class="param-type">list</span></span>
-            <span style="font-size:10.5px; color:var(--accent-coral);">input() detected</span>
-          </div>
-          <textarea id="prefillInputText" rows="2" placeholder="Pre-fill input values (one per line)"></textarea>
-        </div>
+        <div class="param-group" id="inputDrawer" style="display:none;"></div>
       </section>
 
       <!-- Right Code & Output Panel -->
       <section class="panel-right">
+        <!-- Editor Tab Strip -->
         <div class="editor-tab-strip">
           <div class="editor-tabs">
             <div class="editor-tab active" data-pane="python">PYTHON</div>
-            <div class="editor-tab" data-pane="stdout">STDOUT</div>
           </div>
           <div class="pane-header-actions">
             <span style="font-size:11px; font-family:monospace; color:var(--text-light-muted);" id="lineCountLabel">0
@@ -1186,21 +1535,57 @@
           </div>
         </div>
 
-        <div class="editor-split-container">
-          <div class="codemirror-wrapper">
-            <textarea id="codeTextarea"></textarea>
+        <!-- CodeMirror editor — flex:1 takes all space above console -->
+        <div class="codemirror-wrapper">
+          <textarea id="codeTextarea"></textarea>
+        </div>
+
+        <!-- Fixed Bottom Console: INPUT | OUTPUT | ERROR -->
+        <div class="console-panel" id="consolePanel">
+          <div class="console-tab-strip">
+            <div class="console-tabs">
+              <button type="button" class="console-tab" data-tab="input" id="tabBtnInput">INPUT</button>
+              <span class="console-tab-divider">|</span>
+              <button type="button" class="console-tab active" data-tab="output" id="tabBtnOutput">OUTPUT</button>
+              <span class="console-tab-divider">|</span>
+              <button type="button" class="console-tab" data-tab="error" id="tabBtnError">ERROR</button>
+            </div>
+            <div class="console-header-actions">
+              <span id="responseStatusLabel" class="console-status-label">RESPONSE • 200 (READY)</span>
+              <span class="pane-action-link" id="btnClearConsole">Clear</span>
+              <span class="pane-action-link" id="btnCopyConsole">Copy</span>
+            </div>
           </div>
-          <div class="response-pane">
-            <div class="response-header">
-              <span id="responseStatusLabel">RESPONSE • 200 (READY)</span>
-              <div style="display:flex; gap:12px;">
-                <span class="pane-action-link" id="btnClearStdout">Clear</span>
-                <span class="pane-action-link" id="btnCopyStdout">Copy</span>
+          <div class="console-body">
+            <!-- INPUT TAB CONTENT -->
+            <div class="console-pane" id="paneInput" data-tab-content="input">
+              <div class="input-pane-inner">
+                <div class="input-pane-hint">
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
+                    stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="12" cy="12" r="10" />
+                    <line x1="12" y1="8" x2="12" y2="12" />
+                    <line x1="12" y1="16" x2="12.01" y2="16" />
+                  </svg>
+                  One value per line &middot; fed to <code
+                    style="background:rgba(56,189,248,0.12);padding:1px 5px;border-radius:3px;font-size:10.5px;">input()</code>
+                  calls in order
+                </div>
+                <div class="input-editor-wrapper">
+                  <textarea id="prefillInputText" placeholder="e.g.  5&#10;hello world&#10;42"></textarea>
+                </div>
               </div>
             </div>
-            <div class="terminal-output" id="stdoutConsole">No output produced yet. Click RUN to execute.</div>
+            <!-- OUTPUT TAB CONTENT -->
+            <div class="console-pane active" id="paneOutput" data-tab-content="output">
+              <div class="terminal-output" id="stdoutConsole">No output produced yet. Click RUN to execute.</div>
+            </div>
+            <!-- ERROR TAB CONTENT -->
+            <div class="console-pane" id="paneError" data-tab-content="error">
+              <div class="terminal-output error-console no-error" id="errorConsole">No errors.</div>
+            </div>
           </div>
-        </div>
+      </div>
       </section>
     </div>
 
@@ -1271,9 +1656,13 @@
               <option value="mixtral-8x7b-32768">Mixtral 8x7B</option>
               <option value="__custom__">Custom Model...</option>
             </select>
-            <input type="text" id="aiCustomModelInput" placeholder="Enter model ID..." style="display:none; padding:2px 8px; font-size:12px; width:150px; border-radius:4px;">
-            <button id="btnFetchModels" class="btn btn-sm" style="font-size:11px; padding:2px 7px;" title="Query all authorized models directly from Groq API">🔄 Detect My Models</button>
-            <button id="btnTestModels" class="btn btn-sm" style="font-size:11px; padding:2px 7px; color:var(--accent-coral);" title="Run a live test on models and remove any that error">🧪 Test & Filter Models</button>
+            <input type="text" id="aiCustomModelInput" placeholder="Enter model ID..."
+              style="display:none; padding:2px 8px; font-size:12px; width:150px; border-radius:4px;">
+            <button id="btnFetchModels" class="btn btn-sm" style="font-size:11px; padding:2px 7px;"
+              title="Query all authorized models directly from Groq API">🔄 Detect My Models</button>
+            <button id="btnTestModels" class="btn btn-sm"
+              style="font-size:11px; padding:2px 7px; color:var(--accent-coral);"
+              title="Run a live test on models and remove any that error">🧪 Test & Filter Models</button>
             <span id="aiModelStatusBadge" style="font-size:11px; color:var(--text-muted);"></span>
           </div>
           <div style="display:flex; align-items:center; gap:10px;">
@@ -1365,115 +1754,143 @@
 
     <!-- VIEW 5: METRICS & HOTSPOTS -->
     <div id="viewMetrics" class="tab-view full-tab-container">
-      <div style="display:grid; grid-template-columns: repeat(4, 1fr); gap:12px;">
-        <div class="tab-card">
-          <span style="font-size:11px; color:var(--text-muted);">Total Recorded Steps</span>
-          <strong id="metricTotalSteps" style="font-size:22px; color:var(--accent-coral);">0</strong>
+      <!-- Stat Cards Row -->
+      <div class="metrics-stat-row">
+        <div class="metrics-stat-card">
+          <div class="metrics-stat-icon" style="background:rgba(249,117,89,0.12);color:#f97559;">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+          </div>
+          <div class="metrics-stat-body">
+            <span class="metrics-stat-label">Total Steps</span>
+            <strong class="metrics-stat-value" id="metricTotalSteps" style="color:var(--accent-coral);">—</strong>
+          </div>
         </div>
-        <div class="tab-card">
-          <span style="font-size:11px; color:var(--text-muted);">Execution Time</span>
-          <strong id="metricTime" style="font-size:22px; color:var(--accent-green);">0 ms</strong>
+        <div class="metrics-stat-card">
+          <div class="metrics-stat-icon" style="background:rgba(63,185,80,0.12);color:#3fb950;">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+          </div>
+          <div class="metrics-stat-body">
+            <span class="metrics-stat-label">Execution Time</span>
+            <strong class="metrics-stat-value" id="metricTime" style="color:var(--accent-green);">—</strong>
+          </div>
         </div>
-        <div class="tab-card">
-          <span style="font-size:11px; color:var(--text-muted);">Max Call-Stack Depth</span>
-          <strong id="metricMaxDepth" style="font-size:22px; color:var(--accent-blue);">0</strong>
+        <div class="metrics-stat-card">
+          <div class="metrics-stat-icon" style="background:rgba(88,166,255,0.12);color:#58a6ff;">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="4" y1="21" x2="4" y2="14"/><line x1="4" y1="10" x2="4" y2="3"/><line x1="12" y1="21" x2="12" y2="12"/><line x1="12" y1="8" x2="12" y2="3"/><line x1="20" y1="21" x2="20" y2="16"/><line x1="20" y1="12" x2="20" y2="3"/><line x1="1" y1="14" x2="7" y2="14"/><line x1="9" y1="8" x2="15" y2="8"/><line x1="17" y1="16" x2="23" y2="16"/></svg>
+          </div>
+          <div class="metrics-stat-body">
+            <span class="metrics-stat-label">Max Stack Depth</span>
+            <strong class="metrics-stat-value" id="metricMaxDepth" style="color:var(--accent-blue);">—</strong>
+          </div>
         </div>
-        <div class="tab-card">
-          <span style="font-size:11px; color:var(--text-muted);">Line Coverage</span>
-          <strong id="metricCoverage" style="font-size:22px; color:var(--accent-yellow);">0%</strong>
+        <div class="metrics-stat-card">
+          <div class="metrics-stat-icon" style="background:rgba(210,153,34,0.12);color:#d29922;">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+          </div>
+          <div class="metrics-stat-body">
+            <span class="metrics-stat-label">Line Coverage</span>
+            <strong class="metrics-stat-value" id="metricCoverage" style="color:var(--accent-yellow);">—</strong>
+          </div>
         </div>
       </div>
 
-      <div class="tab-card" id="recursionWarningBox"
-        style="display:none; background:var(--accent-yellow-bg); border-color:var(--accent-yellow);">
-        <strong style="color:var(--accent-yellow);">⚠️ Deep Recursion Detected:</strong>
-        <span style="font-size:12px;">Call stack reached depth <span id="recDepthSpan">0</span>. Be mindful of Python
-          recursion limits (1,000).</span>
+      <!-- Recursion Warning -->
+      <div class="tab-card metrics-warn-card" id="recursionWarningBox" style="display:none;">
+        <span style="font-size:16px;">⚠️</span>
+        <div>
+          <strong style="color:var(--accent-yellow); font-size:12.5px;">Deep Recursion Detected</strong><br>
+          <span style="font-size:12px; color:var(--text-muted);">Call stack reached depth <strong id="recDepthSpan" style="color:var(--accent-yellow);">0</strong> — Python's default recursion limit is 1,000.</span>
+        </div>
       </div>
 
+      <!-- Hotspot Chart -->
       <div class="tab-card">
         <div class="tab-card-header">
-          <span class="tab-card-title">🔥 Hotspots: Line Execution Frequency</span>
-          <span style="font-size:11px; color:var(--text-muted);">Identifies bottleneck lines inside nested loops</span>
+          <span class="tab-card-title">🔥 Line Execution Hotspots</span>
+          <span style="font-size:11px; color:var(--text-muted);">Most-hit lines reveal nested loop bottlenecks</span>
         </div>
-        <div id="hotspotChartContainer" style="padding:10px; min-height:160px;">
-          <span style="color:var(--text-muted); font-size:12px;">Click "⚡ RUN" to view execution frequency chart.</span>
+        <div id="hotspotChartContainer" style="padding:14px 16px; min-height:120px; display:flex; align-items:center;">
+          <span style="color:var(--text-muted); font-size:12px;">Click <strong>▶ RUN</strong> to generate the execution frequency chart.</span>
         </div>
       </div>
 
-      <div class="tab-card" style="font-size:12.5px; color:var(--text-muted);">
-        💡 <em>"Steps are a rough stand-in for work done. It's how you feel the difference between O(n) and O(n²)."</em>
+      <!-- Insight Quote -->
+      <div class="metrics-insight-card">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color:var(--accent-coral);flex-shrink:0;margin-top:1px;"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+        <em style="color:var(--text-muted); font-size:12px; line-height:1.6;">"Steps are a rough stand-in for work done. It's how you <em style="color:var(--text-main);">feel</em> the difference between O(n) and O(n²)."</em>
       </div>
     </div>
 
     <!-- VIEW 6: COMPARE MODE -->
-    <div id="viewCompare" class="tab-view full-tab-container">
-      <div class="tab-card">
-        <div class="tab-card-header">
-          <div class="tab-card-title">
-            <span>⚖️ Algorithmic Compare Mode: Head-to-Head</span>
-            <span class="badge badge-coral">Benchmark</span>
-          </div>
-          <button id="btnRunCompare" class="btn btn-run btn-sm">▶ Benchmark Both</button>
-        </div>
+                    <div id="viewCompare" class="tab-view full-tab-container">
+                      <div class="tab-card">
+                        <div class="tab-card-header">
+                          <div class="tab-card-title">
+                            <span>⚖️ Algorithmic Compare Mode: Head-to-Head</span>
+                            <span class="badge badge-coral">Benchmark</span>
+                          </div>
+                          <button id="btnRunCompare" class="btn btn-run btn-sm">▶ Benchmark Both</button>
+                        </div>
 
-        <div style="display:grid; grid-template-columns: 1fr 1fr; gap:16px; min-height:280px;">
-          <div style="display:flex; flex-direction:column; gap:6px;">
-            <strong style="font-size:12px;">Implementation A (e.g. Iterative Factorial)</strong>
-            <textarea id="compareCodeA"
-              style="flex:1; font-family:'JetBrains Mono',monospace; font-size:12px; padding:10px; resize:none;"></textarea>
-          </div>
-          <div style="display:flex; flex-direction:column; gap:6px;">
-            <strong style="font-size:12px;">Implementation B (e.g. Recursive Factorial)</strong>
-            <textarea id="compareCodeB"
-              style="flex:1; font-family:'JetBrains Mono',monospace; font-size:12px; padding:10px; resize:none;"></textarea>
-          </div>
-        </div>
+                        <div style="display:grid; grid-template-columns: 1fr 1fr; gap:16px; min-height:280px;">
+                          <div style="display:flex; flex-direction:column; gap:6px;">
+                            <strong style="font-size:12px;">Implementation A (e.g. Iterative Factorial)</strong>
+                            <textarea id="compareCodeA"
+                              style="flex:1; font-family:'JetBrains Mono',monospace; font-size:12px; padding:10px; resize:none;"></textarea>
+                          </div>
+                          <div style="display:flex; flex-direction:column; gap:6px;">
+                            <strong style="font-size:12px;">Implementation B (e.g. Recursive Factorial)</strong>
+                            <textarea id="compareCodeB"
+                              style="flex:1; font-family:'JetBrains Mono',monospace; font-size:12px; padding:10px; resize:none;"></textarea>
+                          </div>
+                        </div>
 
-        <div id="compareResultsCard"
-          style="padding:14px; background:var(--bg-card-elevated); border:1px solid var(--border-main); border-radius:6px; font-size:12.5px;">
-          <span style="color:var(--text-muted);">Click "Benchmark Both" to compare execution steps, time, and stack
-            depth side-by-side.</span>
-        </div>
-      </div>
-    </div>
+                        <div id="compareResultsCard"
+                          style="padding:14px; background:var(--bg-card-elevated); border:1px solid var(--border-main); border-radius:6px; font-size:12.5px;">
+                          <span style="color:var(--text-muted);">Click "Benchmark Both" to compare execution steps,
+                            time, and stack
+                            depth side-by-side.</span>
+                        </div>
+                      </div>
+                    </div>
 
-    <!-- VIEW 7: SHARE & HISTORY -->
-    <div id="viewHistory" class="tab-view full-tab-container">
-      <div class="tab-card">
-        <div class="tab-card-header">
-          <span class="tab-card-title">🔗 Shareable Session Link</span>
-        </div>
-        <div style="display:flex; gap:8px;">
-          <input type="text" id="shareUrlInput" readonly placeholder="Click Copy to create a shareable URL hash"
-            style="flex:1;">
-          <button id="btnGenerateShare" class="btn btn-sm">Copy Link</button>
-        </div>
-        <span style="font-size:11px; color:var(--text-muted);">Encodes the script and inputs into the URL hash. No
-          server storage needed.</span>
-      </div>
+                    <!-- VIEW 7: SHARE & HISTORY -->
+                    <div id="viewHistory" class="tab-view full-tab-container">
+                      <div class="tab-card">
+                        <div class="tab-card-header">
+                          <span class="tab-card-title">🔗 Shareable Session Link</span>
+                        </div>
+                        <div style="display:flex; gap:8px;">
+                          <input type="text" id="shareUrlInput" readonly
+                            placeholder="Click Copy to create a shareable URL hash" style="flex:1;">
+                          <button id="btnGenerateShare" class="btn btn-sm">Copy Link</button>
+                        </div>
+                        <span style="font-size:11px; color:var(--text-muted);">Encodes the script and inputs into the
+                          URL hash. No
+                          server storage needed.</span>
+                      </div>
 
-      <div class="tab-card">
-        <div class="tab-card-header">
-          <span class="tab-card-title">📦 Trace & Report Export</span>
-        </div>
-        <div style="display:flex; gap:8px;">
-          <button id="btnExportJsonTrace" class="btn btn-sm">Download Trace (JSON)</button>
-          <button id="btnExportSessionMd" class="btn btn-sm">Download Report (Markdown)</button>
-        </div>
-      </div>
+                      <div class="tab-card">
+                        <div class="tab-card-header">
+                          <span class="tab-card-title">📦 Trace & Report Export</span>
+                        </div>
+                        <div style="display:flex; gap:8px;">
+                          <button id="btnExportJsonTrace" class="btn btn-sm">Download Trace (JSON)</button>
+                          <button id="btnExportSessionMd" class="btn btn-sm">Download Report (Markdown)</button>
+                        </div>
+                      </div>
 
-      <div class="tab-card">
-        <div class="tab-card-header">
-          <span class="tab-card-title">📜 Session History</span>
-          <button id="btnClearHistory" class="btn btn-sm">Clear History</button>
-        </div>
-        <div id="historyListContainer"
-          style="display:flex; flex-direction:column; gap:6px; max-height:220px; overflow-y:auto;">
-          <span style="color:var(--text-muted); font-size:12px;">No runs recorded yet.</span>
-        </div>
-      </div>
-    </div>
+                      <div class="tab-card">
+                        <div class="tab-card-header">
+                          <span class="tab-card-title">📜 Session History</span>
+                          <button id="btnClearHistory" class="btn btn-sm">Clear History</button>
+                        </div>
+                        <div id="historyListContainer"
+                          style="display:flex; flex-direction:column; gap:6px; max-height:220px; overflow-y:auto;">
+                          <span style="color:var(--text-muted); font-size:12px;">No runs recorded yet.</span>
+                        </div>
+                      </div>
+                    </div>
 
   </main>
 
@@ -2117,6 +2534,20 @@ initPyodide();
       codeEditor.clearGutter('breakpoint-gutter');
     }
 
+    /* Initialize Input CodeMirror Editor */
+    const inputEditor = CodeMirror.fromTextArea(document.getElementById('prefillInputText'), {
+      mode: null,
+      theme: 'dracula',
+      lineNumbers: true,
+      lineWrapping: true,
+      tabSize: 4,
+      indentUnit: 4
+    });
+
+    inputEditor.on('change', () => {
+      document.getElementById('prefillInputText').value = inputEditor.getValue();
+    });
+
     codeEditor.on('change', () => {
       document.getElementById('lineCountLabel').textContent = codeEditor.lineCount() + ' lines';
       checkInputUsage();
@@ -2125,9 +2556,46 @@ initPyodide();
     function checkInputUsage() {
       const hasInput = /\binput\s*\(/.test(codeEditor.getValue());
       document.getElementById('inputDrawer').style.display = hasInput ? 'flex' : 'none';
+      const inputTab = document.getElementById('tabBtnInput');
+      if (inputTab) {
+        if (hasInput) {
+          inputTab.innerHTML = 'INPUT <span style="display:inline-block; width:6px; height:6px; border-radius:50%; background:var(--accent-coral); margin-left:2px;" title="input() detected"></span>';
+          inputTab.innerHTML = 'INPUT <span style="display:inline-block;width:6px;height:6px;border-radius:50%;background:var(--accent-coral);margin-left:2px;" title="input() detected"></span>';
+        } else {
+          inputTab.textContent = 'INPUT';
+        }
+      }
     }
 
     /* 5. TAB SWITCHING (ALL TABS WORK!) */
+    /* 5. CONSOLE TABS (INPUT | OUTPUT | ERROR) */
+    function switchConsoleTab(tabKey) {
+      document.querySelectorAll('.console-tab').forEach(btn => {
+        btn.classList.toggle('active', btn.getAttribute('data-tab') === tabKey);
+      });
+      document.querySelectorAll('.console-pane').forEach(pane => {
+        const isActive = pane.getAttribute('data-tab-content') === tabKey;
+        pane.classList.toggle('active', isActive);
+        pane.style.display = isActive ? 'flex' : 'none';
+      });
+      if (tabKey === 'input' && inputEditor) {
+        setTimeout(() => {
+          inputEditor.setSize('100%', '100%');
+          inputEditor.refresh();
+          inputEditor.focus();
+        }, 30);
+      }
+    }
+
+
+
+    document.querySelectorAll('.console-tab').forEach(tab => {
+      tab.addEventListener('click', () => {
+        switchConsoleTab(tab.getAttribute('data-tab'));
+      });
+    });
+
+    /* 6. TAB SWITCHING (ALL TOP VIEWS WORK!) */
     const modePills = document.querySelectorAll('.mode-pill');
     const tabViews = {
       trace: document.getElementById('viewTrace'),
@@ -2152,6 +2620,10 @@ initPyodide();
           if (k === 'trace') {
             viewEl.style.display = 'grid';
             setTimeout(() => codeEditor.refresh(), 50);
+            setTimeout(() => {
+              codeEditor.refresh();
+              inputEditor.refresh();
+            }, 50);
           } else {
             viewEl.style.display = 'flex';
             if (k === 'explain' && getCleanApiKey()) {
@@ -2191,20 +2663,12 @@ initPyodide();
       tab.addEventListener('click', () => {
         document.querySelectorAll('.editor-tab').forEach(t => t.classList.remove('active'));
         tab.classList.add('active');
-        const pane = tab.getAttribute('data-pane');
-        const splitContainer = document.querySelector('.editor-split-container');
-        if (pane === 'python') {
-          splitContainer.style.gridTemplateRows = '1fr 200px';
-          document.querySelector('.codemirror-wrapper').style.display = 'block';
-          codeEditor.refresh();
-        } else if (pane === 'stdout') {
-          splitContainer.style.gridTemplateRows = '0px 1fr';
-          document.querySelector('.codemirror-wrapper').style.display = 'none';
-        }
+        codeEditor.refresh();
       });
     });
 
     /* 6. TRACE EXECUTION (999+ ITERATION HEADROOM & 30S WATCHDOG) */
+    /* 7. TRACE EXECUTION (999+ ITERATION HEADROOM & 30S WATCHDOG) */
     function runTrace() {
       const code = codeEditor.getValue().trim();
       if (!code) {
@@ -2220,7 +2684,13 @@ initPyodide();
       setRunningState(true);
       clearEditorLineHighlights();
 
-      const prefillRaw = document.getElementById('prefillInputText').value;
+      // Reset error console for fresh run
+      document.getElementById('errorConsole').textContent = 'No errors.';
+      document.getElementById('errorConsole').classList.add('no-error');
+      document.getElementById('tabBtnError').classList.remove('tab-has-error');
+      switchConsoleTab('output');
+
+      const prefillRaw = inputEditor ? inputEditor.getValue() : document.getElementById('prefillInputText').value;
       const inputs = prefillRaw ? prefillRaw.split('\n').map(s => s.trim()).filter(s => s.length > 0) : [];
       const maxSteps = parseInt(document.getElementById('maxStepsSelect').value, 10) || 10000;
 
@@ -2285,6 +2755,12 @@ initPyodide();
       document.getElementById('responseStatusLabel').textContent = `RESPONSE • 200 (${state.totalSteps} STEPS RECORDED)`;
       document.getElementById('tableStepCountBadge').textContent = `${state.totalSteps} Steps`;
 
+      // Clear any past error on success
+      const errConsole = document.getElementById('errorConsole');
+      errConsole.textContent = 'No errors.';
+      errConsole.classList.add('no-error');
+      document.getElementById('tabBtnError').classList.remove('tab-has-error');
+
       renderDryRunTable();
       renderAstAnalysis();
       renderMetrics(result);
@@ -2298,6 +2774,14 @@ initPyodide();
       highlightErrorLine(line);
       document.getElementById('whatHappenedLabel').textContent = 'Syntax Error';
       document.getElementById('whatHappenedText').textContent = `Syntax error on line ${line}: ${err.msg}`;
+
+      const errText = `SyntaxError: ${err.msg}\n  --> Line ${line}${err.offset ? ` (col ${err.offset})` : ''}`;
+      const errConsole = document.getElementById('errorConsole');
+      errConsole.textContent = errText;
+      errConsole.classList.remove('no-error');
+      document.getElementById('tabBtnError').classList.add('tab-has-error');
+      document.getElementById('responseStatusLabel').textContent = `ERROR • SYNTAX (L${line})`;
+      switchConsoleTab('error');
     }
 
     function showRuntimeError(err) {
@@ -2305,6 +2789,14 @@ initPyodide();
       highlightErrorLine(line);
       document.getElementById('whatHappenedLabel').textContent = err.type || 'Runtime Error';
       document.getElementById('whatHappenedText').textContent = `${err.type} on line ${line}: ${err.msg}`;
+
+      const errText = `${err.type}: ${err.msg}\n  --> Line ${line}`;
+      const errConsole = document.getElementById('errorConsole');
+      errConsole.textContent = errText;
+      errConsole.classList.remove('no-error');
+      document.getElementById('tabBtnError').classList.add('tab-has-error');
+      document.getElementById('responseStatusLabel').textContent = `ERROR • ${(err.type || 'RuntimeError').toUpperCase()}`;
+      switchConsoleTab('error');
     }
 
     function highlightErrorLine(lineNo) {
@@ -2732,7 +3224,7 @@ initPyodide();
           const chatModels = data.data
             .map(m => m.id)
             .filter(id => id && !id.includes('whisper') && !id.includes('guard'));
-          
+
           const select = document.getElementById('aiModelSelect');
           if (select && chatModels.length > 0) {
             const currentVal = select.value;
@@ -2806,7 +3298,7 @@ initPyodide();
             }
           }
         }
-      } catch (e) {}
+      } catch (e) { }
 
       // Test all candidates in parallel for lightning-fast completion (~300ms)
       const testPromises = candidatePool.map(async (mId) => {
@@ -2991,10 +3483,10 @@ MANDATORY RULES:
           // If chosen model is not accessible (permission denied or model not found), query accessible models & try all candidates
           if (errMsg.toLowerCase().includes('does not exist') || errMsg.toLowerCase().includes('access') || response.status === 404) {
             chatWindow.innerHTML = `<em>Model '${chosenModel}' not accessible on this key. Auto-detecting your authorized Groq models...</em>`;
-            
+
             // 1. Query live list of models enabled for this API key
             const liveModels = await fetchAvailableGroqModels(true);
-            
+
             // 2. Candidate models pool to try
             const candidatePool = [
               ...liveModels,
@@ -3007,10 +3499,10 @@ MANDATORY RULES:
               'gemma2-9b-it',
               'mixtral-8x7b-32768'
             ];
-            
+
             // Filter unique models excluding the one that just failed
             const toTry = [...new Set(candidatePool)].filter(m => m && m !== chosenModel && m !== '__custom__');
-            
+
             let succeeded = false;
             for (const candidate of toTry) {
               chatWindow.innerHTML = `<em>Trying alternative model authorized on your account: <strong>${candidate}</strong>...</em>`;
@@ -3031,7 +3523,7 @@ MANDATORY RULES:
                 break;
               }
             }
-            
+
             if (!succeeded) {
               throw new Error(
                 `Your Groq API key cannot access any of the standard chat models (including llama-3.1-8b-instant and llama-3.3-70b-versatile).\n\n` +
@@ -3121,79 +3613,81 @@ MANDATORY RULES:
 
     function renderHotspotChart(lineCounts) {
       const container = document.getElementById('hotspotChartContainer');
-      const lines = Object.keys(lineCounts).map(Number).sort((a, b) => a - b);
+      const lines = Object.keys(lineCounts).map(Number).sort((a, b) => lineCounts[b] - lineCounts[a]);
       if (lines.length === 0) {
         container.innerHTML = '<span style="color:var(--text-muted); font-size:12px;">No lines executed.</span>';
         return;
       }
-
       const maxCount = Math.max(...Object.values(lineCounts));
-      const barHeight = 18;
-      const gap = 6;
-      const svgHeight = lines.length * (barHeight + gap) + 10;
-
-      let svg = `<svg width="100%" height="${svgHeight}" xmlns="http://www.w3.org/2000/svg" style="font-family:sans-serif; font-size:11px;">`;
-      lines.forEach((lineNo, idx) => {
+      const topLines = lines.slice(0, 15);
+      let html = '';
+      topLines.forEach(lineNo => {
         const count = lineCounts[lineNo];
-        const widthPct = Math.max(5, (count / maxCount) * 75);
-        const y = idx * (barHeight + gap) + 5;
-        svg += `
-          <g>
-            <text x="5" y="${y + 13}" fill="var(--text-muted)">L${lineNo}</text>
-            <rect x="35" y="${y}" width="${widthPct}%" height="${barHeight}" rx="3" fill="var(--accent-coral)" />
-            <text x="calc(35% + ${widthPct}% + 6px)" y="${y + 13}" fill="var(--text-main)" font-size="10px">${count}x</text>
-          </g>
-        `;
+        const pct = Math.round((count / maxCount) * 100);
+        const isHot = pct === 100;
+        html += `
+          <div class="hotspot-row">
+            <span class="hotspot-line-label" title="Line ${lineNo}">L${lineNo}</span>
+            <div class="hotspot-bar-track">
+              <div class="hotspot-bar-fill" style="width:${pct}%;${isHot ? 'background:linear-gradient(90deg,#f97559,#fb923c);' : ''}"></div>
+            </div>
+            <span class="hotspot-count-label">${count}×${isHot ? ' 🔥' : ''}</span>
+          </div>`;
       });
-      svg += '</svg>';
-      container.innerHTML = svg;
+      if (lines.length > 15) {
+        html += `<div style="font-size:11px;color:var(--text-muted);margin-top:6px;">… and ${lines.length - 15} more lines</div>`;
+      }
+      container.style.padding = '12px 16px';
+      container.style.display = 'block';
+      container.innerHTML = html;
     }
+
 
     /* 12. COMPARE MODE */
     document.getElementById('compareCodeA').value = `def factorial_iterative(n):
-    res = 1
-    for i in range(1, n + 1):
-        res *= i
-    return res
+          res = 1
+          for i in range(1, n + 1):
+            res *= i
+          return res
 
-ans = factorial_iterative(5)`;
+          ans = factorial_iterative(5)`;
 
-    document.getElementById('compareCodeB').value = `def factorial_recursive(n):
-    if n <= 1:
-        return 1
-    return n * factorial_recursive(n - 1)
+      document.getElementById('compareCodeB').value = `def factorial_recursive(n):
+          if n <= 1:
+            return 1
+          return n * factorial_recursive(n - 1)
 
-ans = factorial_recursive(5)`;
+          ans = factorial_recursive(5)`;
 
-    document.getElementById('btnRunCompare').addEventListener('click', async () => {
-      const codeA = document.getElementById('compareCodeA').value;
-      const codeB = document.getElementById('compareCodeB').value;
-      const resultsDiv = document.getElementById('compareResultsCard');
-      resultsDiv.innerHTML = '<em>Benchmarking both implementations in Pyodide WebAssembly...</em>';
+      document.getElementById('btnRunCompare').addEventListener('click', async () => {
+        const codeA = document.getElementById('compareCodeA').value;
+        const codeB = document.getElementById('compareCodeB').value;
+        const resultsDiv = document.getElementById('compareResultsCard');
+        resultsDiv.innerHTML = '<em>Benchmarking both implementations in Pyodide WebAssembly...</em>';
 
-      async function runSnippet(c) {
-        return new Promise((resolve) => {
-          const tempWorker = new Worker(workerUrl);
-          tempWorker.onmessage = (e) => {
-            if (e.data.type === 'READY') {
-              tempWorker.postMessage({ type: 'RUN', payload: { code: c, inputs: [], maxSteps: 10000 }, id: 1 });
-            } else if (e.data.type === 'RUN_COMPLETE') {
-              tempWorker.terminate();
-              resolve(e.data.result);
-            }
-          };
-        });
-      }
+        async function runSnippet(c) {
+          return new Promise((resolve) => {
+            const tempWorker = new Worker(workerUrl);
+            tempWorker.onmessage = (e) => {
+              if (e.data.type === 'READY') {
+                tempWorker.postMessage({ type: 'RUN', payload: { code: c, inputs: [], maxSteps: 10000 }, id: 1 });
+              } else if (e.data.type === 'RUN_COMPLETE') {
+                tempWorker.terminate();
+                resolve(e.data.result);
+              }
+            };
+          });
+        }
 
-      const resA = await runSnippet(codeA);
-      const resB = await runSnippet(codeB);
+        const resA = await runSnippet(codeA);
+        const resB = await runSnippet(codeB);
 
-      const stepsA = resA.total_steps || 0;
-      const stepsB = resB.total_steps || 0;
-      const winner = stepsA < stepsB ? 'A' : (stepsB < stepsA ? 'B' : 'Tie');
+        const stepsA = resA.total_steps || 0;
+        const stepsB = resB.total_steps || 0;
+        const winner = stepsA < stepsB ? 'A' : (stepsB < stepsA ? 'B' : 'Tie');
 
-      resultsDiv.innerHTML = `
-        <div style="display:grid; grid-template-columns: 1fr 1fr; gap:16px;">
+        resultsDiv.innerHTML = `
+            < div style = "display:grid; grid-template-columns: 1fr 1fr; gap:16px;" >
           <div style="padding:10px; background:var(--bg-card); border:1px solid var(--border-main); border-radius:6px;">
             <h4>Implementation A</h4>
             <div>Steps: <strong>${stepsA}</strong> ${winner === 'A' ? '<span class="badge badge-coral">Winner (Fewer steps)</span>' : ''}</div>
@@ -3204,246 +3698,306 @@ ans = factorial_recursive(5)`;
             <div>Steps: <strong>${stepsB}</strong> ${winner === 'B' ? '<span class="badge badge-coral">Winner (Fewer steps)</span>' : ''}</div>
             <div>Status: ${resB.success ? 'Success' : 'Error'}</div>
           </div>
-        </div>
-      `;
-    });
+        </div >
+            `;
+      });
 
-    /* 13. SHARE & HISTORY */
-    function saveRunToHistory(result) {
-      const firstLine = codeEditor.getValue().trim().split('\n')[0] || 'Python Script';
-      const historyItem = {
-        id: Date.now(),
-        time: new Date().toLocaleTimeString(),
-        title: firstLine.slice(0, 32),
-        steps: result.total_steps || 0,
-        success: result.success
-      };
-      state.history.unshift(historyItem);
-      if (state.history.length > 10) state.history.pop();
-      renderHistoryList();
-    }
-
-    function renderHistoryList() {
-      const container = document.getElementById('historyListContainer');
-      if (state.history.length === 0) {
-        container.innerHTML = '<span style="color:var(--text-muted); font-size:12px;">No runs recorded yet.</span>';
-        return;
+      /* 13. SHARE & HISTORY */
+      function saveRunToHistory(result) {
+        const firstLine = codeEditor.getValue().trim().split('\n')[0] || 'Python Script';
+        const historyItem = {
+          id: Date.now(),
+          time: new Date().toLocaleTimeString(),
+          title: firstLine.slice(0, 32),
+          steps: result.total_steps || 0,
+          success: result.success
+        };
+        state.history.unshift(historyItem);
+        if (state.history.length > 10) state.history.pop();
+        renderHistoryList();
       }
-      container.innerHTML = state.history.map(item => `
-        <div style="padding:6px 10px; background:var(--bg-card-elevated); border:1px solid var(--border-main); border-radius:6px; display:flex; justify-content:space-between; align-items:center; font-size:11.5px;">
+
+      function renderHistoryList() {
+        const container = document.getElementById('historyListContainer');
+        if (state.history.length === 0) {
+          container.innerHTML = '<span style="color:var(--text-muted); font-size:12px;">No runs recorded yet.</span>';
+          return;
+        }
+        container.innerHTML = state.history.map(item => `
+            < div style = "padding:6px 10px; background:var(--bg-card-elevated); border:1px solid var(--border-main); border-radius:6px; display:flex; justify-content:space-between; align-items:center; font-size:11.5px;" >
           <div>
             <strong>${escapeHtml(item.title)}</strong>
             <div style="color:var(--text-muted); font-size:10.5px;">${item.time} • ${item.steps} steps</div>
           </div>
           <span class="badge ${item.success ? 'badge-live' : 'badge-coral'}">${item.success ? 'Success' : 'Error'}</span>
-        </div>
-      `).join('');
-    }
+        </div >
+            `).join('');
+      }
 
-    document.getElementById('btnClearHistory').addEventListener('click', () => {
-      state.history = [];
-      renderHistoryList();
-    });
+      document.getElementById('btnClearHistory').addEventListener('click', () => {
+        state.history = [];
+        renderHistoryList();
+      });
 
-    document.getElementById('btnGenerateShare').addEventListener('click', () => {
-      const payload = { c: codeEditor.getValue(), i: document.getElementById('prefillInputText').value };
-      const b64 = btoa(encodeURIComponent(JSON.stringify(payload)));
-      const url = `${window.location.origin}${window.location.pathname}#code=${b64}`;
-      document.getElementById('shareUrlInput').value = url;
-      navigator.clipboard.writeText(url).then(() => alert('Shareable link copied to clipboard!'));
-    });
+      document.getElementById('btnGenerateShare').addEventListener('click', () => {
+        const inputVal = inputEditor ? inputEditor.getValue() : document.getElementById('prefillInputText').value;
+        const payload = { c: codeEditor.getValue(), i: inputVal };
+        const b64 = btoa(encodeURIComponent(JSON.stringify(payload)));
+        const url = `${ window.location.origin }${ window.location.pathname } #code = ${ b64 } `;
+        document.getElementById('shareUrlInput').value = url;
+        navigator.clipboard.writeText(url).then(() => alert('Shareable link copied to clipboard!'));
+      });
 
-    document.getElementById('btnExportJsonTrace').addEventListener('click', () => {
-      if (state.totalSteps === 0) return;
-      const json = JSON.stringify(state.snapshots, null, 2);
-      const blob = new Blob([json], { type: 'application/json' });
-      const a = document.createElement('a');
-      a.href = URL.createObjectURL(blob);
-      a.download = 'trace.json';
-      a.click();
-    });
+      document.getElementById('btnExportJsonTrace').addEventListener('click', () => {
+        if (state.totalSteps === 0) return;
+        const json = JSON.stringify(state.snapshots, null, 2);
+        const blob = new Blob([json], { type: 'application/json' });
+        const a = document.createElement('a');
+        a.href = URL.createObjectURL(blob);
+        a.download = 'trace.json';
+        a.click();
+      });
 
-    document.getElementById('btnExportSessionMd').addEventListener('click', () => {
-      const code = codeEditor.getValue();
-      const lastSnap = state.snapshots[state.snapshots.length - 1];
-      const md = "# Python Dry-Run Lab Session Report\nGenerated: " + new Date().toLocaleString() + "\n\n## Python Source Code\n```python\n" + code + "\n```\n\n## Execution Summary\n- Total Steps: " + state.totalSteps + "\n- Execution Time: " + (lastSnap ? lastSnap.time_ms : 0) + " ms\n- Final Stdout:\n```\n" + (lastSnap ? lastSnap.stdout : "(no output)") + "\n```\n";
-      const blob = new Blob([md], { type: 'text/markdown' });
-      const a = document.createElement('a');
-      a.href = URL.createObjectURL(blob);
-      a.download = 'report.md';
-      a.click();
-    });
+      document.getElementById('btnExportSessionMd').addEventListener('click', () => {
+        const code = codeEditor.getValue();
+        const lastSnap = state.snapshots[state.snapshots.length - 1];
+        const md = "# Python Dry-Run Lab Session Report\nGenerated: " + new Date().toLocaleString() + "\n\n## Python Source Code\n```python\n" + code + "\n```\n\n## Execution Summary\n- Total Steps: " + state.totalSteps + "\n- Execution Time: " + (lastSnap ? lastSnap.time_ms : 0) + " ms\n- Final Stdout:\n```\n" + (lastSnap ? lastSnap.stdout : "(no output)") + "\n```\n";
+        const blob = new Blob([md], { type: 'text/markdown' });
+        const a = document.createElement('a');
+        a.href = URL.createObjectURL(blob);
+        a.download = 'report.md';
+        a.click();
+      });
 
-    /* 14. STEP CONTROLS & SHORTCUTS */
-    function stepNext() {
-      if (state.currentStep < state.totalSteps) goToStep(state.currentStep + 1);
-      else pauseAutoPlay();
-    }
-    function stepBack() {
-      if (state.currentStep > 1) goToStep(state.currentStep - 1);
-    }
-    function toggleAutoPlay() {
-      if (state.isPlaying) pauseAutoPlay();
-      else startAutoPlay();
-    }
-    function startAutoPlay() {
-      if (state.totalSteps === 0) return;
-      if (state.currentStep >= state.totalSteps) goToStep(1);
-      state.isPlaying = true;
-      document.getElementById('btnStepPlay').textContent = '⏸ Pause';
-      clearInterval(state.playInterval);
-      state.playInterval = setInterval(() => {
-        if (state.currentStep < state.totalSteps) stepNext();
+      /* 14. STEP CONTROLS & SHORTCUTS */
+      function stepNext() {
+        if (state.currentStep < state.totalSteps) goToStep(state.currentStep + 1);
         else pauseAutoPlay();
-      }, state.playSpeedMs);
-    }
-    function pauseAutoPlay() {
-      state.isPlaying = false;
-      clearInterval(state.playInterval);
-      document.getElementById('btnStepPlay').textContent = '▶ Auto-play';
-    }
-
-    document.getElementById('btnStepNext').addEventListener('click', stepNext);
-    document.getElementById('btnStepBack').addEventListener('click', stepBack);
-    document.getElementById('btnStepFirst').addEventListener('click', () => goToStep(1));
-    document.getElementById('btnStepLast').addEventListener('click', () => goToStep(state.totalSteps));
-    document.getElementById('btnStepPlay').addEventListener('click', toggleAutoPlay);
-    document.getElementById('stepScrubber').addEventListener('input', (e) => goToStep(parseInt(e.target.value, 10)));
-    document.getElementById('playSpeedSelect').addEventListener('change', (e) => {
-      state.playSpeedMs = parseInt(e.target.value, 10);
-      if (state.isPlaying) startAutoPlay();
-    });
-
-    window.addEventListener('keydown', (e) => {
-      if (['INPUT', 'TEXTAREA'].includes(e.target.tagName)) return;
-      if (e.key === 'ArrowRight') { e.preventDefault(); stepNext(); }
-      else if (e.key === 'ArrowLeft') { e.preventDefault(); stepBack(); }
-      else if (e.key === ' ' || e.code === 'Space') { e.preventDefault(); toggleAutoPlay(); }
-      else if (e.key === 'b' || e.key === 'B') {
-        e.preventDefault();
-        const cursor = codeEditor.getCursor();
-        toggleBreakpoint(cursor.line + 1);
-      } else if (e.key === 'Escape') {
-        pauseAutoPlay();
       }
-    });
+      function stepBack() {
+        if (state.currentStep > 1) goToStep(state.currentStep - 1);
+      }
+      function toggleAutoPlay() {
+        if (state.isPlaying) pauseAutoPlay();
+        else startAutoPlay();
+      }
+      function startAutoPlay() {
+        if (state.totalSteps === 0) return;
+        if (state.currentStep >= state.totalSteps) goToStep(1);
+        state.isPlaying = true;
+        document.getElementById('btnStepPlay').textContent = '⏸ Pause';
+        clearInterval(state.playInterval);
+        state.playInterval = setInterval(() => {
+          if (state.currentStep < state.totalSteps) stepNext();
+          else pauseAutoPlay();
+        }, state.playSpeedMs);
+      }
+      function pauseAutoPlay() {
+        state.isPlaying = false;
+        clearInterval(state.playInterval);
+        document.getElementById('btnStepPlay').textContent = '▶ Auto-play';
+      }
 
-    /* 15. GROQ KEY & THEME */
-    const groqModal = document.getElementById('groqModal');
-    const modalGroqInput = document.getElementById('modalGroqInput');
-    const groqStatusDot = document.getElementById('groqStatusDot');
-    const groqKeyLabel = document.getElementById('groqKeyLabel');
+      document.getElementById('btnStepNext').addEventListener('click', stepNext);
+      document.getElementById('btnStepBack').addEventListener('click', stepBack);
+      document.getElementById('btnStepFirst').addEventListener('click', () => goToStep(1));
+      document.getElementById('btnStepLast').addEventListener('click', () => goToStep(state.totalSteps));
+      document.getElementById('btnStepPlay').addEventListener('click', toggleAutoPlay);
+      document.getElementById('stepScrubber').addEventListener('input', (e) => goToStep(parseInt(e.target.value, 10)));
+      document.getElementById('playSpeedSelect').addEventListener('change', (e) => {
+        state.playSpeedMs = parseInt(e.target.value, 10);
+        if (state.isPlaying) startAutoPlay();
+      });
 
-    function updateGroqStatusUI() {
-      if (state.groqApiKey) {
-        groqStatusDot.classList.add('connected');
-        groqKeyLabel.textContent = `🔑 Groq Key: ${state.groqApiKey.slice(0, 7)}...`;
+      window.addEventListener('keydown', (e) => {
+        if (['INPUT', 'TEXTAREA'].includes(e.target.tagName)) return;
+        if (e.key === 'ArrowRight') { e.preventDefault(); stepNext(); }
+        else if (e.key === 'ArrowLeft') { e.preventDefault(); stepBack(); }
+        else if (e.key === ' ' || e.code === 'Space') { e.preventDefault(); toggleAutoPlay(); }
+        else if (e.key === 'b' || e.key === 'B') {
+          e.preventDefault();
+          const cursor = codeEditor.getCursor();
+          toggleBreakpoint(cursor.line + 1);
+        } else if (e.key === 'Escape') {
+          pauseAutoPlay();
+        }
+      });
+
+      /* 15. GROQ KEY & THEME */
+      const groqModal = document.getElementById('groqModal');
+      const modalGroqInput = document.getElementById('modalGroqInput');
+      const groqStatusDot = document.getElementById('groqStatusDot');
+      const groqKeyLabel = document.getElementById('groqKeyLabel');
+
+      function updateGroqStatusUI() {
+        if (state.groqApiKey) {
+          groqStatusDot.classList.add('connected');
+          groqKeyLabel.textContent = `🔑 Groq Key: ${ state.groqApiKey.slice(0, 7) }...`;
+          modalGroqInput.value = state.groqApiKey;
+        } else {
+          groqStatusDot.classList.remove('connected');
+          groqKeyLabel.textContent = '🔑 Groq API Key: Not Set';
+          modalGroqInput.value = '';
+        }
+      }
+
+      document.getElementById('btnOpenGroqKeyModal').addEventListener('click', () => {
         modalGroqInput.value = state.groqApiKey;
-      } else {
-        groqStatusDot.classList.remove('connected');
-        groqKeyLabel.textContent = '🔑 Groq API Key: Not Set';
-        modalGroqInput.value = '';
-      }
-    }
+        groqModal.classList.add('active');
+      });
 
-    document.getElementById('btnOpenGroqKeyModal').addEventListener('click', () => {
-      modalGroqInput.value = state.groqApiKey;
-      groqModal.classList.add('active');
-    });
+      document.getElementById('btnSaveGroqModal').addEventListener('click', () => {
+        const key = modalGroqInput.value.trim();
+        state.groqApiKey = key;
+        sessionStorage.setItem('GROQ_API_KEY', key);
+        updateGroqStatusUI();
+        groqModal.classList.remove('active');
+        if (key) {
+          testAndFilterWorkingModels(true);
+        }
+      });
 
-    document.getElementById('btnSaveGroqModal').addEventListener('click', () => {
-      const key = modalGroqInput.value.trim();
-      state.groqApiKey = key;
-      sessionStorage.setItem('GROQ_API_KEY', key);
+      document.getElementById('btnClearGroqModal').addEventListener('click', () => {
+        state.groqApiKey = '';
+        sessionStorage.removeItem('GROQ_API_KEY');
+        updateGroqStatusUI();
+        groqModal.classList.remove('active');
+      });
+
+      document.querySelectorAll('.close-modal-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+          document.querySelectorAll('.modal-backdrop').forEach(m => m.classList.remove('active'));
+        });
+      });
+
       updateGroqStatusUI();
-      groqModal.classList.remove('active');
-      if (key) {
+
+      document.getElementById('btnRunTrace').addEventListener('click', runTrace);
+
+      const exampleSelect = document.getElementById('exampleSelect');
+      exampleSelect.addEventListener('change', (e) => {
+        const k = e.target.value;
+        if (CODE_EXAMPLES[k]) {
+          codeEditor.setValue(CODE_EXAMPLES[k]);
+          clearAllBreakpoints();
+          clearEditorLineHighlights();
+        }
+      });
+
+      document.getElementById('btnResetCode').addEventListener('click', () => {
+        const k = exampleSelect.value;
+        if (CODE_EXAMPLES[k]) codeEditor.setValue(CODE_EXAMPLES[k]);
+      });
+
+      document.getElementById('btnCopyCode').addEventListener('click', () => {
+        navigator.clipboard.writeText(codeEditor.getValue()).then(() => alert('Code copied!'));
+      });
+
+      document.getElementById('btnFormatCode').addEventListener('click', () => {
+        const lines = codeEditor.getValue().split('\n');
+        let indent = 0;
+        const formatted = lines.map(line => {
+          const trimmed = line.trim();
+          if (!trimmed) return '';
+          if (trimmed.startsWith('elif ') || trimmed.startsWith('else:') || trimmed.startsWith('except') || trimmed.startsWith('finally:')) {
+            indent = Math.max(0, indent - 1);
+          }
+          const res = '    '.repeat(indent) + trimmed;
+          if (trimmed.endsWith(':')) indent++;
+          return res;
+        }).join('\n');
+        codeEditor.setValue(formatted);
+      });
+
+      document.getElementById('btnClearBreakpoints').addEventListener('click', clearAllBreakpoints);
+      document.getElementById('btnClearConsole').addEventListener('click', () => {
+        document.getElementById('stdoutConsole').textContent = '(cleared)';
+      });
+      document.getElementById('btnCopyConsole').addEventListener('click', () => {
+        navigator.clipboard.writeText(document.getElementById('stdoutConsole').textContent).then(() => alert('Output copied!'));
+      });
+
+      function getActiveConsoleTabKey() {
+        const activeBtn = document.querySelector('.console-tab.active');
+        return activeBtn ? activeBtn.getAttribute('data-tab') : 'output';
+      }
+
+      const btnClearConsole = document.getElementById('btnClearConsole');
+      if (btnClearConsole) {
+        btnClearConsole.addEventListener('click', () => {
+          const tab = getActiveConsoleTabKey();
+          if (tab === 'input') {
+            if (inputEditor) inputEditor.setValue('');
+            document.getElementById('prefillInputText').value = '';
+          } else if (tab === 'output') {
+            document.getElementById('stdoutConsole').textContent = '(cleared)';
+          } else if (tab === 'error') {
+            document.getElementById('errorConsole').textContent = 'No errors.';
+            document.getElementById('errorConsole').classList.add('no-error');
+            document.getElementById('tabBtnError').classList.remove('tab-has-error');
+          }
+        });
+      }
+
+      const btnCopyConsole = document.getElementById('btnCopyConsole');
+      if (btnCopyConsole) {
+        btnCopyConsole.addEventListener('click', () => {
+          const tab = getActiveConsoleTabKey();
+          let textToCopy = '';
+          if (tab === 'input') {
+            textToCopy = inputEditor ? inputEditor.getValue() : document.getElementById('prefillInputText').value;
+          } else if (tab === 'output') {
+            textToCopy = document.getElementById('stdoutConsole').textContent;
+          } else if (tab === 'error') {
+            textToCopy = document.getElementById('errorConsole').textContent;
+          }
+          navigator.clipboard.writeText(textToCopy).then(() => {
+            showStatusToast(tab.toUpperCase() + ' copied to clipboard!');
+            setTimeout(hideStatusToast, 2000);
+          });
+        });
+      }
+
+      const themeBtn = document.getElementById('btnThemeToggle');
+      const savedTheme = localStorage.getItem('COHERE_THEME') || 'dark';
+      document.documentElement.setAttribute('data-theme', savedTheme);
+      themeBtn.textContent = savedTheme === 'dark' ? '🌙' : '☀️';
+
+      themeBtn.addEventListener('click', () => {
+        const curr = document.documentElement.getAttribute('data-theme');
+        const next = curr === 'dark' ? 'light' : 'dark';
+        document.documentElement.setAttribute('data-theme', next);
+        localStorage.setItem('COHERE_THEME', next);
+        themeBtn.textContent = next === 'dark' ? '🌙' : '☀️';
+        const cmTheme = next === 'dark' ? 'dracula' : 'eclipse';
+        codeEditor.setOption('theme', cmTheme);
+        if (inputEditor) inputEditor.setOption('theme', cmTheme);
+      });
+
+      function escapeHtml(str) {
+        if (!str) return '';
+        return String(str).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#39;');
+      }
+
+      codeEditor.setValue(CODE_EXAMPLES.bubble_sort);
+      try {
+        if (window.location.hash.startsWith('#code=')) {
+          const b64 = window.location.hash.slice(6);
+          const parsed = JSON.parse(decodeURIComponent(atob(b64)));
+          if (parsed.c) codeEditor.setValue(parsed.c);
+          if (parsed.i && inputEditor) {
+            inputEditor.setValue(parsed.i);
+            switchConsoleTab('input');
+          }
+        } else {
+          codeEditor.setValue(CODE_EXAMPLES.bubble_sort);
+        }
+      } catch (e) {
+        codeEditor.setValue(CODE_EXAMPLES.bubble_sort);
+      }
+      if (getCleanApiKey()) {
         testAndFilterWorkingModels(true);
       }
-    });
-
-    document.getElementById('btnClearGroqModal').addEventListener('click', () => {
-      state.groqApiKey = '';
-      sessionStorage.removeItem('GROQ_API_KEY');
-      updateGroqStatusUI();
-      groqModal.classList.remove('active');
-    });
-
-    document.querySelectorAll('.close-modal-btn').forEach(btn => {
-      btn.addEventListener('click', () => {
-        document.querySelectorAll('.modal-backdrop').forEach(m => m.classList.remove('active'));
-      });
-    });
-
-    updateGroqStatusUI();
-
-    document.getElementById('btnRunTrace').addEventListener('click', runTrace);
-
-    const exampleSelect = document.getElementById('exampleSelect');
-    exampleSelect.addEventListener('change', (e) => {
-      const k = e.target.value;
-      if (CODE_EXAMPLES[k]) {
-        codeEditor.setValue(CODE_EXAMPLES[k]);
-        clearAllBreakpoints();
-        clearEditorLineHighlights();
-      }
-    });
-
-    document.getElementById('btnResetCode').addEventListener('click', () => {
-      const k = exampleSelect.value;
-      if (CODE_EXAMPLES[k]) codeEditor.setValue(CODE_EXAMPLES[k]);
-    });
-
-    document.getElementById('btnCopyCode').addEventListener('click', () => {
-      navigator.clipboard.writeText(codeEditor.getValue()).then(() => alert('Code copied!'));
-    });
-
-    document.getElementById('btnFormatCode').addEventListener('click', () => {
-      const lines = codeEditor.getValue().split('\n');
-      let indent = 0;
-      const formatted = lines.map(line => {
-        const trimmed = line.trim();
-        if (!trimmed) return '';
-        if (trimmed.startsWith('elif ') || trimmed.startsWith('else:') || trimmed.startsWith('except') || trimmed.startsWith('finally:')) {
-          indent = Math.max(0, indent - 1);
-        }
-        const res = '    '.repeat(indent) + trimmed;
-        if (trimmed.endsWith(':')) indent++;
-        return res;
-      }).join('\n');
-      codeEditor.setValue(formatted);
-    });
-
-    document.getElementById('btnClearBreakpoints').addEventListener('click', clearAllBreakpoints);
-    document.getElementById('btnClearStdout').addEventListener('click', () => {
-      document.getElementById('stdoutConsole').textContent = '(cleared)';
-    });
-    document.getElementById('btnCopyStdout').addEventListener('click', () => {
-      navigator.clipboard.writeText(document.getElementById('stdoutConsole').textContent).then(() => alert('Stdout copied!'));
-    });
-
-    const themeBtn = document.getElementById('btnThemeToggle');
-    const savedTheme = localStorage.getItem('COHERE_THEME') || 'dark';
-    document.documentElement.setAttribute('data-theme', savedTheme);
-    themeBtn.textContent = savedTheme === 'dark' ? '🌙' : '☀️';
-
-    themeBtn.addEventListener('click', () => {
-      const curr = document.documentElement.getAttribute('data-theme');
-      const next = curr === 'dark' ? 'light' : 'dark';
-      document.documentElement.setAttribute('data-theme', next);
-      localStorage.setItem('COHERE_THEME', next);
-      themeBtn.textContent = next === 'dark' ? '🌙' : '☀️';
-    });
-
-    function escapeHtml(str) {
-      if (!str) return '';
-      return String(str).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#39;');
-    }
-
-    codeEditor.setValue(CODE_EXAMPLES.bubble_sort);
-    if (getCleanApiKey()) {
-      testAndFilterWorkingModels(true);
-    }
   </script>
 </body>
 
