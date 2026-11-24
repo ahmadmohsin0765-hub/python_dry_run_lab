@@ -4,6 +4,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' 'wasm-unsafe-eval' blob: https://cdnjs.cloudflare.com https://cdn.jsdelivr.net; worker-src 'self' blob: https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com https://fonts.googleapis.com; font-src 'self' data: https://fonts.gstatic.com; img-src 'self' data: blob:; connect-src 'self' https://api.groq.com https://cdn.jsdelivr.net https://cdnjs.cloudflare.com;">
   <title>Python Dry-Run Lab — Interactive Execution Playground</title>
   <link rel="icon" type="image/svg+xml" href="favicon.svg">
   <link rel="alternate icon"
@@ -1654,9 +1655,11 @@
             <select id="maxStepsSelect" style="padding:2px 8px; font-size:11.5px;">
               <option value="1000">1,000 steps</option>
               <option value="5000">5,000 steps</option>
-              <option value="10000" selected>10,000 steps (default)</option>
+              <option value="10000">10,000 steps</option>
               <option value="25000">25,000 steps</option>
-              <option value="50000">50,000 steps</option>
+              <option value="50000" selected>50,000 steps (default)</option>
+              <option value="100000">100,000 steps</option>
+              <option value="250000">250,000 steps</option>
             </select>
           </div>
           <span style="font-size:11px; color:var(--text-muted);">Watchdog timeout: 30s. Accommodates 999+ iterations
@@ -3154,14 +3157,24 @@ initPyodide();
       `;
 
       const codeLines = codeEditor.getValue().split('\n');
+      const MAX_TABLE_ROWS = 2000;
+      let renderedCount = 0;
 
-      tableBody.innerHTML = state.snapshots.map((snap, sIdx) => {
+      const rowsHtml = [];
+      for (let sIdx = 0; sIdx < state.snapshots.length; sIdx++) {
+        const snap = state.snapshots[sIdx];
         const stepNum = sIdx + 1;
         const lineText = codeLines[snap.line - 1] || '';
         const prev = sIdx > 0 ? state.snapshots[sIdx - 1] : null;
 
-        if (state.currentFilter === 'changes' && snap.changes.length === 0) return '';
-        if (state.currentFilter === 'loops' && !snap.loop_info) return '';
+        if (state.currentFilter === 'changes' && snap.changes.length === 0) continue;
+        if (state.currentFilter === 'loops' && !snap.loop_info) continue;
+
+        if (renderedCount >= MAX_TABLE_ROWS) {
+          rowsHtml.push(`<tr><td colspan="${varNames.length + 4}" style="text-align:center;color:var(--text-muted);padding:12px;">Showing first ${MAX_TABLE_ROWS.toLocaleString()} rows out of ${state.snapshots.length.toLocaleString()} total steps. Use the stepper slider to inspect any step.</td></tr>`);
+          break;
+        }
+        renderedCount++;
 
         const varCells = varNames.map(v => {
           const valObj = (snap.locals && snap.locals[v]) || (snap.globals && snap.globals[v]);
@@ -3173,12 +3186,12 @@ initPyodide();
           }
 
           if (state.quizMode && sIdx >= state.currentStep) {
-            return `<td class="cell-hidden-quiz" data-step="${stepNum}" data-var="${v}" data-val="${escapeHtml(valRepr)}" onclick="revealQuizCell(this)">???</td>`;
+            return `<td class="cell-hidden-quiz" data-step="${stepNum}" data-var="${escapeHtml(v)}" data-val="${escapeHtml(valRepr)}" onclick="revealQuizCell(this)">???</td>`;
           }
           return `<td class="${changed ? 'cell-changed' : ''}">${escapeHtml(valRepr)}</td>`;
         }).join('');
 
-        return `
+        rowsHtml.push(`
           <tr id="dryRow-${stepNum}" onclick="goToStep(${stepNum})" style="cursor:pointer;">
             <td>${stepNum}</td>
             <td><span class="badge badge-coral">L${snap.line}</span></td>
@@ -3186,8 +3199,9 @@ initPyodide();
             ${varCells}
             <td>${escapeHtml(snap.stdout ? snap.stdout.slice(-30).replace(/\n/g, ' ↵ ') : '')}</td>
           </tr>
-        `;
-      }).join('');
+        `);
+      }
+      tableBody.innerHTML = rowsHtml.join('');
     }
 
     function highlightTableRow(stepNum) {
@@ -3281,12 +3295,12 @@ initPyodide();
       }
 
       const outline = document.getElementById('astOutline');
-      const fnList = (ast.functions || []).map(f => `def ${f.name}(${f.args.join(', ')}) (L${f.line})`);
-      const clsList = (ast.classes || []).map(c => `class ${c.name} (L${c.line})`);
+      const fnList = (ast.functions || []).map(f => `def ${escapeHtml(f.name)}(${(f.args || []).map(a => escapeHtml(a)).join(', ')}) (L${Number(f.line) || 1})`);
+      const clsList = (ast.classes || []).map(c => `class ${escapeHtml(c.name)} (L${Number(c.line) || 1})`);
       outline.innerHTML = `
         <div><strong>Functions:</strong> ${fnList.length ? fnList.join(', ') : 'None'}</div>
         <div><strong>Classes:</strong> ${clsList.length ? clsList.join(', ') : 'None'}</div>
-        <div><strong>Loops:</strong> ${ast.loops ? ast.loops.length : 0} loop(s) detected</div>
+        <div><strong>Loops:</strong> ${Number(ast.loops ? ast.loops.length : 0)} loop(s) detected</div>
       `;
 
       renderSvgFlowchart(ast.cfg_nodes || []);
@@ -3615,7 +3629,7 @@ MANDATORY RULES:
       }
 
       const chatWindow = document.getElementById('aiChatWindow');
-      chatWindow.innerHTML = `<em>Thinking and streaming response from Groq (${chosenModel})...</em>`;
+      chatWindow.innerHTML = `<em>Thinking and streaming response from Groq (${escapeHtml(chosenModel)})...</em>`;
 
       try {
         const tryFetch = async (modelName) => {
@@ -3645,7 +3659,7 @@ MANDATORY RULES:
 
           // If chosen model is not accessible (permission denied or model not found), query accessible models & try all candidates
           if (errMsg.toLowerCase().includes('does not exist') || errMsg.toLowerCase().includes('access') || response.status === 404) {
-            chatWindow.innerHTML = `<em>Model '${chosenModel}' not accessible on this key. Auto-detecting your authorized Groq models...</em>`;
+            chatWindow.innerHTML = `<em>Model '${escapeHtml(chosenModel)}' not accessible on this key. Auto-detecting your authorized Groq models...</em>`;
 
             // 1. Query live list of models enabled for this API key
             const liveModels = await fetchAvailableGroqModels(true);
@@ -3668,7 +3682,7 @@ MANDATORY RULES:
 
             let succeeded = false;
             for (const candidate of toTry) {
-              chatWindow.innerHTML = `<em>Trying alternative model authorized on your account: <strong>${candidate}</strong>...</em>`;
+              chatWindow.innerHTML = `<em>Trying alternative model authorized on your account: <strong>${escapeHtml(candidate)}</strong>...</em>`;
               const altRes = await tryFetch(candidate);
               if (altRes.ok) {
                 response = altRes;
@@ -3850,7 +3864,7 @@ MANDATORY RULES:
         const winner = stepsA < stepsB ? 'A' : (stepsB < stepsA ? 'B' : 'Tie');
 
         resultsDiv.innerHTML = `
-            < div style = "display:grid; grid-template-columns: 1fr 1fr; gap:16px;" >
+        <div style="display:grid; grid-template-columns: 1fr 1fr; gap:16px;">
           <div style="padding:10px; background:var(--bg-card); border:1px solid var(--border-main); border-radius:6px;">
             <h4>Implementation A</h4>
             <div>Steps: <strong>${stepsA}</strong> ${winner === 'A' ? '<span class="badge badge-coral">Winner (Fewer steps)</span>' : ''}</div>
@@ -3861,8 +3875,7 @@ MANDATORY RULES:
             <div>Steps: <strong>${stepsB}</strong> ${winner === 'B' ? '<span class="badge badge-coral">Winner (Fewer steps)</span>' : ''}</div>
             <div>Status: ${resB.success ? 'Success' : 'Error'}</div>
           </div>
-        </div >
-            `;
+        </div>`;
       });
 
       /* 13. SHARE & HISTORY */
@@ -3887,14 +3900,13 @@ MANDATORY RULES:
           return;
         }
         container.innerHTML = state.history.map(item => `
-            < div style = "padding:6px 10px; background:var(--bg-card-elevated); border:1px solid var(--border-main); border-radius:6px; display:flex; justify-content:space-between; align-items:center; font-size:11.5px;" >
+        <div style="padding:6px 10px; background:var(--bg-card-elevated); border:1px solid var(--border-main); border-radius:6px; display:flex; justify-content:space-between; align-items:center; font-size:11.5px;">
           <div>
             <strong>${escapeHtml(item.title)}</strong>
-            <div style="color:var(--text-muted); font-size:10.5px;">${item.time} • ${item.steps} steps</div>
+            <div style="color:var(--text-muted); font-size:10.5px;">${escapeHtml(item.time)} • ${Number(item.steps) || 0} steps</div>
           </div>
           <span class="badge ${item.success ? 'badge-live' : 'badge-coral'}">${item.success ? 'Success' : 'Error'}</span>
-        </div >
-            `).join('');
+        </div>`).join('');
       }
 
       document.getElementById('btnClearHistory').addEventListener('click', () => {
@@ -3906,7 +3918,7 @@ MANDATORY RULES:
         const inputVal = inputEditor ? inputEditor.getValue() : document.getElementById('prefillInputText').value;
         const payload = { c: codeEditor.getValue(), i: inputVal };
         const b64 = btoa(encodeURIComponent(JSON.stringify(payload)));
-        const url = `${ window.location.origin }${ window.location.pathname } #code = ${ b64 } `;
+        const url = `${window.location.origin}${window.location.pathname}#code=${b64}`;
         document.getElementById('shareUrlInput').value = url;
         navigator.clipboard.writeText(url).then(() => alert('Shareable link copied to clipboard!'));
       });
@@ -4153,21 +4165,44 @@ MANDATORY RULES:
       try {
         if (window.location.hash.startsWith('#code=')) {
           const b64 = window.location.hash.slice(6);
-          const parsed = JSON.parse(decodeURIComponent(atob(b64)));
-          if (parsed.c) codeEditor.setValue(parsed.c);
-          if (parsed.i && inputEditor) {
-            inputEditor.setValue(parsed.i);
-            switchConsoleTab('input');
+          if (b64.length <= 200000) {
+            const parsed = JSON.parse(decodeURIComponent(atob(b64)));
+            if (parsed && typeof parsed === 'object') {
+              if (typeof parsed.c === 'string') codeEditor.setValue(parsed.c);
+              if (typeof parsed.i === 'string' && inputEditor) {
+                inputEditor.setValue(parsed.i);
+                switchConsoleTab('input');
+              }
+            }
           }
-        } else {
-          codeEditor.setValue(CODE_EXAMPLES.bubble_sort);
         }
       } catch (e) {
         codeEditor.setValue(CODE_EXAMPLES.bubble_sort);
       }
-      if (getCleanApiKey()) {
-        testAndFilterWorkingModels(true);
-      }
+
+      // Load GROQ_API_KEY from local .env when running on localhost/127.0.0.1 (never in production)
+      (async function loadLocalEnvKey() {
+        const isLocal = location.hostname === 'localhost' || location.hostname === '127.0.0.1';
+        if (isLocal && !getCleanApiKey()) {
+          try {
+            const res = await fetch('.env', { cache: 'no-store' });
+            if (res.ok) {
+              const txt = await res.text();
+              const match = txt.match(/^GROQ_API_KEY=(.+)$/m);
+              if (match && match[1]) {
+                const envKey = match[1].trim().replace(/^["']|["']$/g, '');
+                if (envKey) {
+                  state.groqApiKey = envKey;
+                  updateGroqStatusUI();
+                }
+              }
+            }
+          } catch (_) { /* ignore when .env is absent */ }
+        }
+        if (getCleanApiKey()) {
+          testAndFilterWorkingModels(true);
+        }
+      })();
   </script>
 </body>
 
